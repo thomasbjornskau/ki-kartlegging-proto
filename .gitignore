@@ -1,0 +1,20 @@
+# Operativsystem
+.DS_Store
+Thumbs.db
+
+# Python (hvis du bruker det)
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Editorer
+.vscode/
+.idea/
+
+# Hemmeligheter
+.env
+*.key
+
+# Sensitive data
+data/raw/
