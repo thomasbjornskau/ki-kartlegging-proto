@@ -1,0 +1,2 @@
+# ki-kartlegging-proto
+
