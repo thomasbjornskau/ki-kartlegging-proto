@@ -5,7 +5,7 @@ og utvikling av forvaltningsrammeverk i lys av AI Act
 (Forordning 2024/1689).
 
 ## Status
-Prototypefase. Eies av [navn], ikke et SSB-produkt.
+Prototypefase. Eies av Thomas Bjørnskau, ikke et SSB-produkt.
 Eventuelt produkt overføres til SSB-repo senere.
 
 ## Struktur
