@@ -1,0 +1,962 @@
+{
+  "metadata": {
+    "tittel": "KI-anvendelser i SSB",
+    "versjon": "0.1",
+    "sist_oppdatert": "2026-08-11",
+    "forbehold": "Alle vurderinger er foreløpige arbeidsvurderinger gjort av prosjektet, ikke juridiske konklusjoner. Endelig vurdering gjøres av jurist og personvernombud.",
+    "kilde": "Kartlegging av KI-anvendelser, første registerversjon"
+  },
+  "avdelinger": [
+    {
+      "kode": 100,
+      "navn": "Avdeling 100",
+      "gruppe": "stotte",
+      "dekning": "ikke_forespurt"
+    },
+    {
+      "kode": 200,
+      "navn": "Avdeling 200",
+      "gruppe": "fag",
+      "dekning": "delvis"
+    },
+    {
+      "kode": 300,
+      "navn": "Avdeling 300",
+      "gruppe": "fag",
+      "dekning": "delvis"
+    },
+    {
+      "kode": 400,
+      "navn": "Avdeling 400",
+      "gruppe": "fag",
+      "dekning": "delvis"
+    },
+    {
+      "kode": 500,
+      "navn": "Avdeling 500 – forskning",
+      "gruppe": "fag",
+      "dekning": "ikke_forespurt"
+    },
+    {
+      "kode": 600,
+      "navn": "Avdeling 600",
+      "gruppe": "stotte",
+      "dekning": "delvis"
+    },
+    {
+      "kode": 700,
+      "navn": "Avdeling 700",
+      "gruppe": "stotte",
+      "dekning": "delvis"
+    },
+    {
+      "kode": 800,
+      "navn": "Avdeling 800",
+      "gruppe": "stotte",
+      "dekning": "delvis"
+    }
+  ],
+  "seksjoner": [
+    {
+      "kode": 210,
+      "avdeling": 200,
+      "dekning": "levert"
+    },
+    {
+      "kode": 211,
+      "avdeling": 200,
+      "dekning": "levert"
+    },
+    {
+      "kode": 212,
+      "avdeling": 200,
+      "dekning": "levert"
+    },
+    {
+      "kode": 214,
+      "avdeling": 200,
+      "dekning": "levert"
+    },
+    {
+      "kode": 240,
+      "avdeling": 200,
+      "dekning": "levert"
+    },
+    {
+      "kode": 312,
+      "avdeling": 300,
+      "dekning": "levert"
+    },
+    {
+      "kode": 330,
+      "avdeling": 300,
+      "dekning": "levert"
+    },
+    {
+      "kode": 350,
+      "avdeling": 300,
+      "dekning": "levert"
+    },
+    {
+      "kode": 360,
+      "avdeling": 300,
+      "dekning": "levert"
+    },
+    {
+      "kode": 380,
+      "avdeling": 300,
+      "dekning": "levert"
+    },
+    {
+      "kode": 422,
+      "avdeling": 400,
+      "dekning": "levert"
+    },
+    {
+      "kode": 423,
+      "avdeling": 400,
+      "dekning": "levert"
+    },
+    {
+      "kode": 424,
+      "avdeling": 400,
+      "dekning": "levert"
+    },
+    {
+      "kode": 425,
+      "avdeling": 400,
+      "dekning": "levert"
+    },
+    {
+      "kode": 426,
+      "avdeling": 400,
+      "dekning": "levert"
+    },
+    {
+      "kode": 660,
+      "avdeling": 600,
+      "dekning": "levert"
+    },
+    {
+      "kode": 723,
+      "avdeling": 700,
+      "dekning": "levert"
+    },
+    {
+      "kode": 782,
+      "avdeling": 700,
+      "dekning": "levert"
+    },
+    {
+      "kode": 811,
+      "avdeling": 800,
+      "dekning": "levert"
+    }
+  ],
+  "risikokategorier": [
+    {
+      "kode": "forbudt",
+      "navn": "Forbudt",
+      "forklaring": "Anvendelser som omfattes av forbudene i AI Act artikkel 5."
+    },
+    {
+      "kode": "hoyrisiko",
+      "navn": "Høyrisiko / mulig høyrisiko",
+      "forklaring": "Kan falle inn under høyrisikoregimet, blant annet rekruttering og arbeidstakeroppfølging."
+    },
+    {
+      "kode": "begrenset",
+      "navn": "Begrenset / transparensrelevant",
+      "forklaring": "Særlig generativ KI. Kan utløse krav om merking av KI-generert innhold."
+    },
+    {
+      "kode": "minimal",
+      "navn": "Minimal / øvrig lavrisiko",
+      "forklaring": "Arbeidsstøtte og KI/ML i statistikkproduksjonen som ikke brukes til beslutninger om enkeltpersoner."
+    },
+    {
+      "kode": "uavklart",
+      "navn": "Ikke plassert ennå",
+      "forklaring": "Formål eller rolle er ikke tilstrekkelig avklart til at anvendelsen kan plasseres."
+    }
+  ],
+  "anvendelser": [
+    {
+      "id": "KI-210-01",
+      "navn": "Generelle KI-assistenter",
+      "avdeling": 200,
+      "seksjon": 210,
+      "type": "generell",
+      "beskrivelse": "Dokumentoppsummering og kodegenerering, ad hoc",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": null,
+      "maa_avklares": "Ansvar ikke avklart. Avklar verktøy og databruk.",
+      "sist_oppdatert": "2026-08-11",
+      "generell_klasser": []
+    },
+    {
+      "id": "KI-211-01",
+      "navn": "KI-assistenter i utvikling og tekst",
+      "avdeling": 200,
+      "seksjon": 211,
+      "type": "generell",
+      "beskrivelse": "Kode, oversettelse, oppsummering, arkitektur og utvikling av produksjonssystem",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": null,
+      "maa_avklares": "Fagsansvar ikke oppgitt.",
+      "sist_oppdatert": "2026-08-11",
+      "generell_klasser": []
+    },
+    {
+      "id": "KI-212-01",
+      "navn": "KI-assistenter til Dapla og tekst",
+      "avdeling": 200,
+      "seksjon": 212,
+      "type": "generell",
+      "beskrivelse": "Kodegenerering for statistikkproduksjon, oversettelse og tekstkvalitet",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": null,
+      "maa_avklares": "Ansvar ikke oppgitt.",
+      "sist_oppdatert": "2026-08-11",
+      "generell_klasser": []
+    },
+    {
+      "id": "KI-214-01",
+      "navn": "Copilot/ChatGPT som arbeidsstøtte",
+      "avdeling": 200,
+      "seksjon": 214,
+      "type": "generell",
+      "beskrivelse": "Tekstproduksjon, oppsummering, kode og analyse",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "idriftsetter",
+      "fase": "drift",
+      "ansvarlig": null,
+      "maa_avklares": "Bruk delvis uformell.",
+      "sist_oppdatert": "2026-08-11",
+      "generell_klasser": [
+        "analyse"
+      ]
+    },
+    {
+      "id": "KI-240-01",
+      "navn": "ML-basert vareklassifisering KPI",
+      "avdeling": 200,
+      "seksjon": 240,
+      "type": "spesifikk",
+      "beskrivelse": "Klassifiserer strekkodedata til varegruppe",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "Espen Kristiansen",
+      "maa_avklares": "Dokumentasjon/transparens bør styrkes.",
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-240-02",
+      "navn": "KI-støttet kobling KPI–PPP",
+      "avdeling": 200,
+      "seksjon": 240,
+      "type": "spesifikk",
+      "beskrivelse": "KI/ML til kobling av KPI-data mot PPP",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "eksperiment",
+      "ansvarlig": "Espen Kristiansen",
+      "maa_avklares": "Følg overgang til produksjon.",
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-240-03",
+      "navn": "KI-assistenter",
+      "avdeling": 200,
+      "seksjon": 240,
+      "type": "generell",
+      "beskrivelse": "Tekst, analyse, idéarbeid og kode",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "Espen Kristiansen",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11",
+      "generell_klasser": [
+        "analyse"
+      ]
+    },
+    {
+      "id": "KI-312-01",
+      "navn": "ML-koding av næring i AKU",
+      "avdeling": 300,
+      "seksjon": 312,
+      "type": "spesifikk",
+      "beskrivelse": "BERT + LGBM til klassifisering av ny næringsstandard",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "AKU-gruppen",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-312-02",
+      "navn": "Prediksjon av stillingsprosent",
+      "avdeling": 300,
+      "seksjon": 312,
+      "type": "spesifikk",
+      "beskrivelse": "XGBoost på registerdata fra A-ordningen",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "Registergruppen",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-312-03",
+      "navn": "KI-støttet yrkeskoding",
+      "avdeling": 300,
+      "seksjon": 312,
+      "type": "spesifikk",
+      "beskrivelse": "Copilot/ChatGPT foreslår yrkeskode fra tekst",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "idriftsetter",
+      "fase": "drift",
+      "ansvarlig": "Yrkesgruppen",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-312-04",
+      "navn": "Generelle KI-assistenter",
+      "avdeling": 300,
+      "seksjon": 312,
+      "type": "generell",
+      "beskrivelse": "Kode, oversettelse, tekst, visualisering og dokumentoppsummering",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "Bred bruk; 7 ChatGPT-abonnementer oppgitt",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11",
+      "generell_klasser": [
+        "publikasjon"
+      ]
+    },
+    {
+      "id": "KI-330-01",
+      "navn": "Generelle KI-assistenter",
+      "avdeling": 300,
+      "seksjon": 330,
+      "type": "generell",
+      "beskrivelse": "Kode, tekst, presentasjoner og møtereferater",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": null,
+      "maa_avklares": "Ansvar ikke avklart.",
+      "sist_oppdatert": "2026-08-11",
+      "generell_klasser": [
+        "mote",
+        "publikasjon"
+      ]
+    },
+    {
+      "id": "KI-330-02",
+      "navn": "Klassifisering av åpne data",
+      "avdeling": 300,
+      "seksjon": 330,
+      "type": "spesifikk",
+      "beskrivelse": "ChatGPT til enkel klassifisering av dagligvaredata",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "idriftsetter",
+      "fase": "drift",
+      "ansvarlig": null,
+      "maa_avklares": "Ansvar ikke avklart.",
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-330-03",
+      "navn": "Imputering i kostholdsstatistikken",
+      "avdeling": 300,
+      "seksjon": 330,
+      "type": "spesifikk",
+      "beskrivelse": "Random Forest for manglende verdier",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "Dokumentert i metodenotater",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-350-01",
+      "navn": "Generelle KI-assistenter",
+      "avdeling": 300,
+      "seksjon": 350,
+      "type": "generell",
+      "beskrivelse": "Kode, tekst, oversettelse og dokumentoppsummering",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "Seksjonsleder",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11",
+      "generell_klasser": []
+    },
+    {
+      "id": "KI-350-02",
+      "navn": "Automatisk statistisk koding",
+      "avdeling": 300,
+      "seksjon": 350,
+      "type": "spesifikk",
+      "beskrivelse": "ML for COICOP- og aktivitetskoder med manuell kontroll",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "Seksjonsleder/metode. God dokumentasjon",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-360-01",
+      "navn": "Generelle KI-assistenter",
+      "avdeling": 300,
+      "seksjon": 360,
+      "type": "generell",
+      "beskrivelse": "Kode, metode, tekst, oversettelse, presentasjoner og søk",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": null,
+      "maa_avklares": "Ansvar ikke avklart.",
+      "sist_oppdatert": "2026-08-11",
+      "generell_klasser": [
+        "publikasjon"
+      ]
+    },
+    {
+      "id": "KI-360-02",
+      "navn": "Copilot til analyse",
+      "avdeling": 300,
+      "seksjon": 360,
+      "type": "spesifikk",
+      "beskrivelse": "Planlagt støtte til analyse av aggregerte data",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "idriftsetter",
+      "fase": "planlagt",
+      "ansvarlig": null,
+      "maa_avklares": "Følg videre utvikling.",
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-380-01",
+      "navn": "Copilot som generell arbeidsstøtte",
+      "avdeling": 300,
+      "seksjon": 380,
+      "type": "generell",
+      "beskrivelse": "Tekst, oppsummering, oversettelse, idéarbeid, kode og faglige oppslag",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "idriftsetter",
+      "fase": "drift",
+      "ansvarlig": "Kenneth Schnelle",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11",
+      "generell_klasser": []
+    },
+    {
+      "id": "KI-422-01",
+      "navn": "Copilot/ChatGPT til tekst og kode",
+      "avdeling": 400,
+      "seksjon": 422,
+      "type": "generell",
+      "beskrivelse": "Intern tekst, strukturering, oversettelse og kode; ingen skarpe data",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "idriftsetter",
+      "fase": "drift",
+      "ansvarlig": "Seksjonssjef overordnet",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11",
+      "generell_klasser": []
+    },
+    {
+      "id": "KI-423-01",
+      "navn": "ML-imputering av økonomiske skjemadata",
+      "avdeling": 400,
+      "seksjon": 423,
+      "type": "spesifikk",
+      "beskrivelse": "Gradient boosting til omsetning og driftskostnader",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "Joel Parr. God versjonering og dokumentasjon",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-423-02",
+      "navn": "ML for inferens til populasjon",
+      "avdeling": 400,
+      "seksjon": 423,
+      "type": "spesifikk",
+      "beskrivelse": "Gradient boosting/KNN i statistikkproduksjonen",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "Joel Parr",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-423-03",
+      "navn": "Anbefaling av Prodcom-koder",
+      "avdeling": 400,
+      "seksjon": 423,
+      "type": "spesifikk",
+      "beskrivelse": "Beslutningstre foreslår kode; bruker bekrefter/endrer",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "Iris Santos/Stian Elisenberg",
+      "maa_avklares": "Dokumentasjon bør styrkes.",
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-423-04",
+      "navn": "ML-imputering i Prodcom",
+      "avdeling": 400,
+      "seksjon": 423,
+      "type": "spesifikk",
+      "beskrivelse": "Gradient boosting til manglende mengde",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "Iris Santos. Dokumentasjon/pipeline må styrkes",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-423-05",
+      "navn": "Anomalideteksjon",
+      "avdeling": 400,
+      "seksjon": 423,
+      "type": "spesifikk",
+      "beskrivelse": "Isolation Forest e.l. til kvalitetskontroll",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "eksperiment",
+      "ansvarlig": "Joel Parr",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-423-06",
+      "navn": "Fordeling av omsetning",
+      "avdeling": 400,
+      "seksjon": 423,
+      "type": "spesifikk",
+      "beskrivelse": "Gradient boosting for imputering av inntektstyper",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "planlagt",
+      "ansvarlig": "Joel Parr",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-423-07",
+      "navn": "LLM-analyse av endelige tall",
+      "avdeling": 400,
+      "seksjon": 423,
+      "type": "spesifikk",
+      "beskrivelse": "Lokale Mistral/Llama/Qwen til analyse og avviksundersøkelser",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "idriftsetter",
+      "fase": "test",
+      "ansvarlig": "Joel Parr. Ingen data ut av SSB",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-423-08",
+      "navn": "Generelle KI-assistenter",
+      "avdeling": 400,
+      "seksjon": 423,
+      "type": "generell",
+      "beskrivelse": "Kode, ekstern kommunikasjon, oversettelse og arbeidstekst",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "S423",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11",
+      "generell_klasser": [
+        "publikasjon"
+      ]
+    },
+    {
+      "id": "KI-423-09",
+      "navn": "Mulige KI-agenter i GCP",
+      "avdeling": 400,
+      "seksjon": 423,
+      "type": "spesifikk",
+      "beskrivelse": "Ingen konkret anvendelse definert ennå",
+      "risikokategori": "uavklart",
+      "vurderingsstatus": "maa_avklares",
+      "ssb_rolle": "uavklart",
+      "fase": "ide",
+      "ansvarlig": null,
+      "maa_avklares": "Bør ikke plottes som risikokategori før formålet er kjent.",
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-424-01",
+      "navn": "Generelle KI-assistenter",
+      "avdeling": 400,
+      "seksjon": 424,
+      "type": "generell",
+      "beskrivelse": "Kode, oversettelse, oppsummering, tekst og idémyldring",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": null,
+      "maa_avklares": "Ansvar delvis ikke oppgitt.",
+      "sist_oppdatert": "2026-08-11",
+      "generell_klasser": []
+    },
+    {
+      "id": "KI-424-02",
+      "navn": "SN2025-koding i BRSYS",
+      "avdeling": 400,
+      "seksjon": 424,
+      "type": "spesifikk",
+      "beskrivelse": "KI foreslår næringskode; saksbehandler velger",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "BR",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-424-03",
+      "navn": "ML-modell for SN2007",
+      "avdeling": 400,
+      "seksjon": 424,
+      "type": "spesifikk",
+      "beskrivelse": "Intern klassifiseringsmodell til statistikkformål",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "Metode utvikler, S424 drifter",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-424-04",
+      "navn": "KI-støttet virksomhetsprofilering",
+      "avdeling": 400,
+      "seksjon": 424,
+      "type": "spesifikk",
+      "beskrivelse": "Sammenstiller offentlig informasjon om selskaper og konsern",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "S424. Gjelder virksomheter, ikke personer",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-425-01",
+      "navn": "Generelle KI-assistenter",
+      "avdeling": 400,
+      "seksjon": 425,
+      "type": "generell",
+      "beskrivelse": "Koding, referatskriving, språk og rapportoppsummering",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "Flere",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11",
+      "generell_klasser": [
+        "mote"
+      ]
+    },
+    {
+      "id": "KI-426-01",
+      "navn": "Beregningsområder for boligverdier",
+      "avdeling": 400,
+      "seksjon": 426,
+      "type": "spesifikk",
+      "beskrivelse": "Beslutningstre grupperer grunnkretser i modell brukt videre til markedsverdier",
+      "risikokategori": "uavklart",
+      "vurderingsstatus": "maa_avklares",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "Per Medby m.fl",
+      "maa_avklares": "Bør vurderes særskilt fordi resultatet brukes videre av Skatteetaten til skatteformål.",
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-426-02",
+      "navn": "ML for databehandling og klassifisering",
+      "avdeling": 400,
+      "seksjon": 426,
+      "type": "spesifikk",
+      "beskrivelse": "Automatisk klassifisering av bl.a. AIS- og fjernmålingsdata",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "Gruppe for areal og GIS",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-426-03",
+      "navn": "Generelle KI-assistenter",
+      "avdeling": 400,
+      "seksjon": 426,
+      "type": "generell",
+      "beskrivelse": "Kodegenerering, SAS–Python, oversettelse og tekstforbedring",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "De fleste i seksjonen",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11",
+      "generell_klasser": []
+    },
+    {
+      "id": "KI-660-01",
+      "navn": "Generative funksjoner i kommunikasjonsverktøy",
+      "avdeling": 600,
+      "seksjon": 660,
+      "type": "generell",
+      "beskrivelse": "Figma, Flourish, MyNewsDesk, Vimeo og Siteimprove har KI-funksjonalitet for innhold/visualisering",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "idriftsetter",
+      "fase": "tilgjengelig",
+      "ansvarlig": "Faktisk bruk er ikke kartlagt for alle verktøy",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11",
+      "generell_klasser": [
+        "publikasjon"
+      ]
+    },
+    {
+      "id": "KI-660-02",
+      "navn": "KI i analyse- og SEO-verktøy",
+      "avdeling": 600,
+      "seksjon": 660,
+      "type": "spesifikk",
+      "beskrivelse": "Ahrefs og GA4 med automatiske innsikter, prediksjon og anbefalinger",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "idriftsetter",
+      "fase": "tilgjengelig",
+      "ansvarlig": null,
+      "maa_avklares": "Faktisk KI-bruk bør skilles fra tilgjengelig funksjonalitet.",
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-660-03",
+      "navn": "Gemini-assistent for artikkelproduksjon",
+      "avdeling": 600,
+      "seksjon": 660,
+      "type": "spesifikk",
+      "beskrivelse": "Tilpasset Gem på Dapla for SSB-artikler",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "idriftsetter",
+      "fase": "planlagt",
+      "ansvarlig": "Ulrik Amundsen. Publiseringsnær bruk gjør transparens relevant",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-723-01",
+      "navn": "Analyse av utvikleraktivitet",
+      "avdeling": 700,
+      "seksjon": 723,
+      "type": "spesifikk",
+      "beskrivelse": "GitHub/Jira-data analyseres med Gemini og re-identifiseres lokalt for mulig lederinnsikt",
+      "risikokategori": "hoyrisiko",
+      "vurderingsstatus": "kandidat",
+      "ssb_rolle": "idriftsetter",
+      "fase": "eksperiment",
+      "ansvarlig": "Erik Øvrum",
+      "maa_avklares": "Må avklares med HR/PVO/jus før eventuell bruk.",
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-723-02",
+      "navn": "M365 Copilot i personalsaker",
+      "avdeling": 700,
+      "seksjon": 723,
+      "type": "spesifikk",
+      "beskrivelse": "Sparring, analyse og utkast knyttet til medarbeidersamtaler og oppfølging",
+      "risikokategori": "hoyrisiko",
+      "vurderingsstatus": "kandidat",
+      "ssb_rolle": "idriftsetter",
+      "fase": "drift",
+      "ansvarlig": null,
+      "maa_avklares": "Avgjørende å avklare om KI vurderer ansatte eller bare hjelper med formulering.",
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-723-03",
+      "navn": "Generelle KI-assistenter",
+      "avdeling": 700,
+      "seksjon": 723,
+      "type": "generell",
+      "beskrivelse": "GitHub Copilot, M365 Copilot og Claude til kode, tekst, møter og sparring",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "idriftsetter",
+      "fase": "drift",
+      "ansvarlig": "Erik Øvrum",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11",
+      "generell_klasser": [
+        "mote"
+      ]
+    },
+    {
+      "id": "KI-782-01",
+      "navn": "Copilot i rekruttering",
+      "avdeling": 700,
+      "seksjon": 782,
+      "type": "spesifikk",
+      "beskrivelse": "M365 Copilot brukt til utvelgelse av kvalifiserte kandidater",
+      "risikokategori": "hoyrisiko",
+      "vurderingsstatus": "kandidat",
+      "ssb_rolle": "idriftsetter",
+      "fase": "drift",
+      "ansvarlig": "Klar høyrisikokandidat",
+      "maa_avklares": "HR/juridisk vurdering nødvendig.",
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-782-02",
+      "navn": "KI-assistenter for kode og problemløsing",
+      "avdeling": 700,
+      "seksjon": 782,
+      "type": "generell",
+      "beskrivelse": "Claude/ChatGPT til infrastrukturkode og problemløsing",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "idriftsetter",
+      "fase": "drift",
+      "ansvarlig": "Personlig anskaffede abonnement oppgitt",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11",
+      "generell_klasser": []
+    },
+    {
+      "id": "KI-782-03",
+      "navn": "Copilot Chat / Rovo",
+      "avdeling": 700,
+      "seksjon": 782,
+      "type": "generell",
+      "beskrivelse": "Tekst, idémyldring, scripting og Atlassian-integrert støtte",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "idriftsetter",
+      "fase": "drift",
+      "ansvarlig": null,
+      "maa_avklares": "Ansvar ikke oppgitt.",
+      "sist_oppdatert": "2026-08-11",
+      "generell_klasser": []
+    },
+    {
+      "id": "KI-811-01",
+      "navn": "KI-støtte ved CV-gjennomgang",
+      "avdeling": 800,
+      "seksjon": 811,
+      "type": "spesifikk",
+      "beskrivelse": "Generativ KI analyserer CV-er og foreslår kandidater",
+      "risikokategori": "hoyrisiko",
+      "vurderingsstatus": "kandidat",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "Seksjonsleder",
+      "maa_avklares": "Klar høyrisikokandidat; bør vurderes med HR/jus.",
+      "sist_oppdatert": "2026-08-11"
+    },
+    {
+      "id": "KI-811-02",
+      "navn": "Generelle KI-assistenter",
+      "avdeling": 800,
+      "seksjon": 811,
+      "type": "generell",
+      "beskrivelse": "Intervjureferat, tekst, kode, oppsummering og analyse",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "Seksjon for metoder",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11",
+      "generell_klasser": [
+        "mote",
+        "analyse"
+      ]
+    },
+    {
+      "id": "KI-811-03",
+      "navn": "ML-klassifisering i statistikkproduksjon",
+      "avdeling": 800,
+      "seksjon": 811,
+      "type": "spesifikk",
+      "beskrivelse": "Utvikling av klassifiseringsmodeller som brukes aggregert",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "ssb_rolle": "uavklart",
+      "fase": "drift",
+      "ansvarlig": "Seksjon for metoder",
+      "maa_avklares": null,
+      "sist_oppdatert": "2026-08-11"
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KI-anvendelser i SSB</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="topp-rad">
+    <h1>KI-anvendelser i SSB</h1>
+    <span class="undertittel" id="undertittel"></span>
+  </div>
+  <p class="forbehold" id="forbehold"></p>
+</header>
+
+<div id="feil" hidden class="feil">
+  <h2>Fant ikke data.json</h2>
+  <p>Siden leser data fra <code>data.json</code>, og nettleseren blokkerer den lesingen når filen åpnes direkte fra disk. Start en lokal server i mappen og åpne adressen den skriver ut:</p>
+  <code>python3 -m http.server 8000</code>
+</div>
+
+<main id="app" hidden>
+  <div>
+
+    <section class="panel">
+      <div class="filtre">
+        <div class="felt">
+          <label for="f-avdeling">Avdeling</label>
+          <select id="f-avdeling"></select>
+        </div>
+        <div class="felt">
+          <label for="f-kategori">Risikokategori</label>
+          <select id="f-kategori"></select>
+        </div>
+        <label class="avkryss">
+          <input type="checkbox" id="f-generell" checked>
+          Vis alminnelig assistentbruk
+        </label>
+        <button class="nullstill" id="nullstill">Nullstill</button>
+      </div>
+
+      <div class="figur-boks">
+        <svg id="figur" viewBox="0 0 680 620" role="img" aria-labelledby="figur-tittel figur-beskr">
+          <title id="figur-tittel">Kart over KI-anvendelser i SSB</title>
+          <desc id="figur-beskr">Retningen viser hvilken avdeling anvendelsen hører til. Avstanden fra sentrum viser hvilken AI Act-kategori den er plassert i. Båndet utenfor kanten viser alminnelig assistentbruk per seksjon.</desc>
+        </svg>
+
+        <div class="tegnforklaring" id="tegnforklaring"></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-tittel">
+        <h2>Register</h2>
+        <span class="notat" id="tabell-antall"></span>
+      </div>
+      <div class="tabell-hylse">
+        <table id="tabell">
+          <thead>
+            <tr>
+              <th data-felt="id">ID</th>
+              <th data-felt="navn">Anvendelse</th>
+              <th data-felt="avdeling">Avd.</th>
+              <th data-felt="seksjon">Seksjon</th>
+              <th data-felt="beskrivelse">Kort beskrivelse</th>
+              <th data-felt="risikokategori">Kategori</th>
+              <th data-felt="fase">Fase</th>
+              <th data-felt="ansvarlig">Ansvarlig</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-tittel">
+        <h2>Kort om AI Act</h2>
+        <span class="notat">Forenklet arbeidsforklaring</span>
+      </div>
+      <div class="info-rutenett">
+        <div>
+          <h3>Hva er et KI-system?</h3>
+          <p>Et maskinbasert system som utleder resultater fra data det får inn, med en viss grad av selvstendighet. Rent regelbaserte systemer faller normalt utenfor. Grensen mot tradisjonell statistisk modellering er ikke skarp, og SSB har ikke landet en felles arbeidsdefinisjon ennå.</p>
+        </div>
+        <div>
+          <h3>Fire kategorier</h3>
+          <p>Forordningen deler KI-systemer i forbudt bruk, høyrisiko, begrenset risiko med krav om åpenhet, og øvrig lavrisiko. Kategoriene er juridiske klasser, ikke trinn på en skala.</p>
+        </div>
+        <div>
+          <h3>Bruksområdet avgjør</h3>
+          <p>Høyrisiko følger av hva systemet brukes til, ikke av hvor avansert teknologien er. En avansert maskinlæringsmodell i statistikkproduksjonen er ikke høyrisiko av den grunn. En enkel modell brukt til å sile jobbsøkere kan være det.</p>
+        </div>
+        <div>
+          <h3>Risiko etter AI Act er ikke all risiko</h3>
+          <p>En anvendelse kan ligge ytterst i figuren og likevel ha betydelig personvernrisiko, metodisk risiko eller omdømmerisiko. Aksen viser bare AI Act-kategori.</p>
+        </div>
+        <div>
+          <h3>Leverandør eller idriftsetter</h3>
+          <p>Pliktene er vesentlig strengere for den som utvikler og tilbyr et KI-system enn for den som tar det i bruk. Der SSB utvikler modeller selv, er rollen ikke avklart i denne versjonen.</p>
+        </div>
+        <div>
+          <h3>Vurderingene er foreløpige</h3>
+          <p>Plasseringene her er prosjektets arbeidsvurderinger, gjort for å få oversikt. De er ikke juridiske konklusjoner, og de skal kvalitetssikres av jurist og personvernombud.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <aside>
+    <section class="panel">
+      <div class="panel-tittel">
+        <h2>Detaljer</h2>
+      </div>
+      <div id="detalj">
+        <p class="detalj-tom">Velg et punkt i figuren eller en rad i tabellen.</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-tittel">
+        <h2>Ikke plassert ennå</h2>
+      </div>
+      <div id="uplassert"></div>
+    </section>
+  </aside>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
