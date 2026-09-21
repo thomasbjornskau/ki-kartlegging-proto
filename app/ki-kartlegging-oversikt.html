@@ -144,6 +144,7 @@ footer{max-width:1360px;margin:0 auto;padding:0 var(--gap) 40px;font-size:12.5px
 /* v0.2: seksjoner som ikke har levert */
 .band-celle.ikke-levert{fill:url(#skravur);stroke:var(--line)}
 .seksjon-etikett.ikke-levert{fill:#a9aeb4;font-style:italic}
+.avvik{margin:0 0 14px;padding:8px 11px;background:#fdf6e8;border-left:3px solid var(--hoyrisiko);font-size:13px;color:#6b5420}
 
 </style>
 </head>
@@ -204,36 +205,38 @@ footer{max-width:1360px;margin:0 auto;padding:0 var(--gap) 40px;font-size:12.5px
   </div>
 </section>
 
-<section class="kort">
+<section class="kort" id="rapport" data-tolkning="2026-09-21">
   <div class="hode">
     <div>
-      <div class="eyebrow">Rapport</div>
-      <h2>Hva kartleggingen viste — status 11. august 2026</h2>
+      <div class="eyebrow">Hovedfunn</div>
+      <h2>Hva kartleggingen viser</h2>
     </div>
-    <span class="notat">Gjelder første innsamlingsrunde med 49 poster. Fryst tekst — registeret har vokst siden.</span>
+    <span class="notat">Tallene regnes ut fra registeret. Tolkningen er skrevet 21. september 2026, etter andre innsamlingsrunde.</span>
   </div>
+  <p class="avvik" id="rapport-avvik" hidden>Registeret er oppdatert etter at tolkningen under ble skrevet. Tallene er riktige, men teksten kan være utdatert.</p>
   <div class="funn">
     <div>
-      <div class="tall">4 av 49</div>
+      <div class="tall"><span data-tall="hoyrisiko"></span> av <span data-tall="totalt"></span></div>
       <h3>Risikoen ligger i støttefunksjonene</h3>
-      <p>Alle høyrisikokandidatene gjelder rekruttering og oppfølging av ansatte, i avdeling 700 og 800. Ingen ligger i statistikkproduksjonen. Det korrigerer en antakelse i det interne notatet om at høyrisiko først og fremst ville dukke opp i produksjonen av statistikk.</p>
+      <p>Alle høyrisikokandidatene gjelder rekruttering og oppfølging av ansatte. Ingen ligger i statistikkproduksjonen, og andre runde endret ikke dette. Det korrigerer antakelsen i det interne notatet om at høyrisiko først og fremst ville dukke opp der statistikken lages.</p>
     </div>
     <div>
-      <div class="tall">20 av 49</div>
-      <h3>Halvparten er alminnelig assistentbruk</h3>
-      <p>Kode, tekst, oversettelse og oppsummering finnes i nesten hver seksjon som har svart. Det er reell bruk, men det er ikke tjue systemer som skal forvaltes hver for seg. Tallet 49 bør ikke siteres uten dette forbeholdet.</p>
+      <div class="tall"><span data-tall="generell"></span> av <span data-tall="totalt"></span></div>
+      <h3>Nær halvparten er alminnelig assistentbruk</h3>
+      <p>Kode, tekst, oversettelse og oppsummering finnes i nesten alle seksjoner som har svart. Det er reell bruk, men ikke systemer som skal forvaltes hver for seg. Totaltallet bør ikke siteres uten dette forbeholdet.</p>
     </div>
     <div>
-      <div class="tall">6 av 8</div>
-      <h3>Dekningen er ujevn</h3>
-      <p>Avdeling 100 og 500 er ikke forespurt ennå. Blant dem som har svart, varierer detaljnivået sterkt: én seksjon har meldt ni anvendelser, en annen har meldt tre for hele avdelingen. Figuren viser derfor også hvem som svarte grundig.</p>
+      <div class="tall"><span data-tall="levert"></span> av <span data-tall="seksjoner"></span></div>
+      <h3>Dekningen er fortsatt ujevn</h3>
+      <p>Seksjoner som ikke har levert, er skravert i figuren, og forskningsavdelingen er ikke forespurt. Blant dem som har svart, varierer detaljnivået fra én til ni poster per seksjon. Figuren viser derfor også hvem som svarte grundig.</p>
     </div>
     <div>
-      <div class="tall">2</div>
+      <div class="tall" data-tall="uavklart"></div>
       <h3>To lot seg ikke plassere</h3>
-      <p>Én fordi formålet ikke er definert ennå, én fordi resultatet brukes videre av en annen myndighet — noe som reiser spørsmål om SSB der er leverandør og ikke bare idriftsetter. Begge står utenfor figuren framfor å bli gjettet inn i en kategori.</p>
+      <p>Én fordi formålet ikke er definert ennå, én fordi resultatet brukes videre av en annen myndighet — noe som reiser spørsmålet om SSB der er leverandør og ikke bare idriftsetter. Begge står utenfor figuren framfor å bli gjettet inn i en kategori.</p>
     </div>
   </div>
+  <p class="notat" style="margin-top:16px">Første runde (11. august, 49 poster fra 19 seksjoner) viste det samme hovedbildet. Den versjonen av siden ligger i versjonshistorikken.</p>
 </section>
 
 <section class="kort">
@@ -1849,6 +1852,22 @@ function skrivTall() {
   if (uspurt.length) deler.push(uspurt.map(a => a.navn).join(' og ') + ' er ikke forespurt.');
   if (ikke.length) deler.push(`${ikke.length} seksjoner har ikke levert: ${ikke.map(s => s.kode).join(', ')}. De er skravert i båndet.`);
   document.getElementById('dekning-tekst').textContent = deler.join(' ');
+
+  // hovedfunn: tallene regnes ut, teksten er skrevet for hånd
+  const A = DATA.anvendelser;
+  const tall = {
+    totalt: A.length,
+    hoyrisiko: A.filter(a => a.risikokategori === 'hoyrisiko').length,
+    generell: A.filter(a => a.type === 'generell').length,
+    uavklart: A.filter(a => a.risikokategori === 'uavklart').length,
+    levert: levert.length,
+    seksjoner: DATA.seksjoner.length,
+  };
+  document.querySelectorAll('[data-tall]').forEach(e => { e.textContent = tall[e.dataset.tall]; });
+
+  // Varsle hvis dataene er nyere enn tolkningen
+  const tolkning = document.getElementById('rapport').dataset.tolkning;
+  document.getElementById('rapport-avvik').hidden = !(DATA.metadata.sist_oppdatert > tolkning);
 }
 
 /* ---------- figur ---------- */

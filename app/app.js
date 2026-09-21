@@ -162,6 +162,22 @@ function skrivTall() {
   if (uspurt.length) deler.push(uspurt.map(a => a.navn).join(' og ') + ' er ikke forespurt.');
   if (ikke.length) deler.push(`${ikke.length} seksjoner har ikke levert: ${ikke.map(s => s.kode).join(', ')}. De er skravert i båndet.`);
   document.getElementById('dekning-tekst').textContent = deler.join(' ');
+
+  // hovedfunn: tallene regnes ut, teksten er skrevet for hånd
+  const A = DATA.anvendelser;
+  const tall = {
+    totalt: A.length,
+    hoyrisiko: A.filter(a => a.risikokategori === 'hoyrisiko').length,
+    generell: A.filter(a => a.type === 'generell').length,
+    uavklart: A.filter(a => a.risikokategori === 'uavklart').length,
+    levert: levert.length,
+    seksjoner: DATA.seksjoner.length,
+  };
+  document.querySelectorAll('[data-tall]').forEach(e => { e.textContent = tall[e.dataset.tall]; });
+
+  // Varsle hvis dataene er nyere enn tolkningen
+  const tolkning = document.getElementById('rapport').dataset.tolkning;
+  document.getElementById('rapport-avvik').hidden = !(DATA.metadata.sist_oppdatert > tolkning);
 }
 
 /* ---------- figur ---------- */

@@ -137,3 +137,4 @@ footer{max-width:1360px;margin:0 auto;padding:0 var(--gap) 40px;font-size:12.5px
 /* v0.2: seksjoner som ikke har levert */
 .band-celle.ikke-levert{fill:url(#skravur);stroke:var(--line)}
 .seksjon-etikett.ikke-levert{fill:#a9aeb4;font-style:italic}
+.avvik{margin:0 0 14px;padding:8px 11px;background:#fdf6e8;border-left:3px solid var(--hoyrisiko);font-size:13px;color:#6b5420}
