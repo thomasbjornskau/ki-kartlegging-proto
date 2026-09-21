@@ -227,9 +227,11 @@ function tegnFigur() {
     const celle = el('path', { d: bandsti(g - b / 2 + .4, g + b / 2 - .4),
                                class: 'band-celle' + (ikkeLevert ? ' ikke-levert' : ''),
                                'data-seksjon': s.kode }, gB);
-    el('title', {}, celle).textContent = ikkeLevert
-      ? `Seksjon ${s.kode} – har ikke levert`
-      : `Seksjon ${s.kode} – alminnelig assistentbruk`;
+    const tekst = ikkeLevert
+      ? `<b>Seksjon ${s.kode}</b><br><span>Har ikke levert</span>`
+      : `<b>Seksjon ${s.kode}</b><br><span>Alminnelig assistentbruk</span>`;
+    celle.addEventListener('mousemove', e => visTips(e, tekst));
+    celle.addEventListener('mouseleave', skjulTips);
 
     const [lx, ly] = pkt(g, BAND_UT + 11);
     el('text', { x: f1(lx), y: f1(ly + 3), 'text-anchor': 'middle',
@@ -261,7 +263,6 @@ function tegnFigur() {
   el('text', { x: 56, y: CY + 18, class: 'akse-etikett' }, gE).textContent = 'støttefunksjoner';
 
   // punkter
-  const tips = document.getElementById('tips');
   DATA.anvendelser.forEach(a => {
     const p = pos[a.id];
     if (!p) return;
@@ -271,17 +272,27 @@ function tegnFigur() {
                    fill: avklart ? FARGE[a.risikokategori] : '#fff',
                    stroke: FARGE[a.risikokategori], 'stroke-width': avklart ? 0 : 2.2 }, g);
     const kat = DATA.risikokategorier.find(k => k.kode === a.risikokategori);
-    g.addEventListener('mousemove', e => {
-      tips.style.display = 'block';
-      tips.innerHTML = `<b>${esc(a.navn)}</b><br><span>${esc(kat.navn)} · ${esc(navn(STATUS, a.vurderingsstatus))} · seksjon ${a.seksjon}</span>`;
-      tips.style.left = Math.min(e.clientX + 14, innerWidth - 250) + 'px';
-      tips.style.top = (e.clientY + 16) + 'px';
-    });
-    g.addEventListener('mouseleave', () => { tips.style.display = 'none'; });
+    const tekst = `<b>${esc(a.navn)}</b><br><span>${esc(kat.navn)} · ${esc(navn(STATUS, a.vurderingsstatus))} · seksjon ${a.seksjon}</span>`;
+    g.addEventListener('mousemove', e => visTips(e, tekst));
+    g.addEventListener('mouseleave', skjulTips);
     g.addEventListener('click', () => velg(a.id));
     g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); velg(a.id); } });
   });
 }
+
+/* Egen tooltip. SVG-elementene har bevisst ingen <title>, fordi nettleserens
+   innebygde tooltip ellers legger seg over denne. */
+function visTips(e, html) {
+  const tips = document.getElementById('tips');
+  tips.innerHTML = html;
+  tips.style.display = 'block';
+  const b = tips.offsetWidth || 230, hgt = tips.offsetHeight || 40;
+  const x = e.clientX + 14 + b > innerWidth ? e.clientX - b - 10 : e.clientX + 14;
+  const y = e.clientY + 16 + hgt > innerHeight ? e.clientY - hgt - 10 : e.clientY + 16;
+  tips.style.left = x + 'px';
+  tips.style.top = y + 'px';
+}
+function skjulTips() { document.getElementById('tips').style.display = 'none'; }
 
 function symbol(f, k, x, y) {
   if (k === 'mote') {
