@@ -1,4 +1,354 @@
-{
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KI-anvendelser i SSB</title>
+<style>
+:root{
+--ink:#1b1f23;--ink2:#4a5057;--ink3:#767c84;
+--line:#d5d8dc;--line2:#eceef0;--paper:#fff;--paper2:#f6f7f8;
+--forbudt:#c0392b;--hoyrisiko:#e08a1e;--begrenset:#5c8f2a;--minimal:#9ec46a;--uavklart:#7a7f86;
+--gap:22px;--r:3px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper2);color:var(--ink);
+font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+h1,h2,h3{font-weight:600;letter-spacing:-.01em;margin:0}
+h1{font-size:21px}
+h2{font-size:16px}
+h3{font-size:13.5px}
+p{margin:0 0 10px}
+p:last-child{margin-bottom:0}
+
+header{background:var(--paper);border-bottom:1px solid var(--line);padding:20px var(--gap) 16px}
+.wrap{max-width:1360px;margin:0 auto}
+.topp{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px}
+.sub{color:var(--ink2);font-size:13px}
+.forbehold{margin-top:12px;padding:9px 12px;background:#fdf6e8;border:1px solid #ecd9ae;
+border-radius:var(--r);font-size:13px;color:#6b5420}
+
+main{max-width:1360px;margin:0 auto;padding:var(--gap)}
+section.kort{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);
+padding:18px;margin-bottom:var(--gap)}
+.hode{display:flex;justify-content:space-between;align-items:baseline;gap:14px;
+margin-bottom:12px;flex-wrap:wrap}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink3);
+margin-bottom:5px}
+.notat{color:var(--ink3);font-size:12.5px}
+.lede{max-width:70ch;color:var(--ink2);font-size:14.5px}
+
+/* filtre */
+.filtre{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;
+padding-bottom:14px;margin-bottom:16px;border-bottom:1px solid var(--line2)}
+.felt{display:flex;flex-direction:column;gap:4px}
+.felt label{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink3)}
+select,input[type=search]{font:inherit;font-size:14px;padding:6px 8px;border:1px solid var(--line);
+border-radius:var(--r);background:var(--paper);color:var(--ink);min-width:150px}
+input[type=search]{min-width:200px}
+.avkryss{display:flex;align-items:center;gap:7px;font-size:14px;padding-bottom:7px;cursor:pointer}
+.knapp{font:inherit;font-size:13px;background:none;border:1px solid var(--line);
+border-radius:var(--r);padding:7px 12px;cursor:pointer;color:var(--ink2)}
+.knapp:hover{background:var(--paper2)}
+
+/* figur + panel */
+.figurrad{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:var(--gap);align-items:start}
+svg#figur{display:block;width:100%;height:auto}
+.sektor-etikett{font-size:13px;font-weight:600;fill:var(--ink2)}
+.seksjon-etikett{font-size:9.5px;fill:var(--ink3)}
+.akse-etikett{font-size:10.5px;fill:var(--ink3)}
+.punkt{cursor:pointer}
+.punkt:hover circle{r:8}
+.punkt.valgt circle{stroke:var(--ink);stroke-width:2.5}
+.punkt.dempet{opacity:.12;pointer-events:none}
+.band-celle{fill:var(--paper2);stroke:var(--line);stroke-width:.6}
+.band-celle.dempet{opacity:.3}
+.band-symbol{fill:none;stroke:var(--ink2);stroke-width:1.5}
+
+.tegn{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:14px;padding-top:14px;
+border-top:1px solid var(--line2);font-size:12.5px;color:var(--ink2)}
+.tp{display:flex;align-items:center;gap:7px}
+.dot{width:11px;height:11px;border-radius:50%;flex:none}
+.ring{width:11px;height:11px;border-radius:50%;border:2px solid var(--ink2);flex:none}
+
+.detalj-boks{border:1px solid var(--line);border-radius:var(--r);padding:14px;background:var(--paper2)}
+.tom{color:var(--ink3);font-size:13.5px}
+.detalj .id{font-size:11.5px;color:var(--ink3);margin-top:2px}
+.merker{display:flex;flex-wrap:wrap;gap:5px;margin:11px 0 13px}
+.merke{font-size:11.5px;padding:2px 8px;border-radius:10px;border:1px solid var(--line);
+color:var(--ink2);background:var(--paper)}
+.merke.risiko{color:#fff;border:none}
+.merke.risiko.forbudt{background:var(--forbudt)}
+.merke.risiko.hoyrisiko{background:var(--hoyrisiko)}
+.merke.risiko.begrenset{background:var(--begrenset)}
+.merke.risiko.minimal{background:var(--minimal);color:#2c3a18}
+.merke.risiko.uavklart{background:var(--uavklart)}
+.detalj dl{margin:0;display:grid;gap:10px}
+.detalj dt{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink3)}
+.detalj dd{margin:0;font-size:13.5px}
+.detalj dd.mangler{color:var(--ink3);font-style:italic}
+.avklar{background:#fdf6e8;border-left:3px solid var(--hoyrisiko);padding:8px 10px}
+
+#tips{position:fixed;pointer-events:none;background:var(--ink);color:#fff;font-size:12.5px;
+padding:6px 9px;border-radius:var(--r);max-width:230px;z-index:20;display:none;line-height:1.4}
+#tips b{font-weight:600}
+#tips span{opacity:.75}
+
+/* funn */
+.funn{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.funn h3{margin-bottom:4px}
+.funn p{font-size:13.5px;color:var(--ink2)}
+.tall{font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.1;margin-bottom:2px}
+
+/* tabell */
+.hylse{overflow-x:auto;max-height:560px}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line2);vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink3);
+border-bottom:1px solid var(--line);cursor:pointer;white-space:nowrap;user-select:none;
+position:sticky;top:0;background:var(--paper);z-index:2}
+th:hover{color:var(--ink)}
+th[aria-sort]{color:var(--ink)}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:var(--paper2)}
+tbody tr.valgt{background:#eef3f8}
+td.id{color:var(--ink3);white-space:nowrap}
+td.navn{font-weight:500}
+.kp{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+.kp.forbudt{background:var(--forbudt)}.kp.hoyrisiko{background:var(--hoyrisiko)}
+.kp.begrenset{background:var(--begrenset)}.kp.minimal{background:var(--minimal)}
+.kp.uavklart{background:var(--uavklart)}
+
+/* AI Act */
+.akt{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.akt h3{margin-bottom:5px}
+.akt p{font-size:13.5px;color:var(--ink2)}
+.eks{margin-top:8px;padding:9px 11px;background:var(--paper2);border-left:2px solid var(--line);
+font-size:13px;color:var(--ink2)}
+.eks b{color:var(--ink);font-weight:600}
+
+.sti{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-top:4px}
+.sti h3{margin-bottom:4px}
+.sti p{font-size:13.5px;color:var(--ink2)}
+.sti ul{margin:6px 0 0;padding-left:18px;font-size:13.5px;color:var(--ink2)}
+.sti li{margin-bottom:3px}
+
+.kilder{font-size:13.5px;color:var(--ink2);max-width:75ch}
+.kilder h3{margin:14px 0 4px;color:var(--ink)}
+
+footer{max-width:1360px;margin:0 auto;padding:0 var(--gap) 40px;font-size:12.5px;color:var(--ink3)}
+
+@media(max-width:900px){.figurrad{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* v0.2: seksjoner som ikke har levert */
+.band-celle.ikke-levert{fill:url(#skravur);stroke:var(--line)}
+.seksjon-etikett.ikke-levert{fill:#a9aeb4;font-style:italic}
+
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <div class="topp">
+    <h1>KI-anvendelser i SSB</h1>
+    <span class="sub" id="sub"></span>
+  </div>
+  <p class="forbehold" id="forbehold"></p>
+</div></header>
+
+<main>
+
+<section class="kort">
+  <div class="eyebrow">Om siden</div>
+  <h2>Hva dette er</h2>
+  <p class="lede" style="margin-top:8px">En oversikt over KI-anvendelser som er kartlagt i SSB, og hvor de foreløpig er plassert i AI Acts risikostruktur. Siden er laget for prosjektet selv og for metode, HR, IT og personvernombudet, som arbeider videre med forvaltningen. Den er tre ting samtidig: et øyeblikksbilde av det som er samlet inn, et arbeidsregister som skal holdes ved like, og en kort forklaring av regelverket med SSB-nære eksempler.</p>
+</section>
+
+<section class="kort">
+  <div class="hode">
+    <div>
+      <div class="eyebrow">Oversiktsbilde</div>
+      <h2>Hvor i SSB, og hvor i AI Act</h2>
+    </div>
+    <span class="notat" id="figur-antall"></span>
+  </div>
+
+  <div class="filtre">
+    <div class="felt"><label for="f-sok">Søk</label>
+      <input type="search" id="f-sok" placeholder="navn, beskrivelse, ansvarlig"></div>
+    <div class="felt"><label for="f-avdeling">Enhet</label><select id="f-avdeling"></select></div>
+    <div class="felt"><label for="f-kategori">Risikokategori</label><select id="f-kategori"></select></div>
+    <div class="felt"><label for="f-fase">Fase</label><select id="f-fase"></select></div>
+    <label class="avkryss"><input type="checkbox" id="f-generell" checked> Vis alminnelig assistentbruk</label>
+    <button class="knapp" id="nullstill">Nullstill</button>
+  </div>
+
+  <div class="figurrad">
+    <div>
+      <svg id="figur" viewBox="0 0 680 600" role="img" aria-labelledby="ft fb">
+        <title id="ft">Kart over KI-anvendelser i SSB</title>
+        <desc id="fb">Retningen viser hvilken avdeling anvendelsen hører til. Avstanden fra sentrum viser hvilken AI Act-kategori den er plassert i. Båndet utenfor kanten viser alminnelig assistentbruk per seksjon.</desc>
+      </svg>
+      <div class="tegn" id="tegn"></div>
+    </div>
+    <div>
+      <div class="detalj-boks" id="detalj">
+        <p class="tom">Pek på et punkt for en kort forklaring. Klikk for alle opplysninger.</p>
+      </div>
+      <div class="detalj-boks" style="margin-top:14px">
+        <h3>Ikke plassert ennå</h3>
+        <div id="uplassert" style="margin-top:8px"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="kort">
+  <div class="hode">
+    <div>
+      <div class="eyebrow">Rapport</div>
+      <h2>Hva kartleggingen viste — status 11. august 2026</h2>
+    </div>
+    <span class="notat">Gjelder første innsamlingsrunde med 49 poster. Fryst tekst — registeret har vokst siden.</span>
+  </div>
+  <div class="funn">
+    <div>
+      <div class="tall">4 av 49</div>
+      <h3>Risikoen ligger i støttefunksjonene</h3>
+      <p>Alle høyrisikokandidatene gjelder rekruttering og oppfølging av ansatte, i avdeling 700 og 800. Ingen ligger i statistikkproduksjonen. Det korrigerer en antakelse i det interne notatet om at høyrisiko først og fremst ville dukke opp i produksjonen av statistikk.</p>
+    </div>
+    <div>
+      <div class="tall">20 av 49</div>
+      <h3>Halvparten er alminnelig assistentbruk</h3>
+      <p>Kode, tekst, oversettelse og oppsummering finnes i nesten hver seksjon som har svart. Det er reell bruk, men det er ikke tjue systemer som skal forvaltes hver for seg. Tallet 49 bør ikke siteres uten dette forbeholdet.</p>
+    </div>
+    <div>
+      <div class="tall">6 av 8</div>
+      <h3>Dekningen er ujevn</h3>
+      <p>Avdeling 100 og 500 er ikke forespurt ennå. Blant dem som har svart, varierer detaljnivået sterkt: én seksjon har meldt ni anvendelser, en annen har meldt tre for hele avdelingen. Figuren viser derfor også hvem som svarte grundig.</p>
+    </div>
+    <div>
+      <div class="tall">2</div>
+      <h3>To lot seg ikke plassere</h3>
+      <p>Én fordi formålet ikke er definert ennå, én fordi resultatet brukes videre av en annen myndighet — noe som reiser spørsmål om SSB der er leverandør og ikke bare idriftsetter. Begge står utenfor figuren framfor å bli gjettet inn i en kategori.</p>
+    </div>
+  </div>
+</section>
+
+<section class="kort">
+  <div class="hode">
+    <div>
+      <div class="eyebrow">Register</div>
+      <h2>Gjeldende oversikt</h2>
+    </div>
+    <span class="notat" id="tabell-antall"></span>
+  </div>
+  <div class="hylse">
+    <table id="tabell">
+      <thead><tr>
+        <th data-felt="id">ID</th><th data-felt="navn">Anvendelse</th>
+        <th data-felt="avdeling">Avd.</th><th data-felt="seksjon">Seksjon</th>
+        <th data-felt="beskrivelse">Kort beskrivelse</th>
+        <th data-felt="risikokategori">Kategori</th><th data-felt="fase">Fase</th>
+        <th data-felt="ansvarlig">Ansvarlig</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="kort">
+  <div class="eyebrow">Regelverk</div>
+  <h2>AI Act i korte trekk</h2>
+  <p class="lede" style="margin:8px 0 16px">Forenklet arbeidsforklaring. Forordning (EU) 2024/1689. Ved tvil gjelder forordningsteksten, ikke denne siden.</p>
+  <div class="akt">
+    <div>
+      <h3>Hva er et KI-system?</h3>
+      <p>Et maskinbasert system som utleder resultater fra data det får inn, med en viss grad av selvstendighet. Rent regelbaserte systemer faller normalt utenfor.</p>
+      <div class="eks"><b>Uavklart hos oss:</b> grensen mot tradisjonell statistisk modellering. Et beslutningstre som grupperer grunnkretser lærer av data — en regelbasert imputering gjør det ikke. SSB har ikke landet en felles arbeidsdefinisjon, og seksjonene som har svart har trolig brukt hver sin.</div>
+    </div>
+    <div>
+      <h3>Bruksområdet avgjør, ikke teknologien</h3>
+      <p>Høyrisiko følger av hva systemet brukes til. Hvor avansert modellen er, har ingenting med saken å gjøre.</p>
+      <div class="eks"><b>To eksempler fra registeret:</b> gradient boosting som imputerer manglende omsetningstall er plassert som minimal risiko. Generativ KI som leser CV-er og foreslår kandidater er en høyrisikokandidat. Den enkleste av de to er den som teller.</div>
+    </div>
+    <div>
+      <h3>Fire kategorier, ikke en skala</h3>
+      <p>Forbudt bruk, høyrisiko, begrenset risiko med krav om åpenhet, og øvrig lavrisiko. Dette er diskrete juridiske klasser. Det finnes ingen risikoscore mellom dem.</p>
+      <div class="eks"><b>I figuren:</b> avstanden fra sentrum viser kategori, ikke grad. To punkter i samme sone er i samme klasse, uansett hvor de ligger innenfor den.</div>
+    </div>
+    <div>
+      <h3>Begrenset risiko betyr ikke ingenting</h3>
+      <p>Transparenskravene gjelder blant annet merking av KI-generert innhold.</p>
+      <div class="eks"><b>Nærmest oss:</b> en Gemini-assistent for produksjon av SSB-artikler. Publiseringsnær bruk i et byrå hvis troverdighet hviler på åpenhet. Det er den eneste posten i kategorien med en plikt som treffer utad.</div>
+    </div>
+    <div>
+      <h3>Leverandør eller idriftsetter</h3>
+      <p>Pliktene er vesentlig strengere for den som utvikler og tilbyr et KI-system enn for den som tar det i bruk.</p>
+      <div class="eks"><b>Der det brenner:</b> modeller SSB utvikler selv og som brukes videre av andre myndigheter. Feltet er satt maskinelt i denne versjonen og er ikke en juridisk vurdering.</div>
+    </div>
+    <div>
+      <h3>AI Act-risiko er ikke all risiko</h3>
+      <p>En anvendelse kan ligge helt ytterst i figuren og likevel ha betydelig personvernrisiko, metodisk risiko eller omdømmerisiko.</p>
+      <div class="eks"><b>Merk:</b> grønt i figuren betyr «minimal risiko etter AI Act». Det betyr ikke at anvendelsen er vurdert som uproblematisk på andre områder.</div>
+    </div>
+  </div>
+</section>
+
+<section class="kort">
+  <div class="eyebrow">Vedlikehold</div>
+  <h2>Slik legges nye anvendelser inn</h2>
+  <p class="lede" style="margin:8px 0 16px">Registeret er ikke ferdig. Nye anvendelser kommer til, og eksisterende endrer seg. Meld fra tidlig — en anvendelse som er på idéstadiet er lettere å vurdere enn en som allerede er i drift.</p>
+  <div class="sti">
+    <div>
+      <h3>Hva vi trenger å vite</h3>
+      <ul>
+        <li>Hva KI-en faktisk gjør, i én til tre setninger</li>
+        <li>Hvilken seksjon som bruker den</li>
+        <li>Om den brukes på opplysninger om enkeltpersoner</li>
+        <li>Hvem som eier anvendelsen</li>
+        <li>Om den er idé, pilot eller i drift</li>
+        <li>Hva som er uklart</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Beskriv anvendelsen, ikke verktøyet</h3>
+      <p>«Copilot» er et verktøy. «Copilot brukt til å sile jobbsøkere» er en anvendelse. Samme verktøy kan brukes til mange formål og få ulik vurdering.</p>
+      <p>Alminnelig bruk av KI-assistenter til kode og tekst trenger ikke meldes per person eller per oppgave — det holder at seksjonen er med.</p>
+    </div>
+    <div>
+      <h3>Hva som skjer etterpå</h3>
+      <p>Prosjektet gjør en foreløpig plassering og legger anvendelsen inn i registeret. Ved mistanke om høyrisiko tas den videre til HR, personvernombud og jus.</p>
+      <p class="notat" style="margin-top:8px">Mottaker og svartid er ikke avklart ennå. Til det er på plass, meld fra til prosjektleder.</p>
+    </div>
+  </div>
+</section>
+
+<section class="kort">
+  <div class="eyebrow">Grunnlag</div>
+  <h2>Forbehold, kilder og det som ikke er kartlagt</h2>
+  <div class="kilder">
+    <h3>Ikke kartlagt</h3>
+    <p><span id="dekning-tekst"></span> Tomme eller skraverte felt i figuren betyr manglende kartlegging, ikke fravær av KI-bruk. Blant seksjonene som har svart, er detaljnivået ujevnt, og figuren viser derfor delvis hvem som rapporterte grundig.</p><p>Kildefilen inneholder også plassholderrader for seksjoner som ikke har levert. Disse er ikke tatt med som anvendelser, fordi kategorien deres er gjettet og ikke meldt inn.</p>
+    <h3>Utledet, ikke registrert</h3>
+    <p>Inndelingen av alminnelig bruk i møte- og referatstøtte, publiseringsnært innhold og analysestøtte er lest ut av korte fritekstbeskrivelser. Den er ikke et registrert felt og bør bekreftes mot intervjunotatene før den brukes utenfor prosjektet. Det samme gjelder feltet for SSBs rolle, som er satt ved tekstsøk etter verktøynavn, og skillet mellom alminnelig bruk og egne anvendelser, som er satt ved tekstsøk til kildefilen får en egen kolonne for det.</p>
+    <h3>Om plasseringen i figuren</h3>
+    <p>Punkter som ellers ville dekket hverandre er forskjøvet litt. Forskyvningen er visuell og har ingen faglig betydning. Båndet utenfor kanten har ingen radiell akse — der betyr avstand ingenting.</p>
+    <h3>Kilder</h3>
+    <p>Forordning (EU) 2024/1689 om kunstig intelligens. Kommisjonens retningslinjer om definisjonen av KI-system. Intern kartlegging av KI-anvendelser, første registerversjon. Rådata fra intervjuene ligger i SSBs egne systemer og er ikke del av denne løsningen.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>Prototype. Versjon 0.2. Innholdet er arbeidsmateriale og skal ikke deles utenfor SSB.</footer>
+
+<div id="tips"></div>
+
+<div id="feil" class="kort" hidden style="max-width:700px;margin:22px auto"><h2>Fant ikke data.json</h2><p>Nettleseren blokkerer lesing av data.json når siden åpnes direkte fra disk. Start en lokal server i mappen:</p><code>python3 -m http.server 8000</code></div>
+
+<script>window.DATA = {
   "metadata": {
     "tittel": "KI-anvendelser i SSB",
     "sist_oppdatert": "2026-09-21",
@@ -1333,4 +1683,434 @@
       "generell_klasser": []
     }
   ]
+};</script>
+<script>
+/* KI-anvendelser i SSB – prototype v0.2
+   All geometri og alle tall i løpende tekst beregnes fra data.json.
+   Ingen koordinater ligger i datafilen. */
+
+'use strict';
+
+const NS = 'http://www.w3.org/2000/svg';
+
+/* ---------- fast geometri ---------- */
+
+const CX = 340, CY = 300;
+const R_YTRE = 235;
+const BAND_INN = 246, BAND_UT = 268;
+const MAKS_SEKSJONSBREDDE = 7.6;   // grader
+const SEKTOR_NYTTE = 42;           // grader av 45 som seksjonene kan bruke
+
+// Sektorgrensene ligger på 0, 45, 90 ... grader, slik at den vannrette
+// aksen skiller fag og forskning (over) fra støttefunksjoner (under).
+const RETNING = { 500: 22.5, 400: 67.5, 300: 112.5, 200: 157.5,
+                  100: 202.5, 800: 247.5, 700: 292.5, 600: 337.5 };
+
+const SONER = { forbudt: [0, 52], hoyrisiko: [52, 112],
+                begrenset: [112, 172], minimal: [172, R_YTRE] };
+
+const FARGE = { forbudt: '#c0392b', hoyrisiko: '#e08a1e',
+                begrenset: '#5c8f2a', minimal: '#9ec46a' };
+const FLATE = { forbudt: .30, hoyrisiko: .26, begrenset: .15, minimal: .09 };
+
+/* ---------- visningsnavn for kodeverdier ---------- */
+
+const KLASSE = { mote: 'Møte- og referatstøtte',
+                 publikasjon: 'Publiseringsnært innhold',
+                 analyse: 'Analysestøtte' };
+
+const FASE = { drift: 'I drift', eksperiment: 'Eksperiment', planlagt: 'Planlagt',
+               test: 'Test', ide: 'Idé', tilgjengelig: 'Tilgjengelig, bruk ukjent' };
+const NYE = ['ide', 'planlagt', 'eksperiment', 'test'];
+
+const STATUS = { foreloepig: 'Foreløpig vurdert', ikke_vurdert: 'Ikke vurdert',
+                 formaal_mangler: 'Formål mangler', maa_avklares: 'Må avklares',
+                 mulig_hoyrisiko: 'Mulig høyrisiko', kandidat: 'Høyrisikokandidat',
+                 avklart: 'Avklart' };
+
+const ROLLE = { idriftsetter: 'Idriftsetter', leverandoer: 'Leverandør',
+                uavklart: 'Rolle ikke avklart' };
+
+const GRUNNLAG = { runde1: 'Første innsamlingsrunde', runde2: 'Ny innsamlingsrunde' };
+
+// Viser koden selv hvis en verdi mangler i tabellen, i stedet for «undefined»
+const navn = (tabell, kode) => tabell[kode] || kode || '–';
+
+/* ---------- hjelpefunksjoner ---------- */
+
+const K = Math.cos(Math.PI * 22.5 / 180);
+const kant = (r, g) => { const t = ((g + 22.5) % 45 + 45) % 45 - 22.5;
+                         return r * K / Math.cos(Math.PI * t / 180); };
+const pkt = (g, r) => [CX + r * Math.cos(Math.PI * g / 180), CY - r * Math.sin(Math.PI * g / 180)];
+const f1 = v => v.toFixed(1);
+const attekant = r => { const p = []; for (let i = 0; i < 8; i++) p.push(pkt(i * 45, r).map(f1).join(','));
+                        return p.join(' '); };
+
+function el(n, a, forelder) {
+  const e = document.createElementNS(NS, n);
+  for (const k in (a || {})) e.setAttribute(k, a[k]);
+  if (forelder) forelder.appendChild(e);
+  return e;
 }
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+function bandsti(a1, a2) {
+  const p1 = pkt(a1, BAND_INN), p2 = pkt(a2, BAND_INN), p3 = pkt(a2, BAND_UT), p4 = pkt(a1, BAND_UT);
+  return `M${f1(p1[0])},${f1(p1[1])} A${BAND_INN},${BAND_INN} 0 0 0 ${f1(p2[0])},${f1(p2[1])}` +
+         ` L${f1(p3[0])},${f1(p3[1])} A${BAND_UT},${BAND_UT} 0 0 1 ${f1(p4[0])},${f1(p4[1])} Z`;
+}
+
+/* ---------- tilstand ---------- */
+
+let DATA;
+const sv = {};      // seksjon -> midtvinkel
+const sb = {};      // seksjon -> vinkelbredde
+const pos = {};     // anvendelse -> {x, y}
+let valgt = null;
+const sortering = { felt: 'id', opp: true };
+const filt = { sok: '', avdeling: 'alle', kategori: 'alle', fase: 'alle', generell: true };
+
+/* ---------- oppstart ---------- */
+
+if (window.DATA) {
+  DATA = window.DATA; start();
+} else {
+  fetch('data.json')
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(d => { DATA = d; start(); })
+    .catch(() => { document.getElementById('feil').hidden = false; });
+}
+
+function start() {
+  beregnVinkler();
+  beregnPosisjoner();
+  skrivTall();
+  tegnFigur();
+  tegnTegnforklaring();
+  tegnUplassert();
+  fyllFiltre();
+  koblingerOgLyttere();
+  oppdater();
+}
+
+/* ---------- geometri ---------- */
+
+function beregnVinkler() {
+  const perAvd = {};
+  DATA.seksjoner.forEach(s => { (perAvd[s.avdeling] = perAvd[s.avdeling] || []).push(s.kode); });
+  Object.keys(perAvd).forEach(avd => {
+    const koder = perAvd[avd].sort((a, b) => a - b);
+    const n = koder.length;
+    // Seksjonsbredden krymper når en avdeling har mange seksjoner,
+    // slik at ingen seksjon havner i nabosektoren.
+    const bredde = Math.min(MAKS_SEKSJONSBREDDE, SEKTOR_NYTTE / n);
+    koder.forEach((kode, i) => {
+      sv[kode] = RETNING[avd] + (i - (n - 1) / 2) * bredde;
+      sb[kode] = bredde;
+    });
+  });
+}
+
+function beregnPosisjoner() {
+  const grupper = {};
+  DATA.anvendelser.forEach(a => {
+    if (a.type !== 'spesifikk' || a.risikokategori === 'uavklart') return;
+    const n = a.seksjon + '|' + a.risikokategori;
+    (grupper[n] = grupper[n] || []).push(a);
+  });
+  Object.values(grupper).forEach(g => {
+    const m = g.length;
+    g.forEach((a, i) => {
+      const grad = sv[a.seksjon] + (m === 1 ? 0 : (i / (m - 1) - .5) * sb[a.seksjon] * .8);
+      const [lo, hi] = SONER[a.risikokategori];
+      const rI = kant(lo, grad), rU = kant(hi, grad);
+      // Trinnvis forskyvning slik at punkter ikke dekker hverandre.
+      // Forskyvningen er visuell og har ingen faglig betydning.
+      const andel = m === 1 ? (a.seksjon % 2 ? .40 : .60) : .30 + (i % 3) * .20;
+      const [x, y] = pkt(grad, rI + (rU - rI) * andel);
+      pos[a.id] = { x, y };
+    });
+  });
+}
+
+/* ---------- tall i løpende tekst ---------- */
+
+function skrivTall() {
+  const levert = DATA.seksjoner.filter(s => s.dekning === 'levert');
+  const ikke = DATA.seksjoner.filter(s => s.dekning === 'ikke_levert');
+  const uspurt = DATA.avdelinger.filter(a => a.dekning === 'ikke_forespurt');
+
+  document.getElementById('sub').textContent =
+    `${DATA.anvendelser.length} registrerte anvendelser · ${levert.length} seksjoner har levert, ` +
+    `${ikke.length} har ikke levert · oppdatert ${DATA.metadata.sist_oppdatert}`;
+  document.getElementById('forbehold').textContent = DATA.metadata.forbehold;
+
+  const deler = [];
+  if (uspurt.length) deler.push(uspurt.map(a => a.navn).join(' og ') + ' er ikke forespurt.');
+  if (ikke.length) deler.push(`${ikke.length} seksjoner har ikke levert: ${ikke.map(s => s.kode).join(', ')}. De er skravert i båndet.`);
+  document.getElementById('dekning-tekst').textContent = deler.join(' ');
+}
+
+/* ---------- figur ---------- */
+
+function tegnFigur() {
+  const svg = document.getElementById('figur');
+  const defs = el('defs', {}, svg);
+  const pat = el('pattern', { id: 'skravur', width: 7, height: 7, patternUnits: 'userSpaceOnUse' }, defs);
+  el('path', { d: 'M0,7 L7,0', stroke: '#767c84', 'stroke-width': .5, opacity: .5, fill: 'none' }, pat);
+
+  const gS = el('g', {}, svg), gR = el('g', {}, svg), gB = el('g', {}, svg),
+        gE = el('g', {}, svg), gP = el('g', { id: 'punkter' }, svg);
+
+  // risikosoner
+  ['minimal', 'begrenset', 'hoyrisiko', 'forbudt'].forEach(k => {
+    const [lo, hi] = SONER[k];
+    if (lo === 0) el('polygon', { points: attekant(hi), fill: FARGE[k], opacity: FLATE[k] }, gS);
+    else el('path', { d: 'M' + attekant(hi).replace(/ /g, ' L') + ' Z M' + attekant(lo).replace(/ /g, ' L') + ' Z',
+                      'fill-rule': 'evenodd', fill: FARGE[k], opacity: FLATE[k] }, gS);
+  });
+
+  // avdelinger som ikke er forespurt
+  DATA.avdelinger.filter(a => a.dekning === 'ikke_forespurt').forEach(a => {
+    const g = RETNING[a.kode];
+    const p1 = pkt(g - 22.5, kant(R_YTRE, g - 22.5)), p2 = pkt(g + 22.5, kant(R_YTRE, g + 22.5));
+    const d = `M${CX},${CY} L${f1(p1[0])},${f1(p1[1])} L${f1(p2[0])},${f1(p2[1])} Z`;
+    el('path', { d, fill: '#f6f7f8', opacity: .92 }, gR);
+    el('path', { d, fill: 'url(#skravur)' }, gR);
+    el('path', { d: bandsti(g - 20, g + 20), fill: 'url(#skravur)', stroke: '#d5d8dc', 'stroke-width': .6 }, gB);
+  });
+
+  // raster
+  Object.values(SONER).forEach(([, hi]) =>
+    el('polygon', { points: attekant(hi), fill: 'none', stroke: '#d5d8dc', 'stroke-width': .6 }, gR));
+  el('polygon', { points: attekant(R_YTRE), fill: 'none', stroke: '#767c84', 'stroke-width': .9 }, gR);
+  for (let i = 0; i < 8; i++) {
+    const [x, y] = pkt(i * 45, kant(R_YTRE, i * 45));
+    el('line', { x1: CX, y1: CY, x2: f1(x), y2: f1(y), stroke: '#d5d8dc', 'stroke-width': .6 }, gR);
+  }
+  el('line', { x1: CX - 278, y1: CY, x2: CX + 278, y2: CY, stroke: '#767c84',
+               'stroke-width': .7, 'stroke-dasharray': '4 4' }, gR);
+
+  // bandet: én celle per seksjon
+  DATA.seksjoner.forEach(s => {
+    const g = sv[s.kode], b = sb[s.kode];
+    const ikkeLevert = s.dekning === 'ikke_levert';
+    const celle = el('path', { d: bandsti(g - b / 2 + .4, g + b / 2 - .4),
+                               class: 'band-celle' + (ikkeLevert ? ' ikke-levert' : ''),
+                               'data-seksjon': s.kode }, gB);
+    el('title', {}, celle).textContent = ikkeLevert
+      ? `Seksjon ${s.kode} – har ikke levert`
+      : `Seksjon ${s.kode} – alminnelig assistentbruk`;
+
+    const [lx, ly] = pkt(g, BAND_UT + 11);
+    el('text', { x: f1(lx), y: f1(ly + 3), 'text-anchor': 'middle',
+                 class: 'seksjon-etikett' + (ikkeLevert ? ' ikke-levert' : '') }, gB).textContent = s.kode;
+
+    if (ikkeLevert) return;
+
+    // samle klasser fra alle poster med alminnelig bruk i seksjonen
+    const rekkefolge = Object.keys(KLASSE);
+    const kl = [...new Set(DATA.anvendelser
+      .filter(a => a.seksjon === s.kode && a.type === 'generell')
+      .flatMap(a => a.generell_klasser || []))]
+      .sort((x, y) => rekkefolge.indexOf(x) - rekkefolge.indexOf(y));
+    const avstand = Math.min(2.6, (b - 2.2) / Math.max(1, kl.length - 1));
+    kl.forEach((k, j) => {
+      const [sx, sy] = pkt(g + (j - (kl.length - 1) / 2) * avstand, (BAND_INN + BAND_UT) / 2);
+      symbol(gB, k, sx, sy);
+    });
+  });
+
+  // avdelingsetiketter
+  DATA.avdelinger.forEach(a => {
+    const [x, y] = pkt(RETNING[a.kode], 203);
+    el('text', { x: f1(x), y: f1(y), 'text-anchor': 'middle', class: 'sektor-etikett' }, gE).textContent = a.kode;
+    if (a.dekning === 'ikke_forespurt')
+      el('text', { x: f1(x), y: f1(y + 14), 'text-anchor': 'middle', class: 'akse-etikett' }, gE).textContent = 'ikke forespurt';
+  });
+  el('text', { x: 56, y: CY - 9, class: 'akse-etikett' }, gE).textContent = 'fag og forskning';
+  el('text', { x: 56, y: CY + 18, class: 'akse-etikett' }, gE).textContent = 'støttefunksjoner';
+
+  // punkter
+  const tips = document.getElementById('tips');
+  DATA.anvendelser.forEach(a => {
+    const p = pos[a.id];
+    if (!p) return;
+    const g = el('g', { class: 'punkt', 'data-id': a.id, tabindex: 0, role: 'button' }, gP);
+    const avklart = a.vurderingsstatus === 'avklart';
+    el('circle', { cx: f1(p.x), cy: f1(p.y), r: 5.5,
+                   fill: avklart ? FARGE[a.risikokategori] : '#fff',
+                   stroke: FARGE[a.risikokategori], 'stroke-width': avklart ? 0 : 2.2 }, g);
+    const kat = DATA.risikokategorier.find(k => k.kode === a.risikokategori);
+    g.addEventListener('mousemove', e => {
+      tips.style.display = 'block';
+      tips.innerHTML = `<b>${esc(a.navn)}</b><br><span>${esc(kat.navn)} · ${esc(navn(STATUS, a.vurderingsstatus))} · seksjon ${a.seksjon}</span>`;
+      tips.style.left = Math.min(e.clientX + 14, innerWidth - 250) + 'px';
+      tips.style.top = (e.clientY + 16) + 'px';
+    });
+    g.addEventListener('mouseleave', () => { tips.style.display = 'none'; });
+    g.addEventListener('click', () => velg(a.id));
+    g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); velg(a.id); } });
+  });
+}
+
+function symbol(f, k, x, y) {
+  if (k === 'mote') {
+    el('rect', { x: f1(x - 4), y: f1(y - 4), width: 8, height: 8, class: 'band-symbol' }, f);
+  } else if (k === 'publikasjon') {
+    el('polygon', { points: `${f1(x)},${f1(y - 4.8)} ${f1(x - 4.4)},${f1(y + 3.4)} ${f1(x + 4.4)},${f1(y + 3.4)}`,
+                    class: 'band-symbol' }, f);
+  } else {
+    el('line', { x1: f1(x - 4.4), y1: f1(y), x2: f1(x + 4.4), y2: f1(y), class: 'band-symbol', 'stroke-width': 2 }, f);
+    el('line', { x1: f1(x), y1: f1(y - 4.4), x2: f1(x), y2: f1(y + 4.4), class: 'band-symbol', 'stroke-width': 2 }, f);
+  }
+}
+
+function tegnTegnforklaring() {
+  const ikon = inner => `<svg width="14" height="14" aria-hidden="true">${inner}</svg>`;
+  document.getElementById('tegn').innerHTML =
+    DATA.risikokategorier.filter(k => k.kode !== 'uavklart')
+      .map(k => `<span class="tp"><span class="dot" style="background:${FARGE[k.kode]}"></span>${k.navn}</span>`).join('') +
+    '<span class="tp"><span class="ring"></span>Foreløpig vurdert</span>' +
+    `<span class="tp">${ikon('<rect x="2.5" y="2.5" width="9" height="9" fill="none" stroke="#4a5057" stroke-width="1.5"/>')}Møte- og referatstøtte</span>` +
+    `<span class="tp">${ikon('<polygon points="7,2 1.8,11.5 12.2,11.5" fill="none" stroke="#4a5057" stroke-width="1.5"/>')}Publiseringsnært innhold</span>` +
+    `<span class="tp">${ikon('<line x1="2" y1="7" x2="12" y2="7" stroke="#4a5057" stroke-width="2"/><line x1="7" y1="2" x2="7" y2="12" stroke="#4a5057" stroke-width="2"/>')}Analysestøtte</span>` +
+    `<span class="tp">${ikon('<defs><pattern id="skravur-tf" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0,4 L4,0" stroke="#767c84" stroke-width=".6"/></pattern></defs><rect x="1" y="3" width="12" height="8" fill="url(#skravur-tf)" stroke="#d5d8dc"/>')}Seksjon har ikke levert</span>`;
+}
+
+function tegnUplassert() {
+  const upl = DATA.anvendelser.filter(a => a.risikokategori === 'uavklart');
+  const boks = document.getElementById('uplassert');
+  boks.innerHTML = upl.length
+    ? '<p class="notat" style="margin:0 0 10px">Formål eller rolle er ikke avklart nok til at disse kan plasseres.</p>' +
+      upl.map(a => `<div style="margin-bottom:9px"><a href="#" data-id="${a.id}" style="font-weight:500;color:inherit">${esc(a.navn)}</a>` +
+                   `<div class="notat">${a.id} · seksjon ${a.seksjon}</div></div>`).join('')
+    : '<p class="tom">Alle anvendelser er plassert.</p>';
+  boks.querySelectorAll('a').forEach(a => a.addEventListener('click', e => { e.preventDefault(); velg(a.dataset.id); }));
+}
+
+/* ---------- filtre ---------- */
+
+function fyllFiltre() {
+  document.getElementById('f-avdeling').innerHTML = '<option value="alle">Alle enheter</option>' +
+    DATA.avdelinger.filter(a => a.dekning !== 'ikke_forespurt')
+      .map(a => `<option value="${a.kode}">${a.navn}</option>`).join('');
+  document.getElementById('f-kategori').innerHTML = '<option value="alle">Alle kategorier</option>' +
+    DATA.risikokategorier.map(k => `<option value="${k.kode}">${k.navn}</option>`).join('');
+  document.getElementById('f-fase').innerHTML = '<option value="alle">Alle faser</option>' +
+    '<option value="nye">Nye tiltak (idé, planlagt, eksperiment, test)</option>' +
+    Object.keys(FASE).map(f => `<option value="${f}">${FASE[f]}</option>`).join('');
+}
+
+function passerer(a) {
+  if (filt.avdeling !== 'alle' && String(a.avdeling) !== filt.avdeling) return false;
+  if (filt.kategori !== 'alle' && a.risikokategori !== filt.kategori) return false;
+  if (filt.fase === 'nye') { if (!NYE.includes(a.fase)) return false; }
+  else if (filt.fase !== 'alle' && a.fase !== filt.fase) return false;
+  if (!filt.generell && a.type === 'generell') return false;
+  if (filt.sok) {
+    const t = `${a.navn} ${a.beskrivelse} ${a.ansvarlig || ''} ${a.id}`.toLowerCase();
+    if (!t.includes(filt.sok.toLowerCase())) return false;
+  }
+  return true;
+}
+
+function koblingerOgLyttere() {
+  ['f-avdeling', 'f-kategori', 'f-fase'].forEach(id =>
+    document.getElementById(id).addEventListener('change', e => { filt[id.slice(2)] = e.target.value; oppdater(); }));
+  document.getElementById('f-sok').addEventListener('input', e => { filt.sok = e.target.value.trim(); oppdater(); });
+  document.getElementById('f-generell').addEventListener('change', e => { filt.generell = e.target.checked; oppdater(); });
+  document.getElementById('nullstill').addEventListener('click', () => {
+    Object.assign(filt, { sok: '', avdeling: 'alle', kategori: 'alle', fase: 'alle', generell: true });
+    document.getElementById('f-sok').value = '';
+    ['f-avdeling', 'f-kategori', 'f-fase'].forEach(i => { document.getElementById(i).value = 'alle'; });
+    document.getElementById('f-generell').checked = true;
+    velg(null); oppdater();
+  });
+  document.querySelectorAll('#tabell th').forEach(th => th.addEventListener('click', () => {
+    const f = th.dataset.felt;
+    sortering.opp = sortering.felt === f ? !sortering.opp : true;
+    sortering.felt = f;
+    tabell();
+  }));
+}
+
+function oppdater() {
+  document.querySelectorAll('#punkter .punkt').forEach(g => {
+    g.classList.toggle('dempet', !passerer(DATA.anvendelser.find(x => x.id === g.dataset.id)));
+  });
+  document.querySelectorAll('.band-celle').forEach(c => {
+    const s = DATA.seksjoner.find(x => x.kode === Number(c.dataset.seksjon));
+    const iAvd = filt.avdeling === 'alle' || String(s.avdeling) === filt.avdeling;
+    c.classList.toggle('dempet', !(iAvd && filt.generell));
+  });
+  const synlig = DATA.anvendelser.filter(passerer).length;
+  document.getElementById('figur-antall').textContent =
+    synlig === DATA.anvendelser.length ? '' : `viser ${synlig} av ${DATA.anvendelser.length}`;
+  tabell();
+}
+
+/* ---------- tabell ---------- */
+
+function tabell() {
+  const rader = DATA.anvendelser.filter(passerer).slice();
+  const f = sortering.felt, d = sortering.opp ? 1 : -1;
+  rader.sort((a, b) => {
+    const x = a[f] == null ? '' : a[f], y = b[f] == null ? '' : b[f];
+    if (typeof x === 'number' && typeof y === 'number') return (x - y) * d;
+    return String(x).localeCompare(String(y), 'nb') * d;
+  });
+  document.querySelectorAll('#tabell th').forEach(th => {
+    th.removeAttribute('aria-sort');
+    if (th.dataset.felt === f) th.setAttribute('aria-sort', sortering.opp ? 'ascending' : 'descending');
+  });
+  document.querySelector('#tabell tbody').innerHTML = rader.map(a => {
+    const k = DATA.risikokategorier.find(x => x.kode === a.risikokategori);
+    return `<tr data-id="${a.id}" class="${a.id === valgt ? 'valgt' : ''}">` +
+      `<td class="id">${a.id}</td><td class="navn">${esc(a.navn)}</td>` +
+      `<td>${a.avdeling}</td><td>${a.seksjon}</td><td>${esc(a.beskrivelse)}</td>` +
+      `<td><span class="kp ${a.risikokategori}"></span>${k.navn}</td>` +
+      `<td>${navn(FASE, a.fase)}</td>` +
+      `<td>${a.ansvarlig ? esc(a.ansvarlig) : '<span style="color:#767c84">ikke oppgitt</span>'}</td></tr>`;
+  }).join('');
+  document.querySelectorAll('#tabell tbody tr').forEach(tr => tr.addEventListener('click', () => velg(tr.dataset.id)));
+  const alle = DATA.anvendelser.length;
+  document.getElementById('tabell-antall').textContent =
+    rader.length === alle ? `${alle} anvendelser` : `${rader.length} av ${alle} anvendelser`;
+}
+
+/* ---------- detaljpanel ---------- */
+
+function velg(id) {
+  valgt = id;
+  document.querySelectorAll('#punkter .punkt').forEach(g => g.classList.toggle('valgt', g.dataset.id === id));
+  document.querySelectorAll('#tabell tbody tr').forEach(tr => tr.classList.toggle('valgt', tr.dataset.id === id));
+  const boks = document.getElementById('detalj');
+  if (!id) {
+    boks.innerHTML = '<p class="tom">Pek på et punkt for en kort forklaring. Klikk for alle opplysninger.</p>';
+    return;
+  }
+  const a = DATA.anvendelser.find(x => x.id === id);
+  const k = DATA.risikokategorier.find(x => x.kode === a.risikokategori);
+  const rad = (m, v) => v ? `<div><dt>${m}</dt><dd>${esc(v)}</dd></div>`
+                          : `<div><dt>${m}</dt><dd class="mangler">ikke oppgitt</dd></div>`;
+  boks.innerHTML = `<div class="detalj"><h3>${esc(a.navn)}</h3>` +
+    `<div class="id">${a.id} · avdeling ${a.avdeling}, seksjon ${a.seksjon}</div>` +
+    `<div class="merker"><span class="merke risiko ${a.risikokategori}">${k.navn}</span>` +
+    `<span class="merke">${navn(STATUS, a.vurderingsstatus)}</span>` +
+    `<span class="merke">${navn(FASE, a.fase)}</span>` +
+    `<span class="merke">${navn(ROLLE, a.ssb_rolle)}</span>` +
+    (a.type === 'generell' ? '<span class="merke">Alminnelig assistentbruk</span>' : '') + '</div><dl>' +
+    rad('Hva KI brukes til', a.beskrivelse) +
+    `<div><dt>Hvorfor denne kategorien</dt><dd>${k.forklaring}</dd></div>` +
+    rad('Ansvarlig', a.ansvarlig) +
+    (a.maa_avklares ? `<div class="avklar"><dt>Må avklares</dt><dd>${esc(a.maa_avklares)}</dd></div>` : '') +
+    (a.generell_klasser && a.generell_klasser.length
+      ? `<div><dt>Klasser av alminnelig bruk</dt><dd>${a.generell_klasser.map(x => navn(KLASSE, x)).join(', ')}</dd></div>` : '') +
+    `<div><dt>Datagrunnlag</dt><dd>${navn(GRUNNLAG, a.datagrunnlag)}</dd></div>` +
+    '</dl></div>';
+}
+
+</script>
+</body>
+</html>

@@ -1,57 +1,65 @@
-# KI-kartlegging - prototype
+# KI-kartlegging – prototype v0.2
 
-Statisk oversikt over kartlagte KI-anvendelser i SSB og deres foreløpige
-vurdering opp mot AI Act (forordning 2024/1689).
+Oversikt over kartlagte KI-anvendelser i SSB og deres foreløpige plassering
+etter AI Act (forordning 2024/1689).
+
+## Oppdatere registeret
+
+Excel-filen i `kilde/` er kilden. `data.json` er avledet og skal ikke
+redigeres for hånd.
+
+    python3 verktoy/excel_til_json.py kilde/KI_register.xlsx
+    git add kilde/ data.json
+    git commit -m "Oppdatert register"
+
+Skriptet stopper hvis det møter en verdi det ikke kjenner, for eksempel en ny
+status. Det er med vilje: nye verdier skal legges inn bevisst i skriptet, ikke
+oversettes stille. Krever `pandas` og `openpyxl`.
+
+Plassholderrader i Excel (Status = «Plassholder») tas ikke med som
+anvendelser. Seksjonens dekning leses fra arket «Dekning».
 
 ## Kjøre lokalt
 
-Siden leser data fra `data.json`. Nettleseren blokkerer den lesingen når
-`index.html` åpnes direkte fra disk, så start en enkel server i mappen:
-
     python3 -m http.server 8000
 
-og åpne http://localhost:8000
+og åpne http://localhost:8000. Nettleseren blokkerer lesing av `data.json`
+når `index.html` åpnes direkte fra disk.
+
+For en fil som kan åpnes uten server eller sendes til noen:
+
+    python3 verktoy/bygg_samlefil.py
 
 ## Filer
 
-    index.html   struktur og AI Act-tekstene
-    style.css    utseende
-    app.js       all geometri og interaksjon
-    data.json    registeret
+    index.html                 struktur og faste tekster
+    style.css                  utseende
+    app.js                     geometri, filtre, tabell, detaljpanel
+    data.json                  avledet fra kildefilen
+    kilde/KI_register.xlsx     kilden
+    verktoy/excel_til_json.py  Excel → data.json
+    verktoy/bygg_samlefil.py   lager én selvstendig HTML-fil
 
-Data er skilt fra visualiseringen. En post kan endres i `data.json` uten at
-`app.js` røres. Ingen koordinater ligger i datafilen - all plassering
-beregnes ved innlasting.
+Tall i løpende tekst (antall anvendelser, seksjoner som ikke har levert)
+beregnes fra data. Unntaket er rapportdelen, som er datert og fryst.
 
 ## Slik leses figuren
 
-Retningen viser hvilken avdeling anvendelsen hører til. Den vannrette aksen
-skiller fag og forskning (over) fra støttefunksjoner (under).
+Retningen viser avdeling. Den vannrette aksen skiller fag og forskning (over)
+fra støttefunksjoner (under). Avstanden fra sentrum viser AI Act-kategori.
+Kategoriene er diskrete klasser, ikke trinn på en skala.
 
-Avstanden fra sentrum viser hvilken AI Act-kategori anvendelsen er plassert
-i. Kategoriene er diskrete juridiske klasser, ikke trinn på en skala. Fargen
-gjentar den samme inndelingen, slik at figuren også kan leses i svart-hvitt.
+Båndet utenfor kanten viser alminnelig assistentbruk per seksjon. Skraverte
+celler er seksjoner som ikke har levert. I båndet betyr avstand ingenting.
 
 Punkter som ellers ville dekket hverandre er forskjøvet litt. Forskyvningen
-er visuell og har ingen faglig betydning.
+har ingen faglig betydning.
 
-Båndet utenfor kanten viser alminnelig assistentbruk per seksjon. Der er det
-ingen radiell akse, og avstand betyr ingenting.
+## Kjente svakheter
 
-## Forbehold
-
-Vurderingene i registeret er prosjektets foreløpige arbeidsvurderinger, ikke
-juridiske konklusjoner. Endelig vurdering gjøres av jurist og
-personvernombud.
-
-Klassene for alminnelig bruk (møte- og referatstøtte, publiseringsnært
-innhold, analysestøtte) er utledet av korte fritekstbeskrivelser i
-registeret. De er ikke et registrert felt, og bør bekreftes mot
-intervjunotatene før figuren brukes utenfor prosjektet.
-
-Feltet `ssb_rolle` er satt maskinelt: `idriftsetter` der anvendelsen bygger
-på et innkjøpt verktøy, ellers `uavklart`. Grensedragningen mellom
-leverandør og idriftsetter er et juridisk spørsmål som ikke er avklart.
-
-Avdeling 100 og 500 er ikke forespurt ennå og er skravert i figuren. Tomme
-sektorer betyr manglende kartlegging, ikke fravær av KI-bruk.
+- Skillet mellom alminnelig bruk og egne anvendelser settes ved tekstsøk,
+  fordi kildefilen mangler en `Type`-kolonne. Skriptet skriver ut hvilke
+  poster som er satt som alminnelig bruk, slik at de kan kontrolleres.
+  Legges kolonnen inn, bruker skriptet den automatisk.
+- Klassene for alminnelig bruk og feltet `ssb_rolle` er også satt ved tekstsøk.
+- Seksjon 380 har poster, men mangler i arket «Dekning».
