@@ -109,7 +109,8 @@ def klasser_for_generell(tekst):
     ut = []
     if re.search(r'møte|referat', t):
         ut.append('mote')
-    if re.search(r'presentasjon|kommunikasjon|innhold|visualisering|artikkel|rapportering', t):
+    # «intern kommunikasjon» er ikke publiseringsnært
+    if re.search(r'presentasjon|(?<!intern )kommunikasjon|innholdsproduksjon|innhold til|visualisering|artikkel|rapportering', t):
         ut.append('publikasjon')
     if re.search(r'analyse', t):
         ut.append('analyse')
