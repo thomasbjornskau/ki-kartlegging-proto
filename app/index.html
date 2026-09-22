@@ -3,210 +3,246 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KI-anvendelser i SSB</title>
+<title>KI i SSB – kartlegging og foreløpig plassering etter AI Act</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header><div class="wrap">
-  <div class="topp">
-    <h1>KI-anvendelser i SSB</h1>
-    <span class="sub" id="sub"></span>
+<a class="hopp" href="#oversikt">Hopp til oversiktsbildet</a>
+
+<header class="topp">
+  <div class="ramme">
+    <p class="eyebrow">KI-forvaltning i SSB</p>
+    <h1>Hvor brukes KI i SSB, og hvor havner bruken i AI Act?</h1>
+    <p class="ingress">En kartlegging av KI-anvendelser i avdelingene, med foreløpig plassering etter EUs forordning om kunstig intelligens. Siden er et arbeidsverktøy for prosjektet og for metode, HR, IT og personvernombudet, som skal forvalte dette videre.</p>
+    <dl class="meta" id="meta"></dl>
+    <p class="forbehold" id="forbehold"></p>
+    <nav class="innhold" aria-label="Innhold på siden">
+      <a href="#oversikt">Oversiktsbildet</a>
+      <a href="#funn">Hva kartleggingen viser</a>
+      <a href="#register">Registeret</a>
+      <a href="#aiact">AI Act i korte trekk</a>
+      <a href="#nye">Nye anvendelser</a>
+      <a href="#grunnlag">Forbehold og kilder</a>
+    </nav>
   </div>
-  <p class="forbehold" id="forbehold"></p>
-</div></header>
+</header>
 
 <main>
 
-<section class="kort">
-  <div class="eyebrow">Om siden</div>
-  <h2>Hva dette er</h2>
-  <p class="lede" style="margin-top:8px">En oversikt over KI-anvendelser som er kartlagt i SSB, og hvor de foreløpig er plassert i AI Acts risikostruktur. Siden er laget for prosjektet selv og for metode, HR, IT og personvernombudet, som arbeider videre med forvaltningen. Den er tre ting samtidig: et øyeblikksbilde av det som er samlet inn, et arbeidsregister som skal holdes ved like, og en kort forklaring av regelverket med SSB-nære eksempler.</p>
-</section>
-
-<section class="kort">
-  <div class="hode">
-    <div>
-      <div class="eyebrow">Oversiktsbilde</div>
-      <h2>Hvor i SSB, og hvor i AI Act</h2>
+<section class="seksjon" id="oversikt" aria-labelledby="h-oversikt">
+  <div class="ramme">
+    <p class="eyebrow">Oversiktsbildet</p>
+    <h2 id="h-oversikt">Retning viser hvor i SSB, avstand viser kategori</h2>
+    <div class="tekst">
+      <p>Hver sektor er en avdeling. Fag og forskning ligger over den stiplede linjen, støttefunksjonene under. Jo nærmere sentrum et punkt ligger, desto strengere AI Act-kategori er anvendelsen foreløpig plassert i. Kategoriene er juridiske klasser, ikke en skala: plasseringen innenfor en sone betyr ingenting.</p>
+      <p>Båndet utenfor kanten viser alminnelig bruk av KI-assistenter i hver seksjon. Symbolene i båndet viser hva slags alminnelig bruk som er meldt inn.</p>
     </div>
-    <span class="notat" id="figur-antall"></span>
-  </div>
 
-  <div class="filtre">
-    <div class="felt"><label for="f-sok">Søk</label>
-      <input type="search" id="f-sok" placeholder="navn, beskrivelse, ansvarlig"></div>
-    <div class="felt"><label for="f-avdeling">Enhet</label><select id="f-avdeling"></select></div>
-    <div class="felt"><label for="f-kategori">Risikokategori</label><select id="f-kategori"></select></div>
-    <div class="felt"><label for="f-fase">Fase</label><select id="f-fase"></select></div>
-    <label class="avkryss"><input type="checkbox" id="f-generell" checked> Vis alminnelig assistentbruk</label>
-    <button class="knapp" id="nullstill">Nullstill</button>
-  </div>
-
-  <div class="figurrad">
-    <div>
-      <svg id="figur" viewBox="0 0 680 600" role="img" aria-label="Kart over KI-anvendelser i SSB" aria-describedby="fb">
-        <desc id="fb">Retningen viser hvilken avdeling anvendelsen hører til. Avstanden fra sentrum viser hvilken AI Act-kategori den er plassert i. Båndet utenfor kanten viser alminnelig assistentbruk per seksjon.</desc>
-      </svg>
-      <div class="tegn" id="tegn"></div>
-    </div>
-    <div>
-      <div class="detalj-boks" id="detalj">
-        <p class="tom">Pek på et punkt for en kort forklaring. Klikk for alle opplysninger.</p>
+    <div class="kontroller" role="group" aria-label="Filtrer anvendelsene">
+      <div class="felt felt-sok">
+        <label for="f-sok">Søk</label>
+        <input type="search" id="f-sok" placeholder="Navn, beskrivelse eller ansvarlig" autocomplete="off">
       </div>
-      <div class="detalj-boks" style="margin-top:14px">
-        <h3>Ikke plassert ennå</h3>
-        <div id="uplassert" style="margin-top:8px"></div>
+      <div class="felt">
+        <label for="f-avdeling">Avdeling</label>
+        <select id="f-avdeling"></select>
+      </div>
+      <fieldset class="felt knapperad">
+        <legend>Kategori</legend>
+        <div id="f-kategori" class="knapper"></div>
+      </fieldset>
+      <fieldset class="felt knapperad">
+        <legend>Fase</legend>
+        <div id="f-fase" class="knapper"></div>
+      </fieldset>
+      <div class="felt felt-valg">
+        <label class="avkryss"><input type="checkbox" id="f-generell" checked> Vis alminnelig assistentbruk</label>
+        <button type="button" class="knapp-sekundaer" id="nullstill">Nullstill utvalg</button>
       </div>
     </div>
-  </div>
-</section>
+    <p class="utvalg" id="utvalg" aria-live="polite"></p>
 
-<section class="kort" id="rapport" data-tolkning="2026-09-21">
-  <div class="hode">
-    <div>
-      <div class="eyebrow">Hovedfunn</div>
-      <h2>Hva kartleggingen viser</h2>
-    </div>
-    <span class="notat">Tallene regnes ut fra registeret. Tolkningen er skrevet 21. september 2026, etter andre innsamlingsrunde.</span>
-  </div>
-  <p class="avvik" id="rapport-avvik" hidden>Registeret er oppdatert etter at tolkningen under ble skrevet. Tallene er riktige, men teksten kan være utdatert.</p>
-  <div class="funn">
-    <div>
-      <div class="tall"><span data-tall="hoyrisiko"></span> av <span data-tall="totalt"></span></div>
-      <h3>Risikoen ligger i støttefunksjonene</h3>
-      <p>Alle høyrisikokandidatene gjelder rekruttering og oppfølging av ansatte. Ingen ligger i statistikkproduksjonen, og andre runde endret ikke dette. Det korrigerer antakelsen i det interne notatet om at høyrisiko først og fremst ville dukke opp der statistikken lages.</p>
-    </div>
-    <div>
-      <div class="tall"><span data-tall="generell"></span> av <span data-tall="totalt"></span></div>
-      <h3>Nær halvparten er alminnelig assistentbruk</h3>
-      <p>Kode, tekst, oversettelse og oppsummering finnes i nesten alle seksjoner som har svart. Det er reell bruk, men ikke systemer som skal forvaltes hver for seg. Totaltallet bør ikke siteres uten dette forbeholdet.</p>
-    </div>
-    <div>
-      <div class="tall"><span data-tall="levert"></span> av <span data-tall="seksjoner"></span></div>
-      <h3>Dekningen er fortsatt ujevn</h3>
-      <p>Seksjoner som ikke har levert, er skravert i figuren, og forskningsavdelingen er ikke forespurt. Blant dem som har svart, varierer detaljnivået fra én til ni poster per seksjon. Figuren viser derfor også hvem som svarte grundig.</p>
-    </div>
-    <div>
-      <div class="tall" data-tall="uavklart"></div>
-      <h3>To lot seg ikke plassere</h3>
-      <p>Én fordi formålet ikke er definert ennå, én fordi resultatet brukes videre av en annen myndighet — noe som reiser spørsmålet om SSB der er leverandør og ikke bare idriftsetter. Begge står utenfor figuren framfor å bli gjettet inn i en kategori.</p>
-    </div>
-  </div>
-  <p class="notat" style="margin-top:16px">Første runde (11. august, 49 poster fra 19 seksjoner) viste det samme hovedbildet. Den versjonen av siden ligger i versjonshistorikken.</p>
-</section>
+    <div class="figurrad">
+      <figure class="figur">
+        <div class="figur-hylse" tabindex="-1"><svg id="figur" viewBox="10 -32 720 668" role="img" aria-label="Kart over KI-anvendelser i SSB" aria-describedby="figur-oppsummering"></svg></div>
+        <div class="akse" id="akse" aria-hidden="true"></div>
+        <div class="symboler" id="symboler"></div>
+        <figcaption>
+          <p id="figur-oppsummering"></p>
+          <p class="kilde">Kilde: Kartlegging av KI-anvendelser i SSB, <span id="kilde-dato"></span>. Plasseringene er prosjektets foreløpige arbeidsvurderinger. Punkter som ellers ville dekket hverandre er forskjøvet litt; forskyvningen har ingen faglig betydning.</p>
+        </figcaption>
+      </figure>
 
-<section class="kort">
-  <div class="hode">
-    <div>
-      <div class="eyebrow">Register</div>
-      <h2>Gjeldende oversikt</h2>
-    </div>
-    <span class="notat" id="tabell-antall"></span>
-  </div>
-  <div class="hylse">
-    <table id="tabell">
-      <thead><tr>
-        <th data-felt="id">ID</th><th data-felt="navn">Anvendelse</th>
-        <th data-felt="avdeling">Avd.</th><th data-felt="seksjon">Seksjon</th>
-        <th data-felt="beskrivelse">Kort beskrivelse</th>
-        <th data-felt="risikokategori">Kategori</th><th data-felt="fase">Fase</th>
-        <th data-felt="ansvarlig">Ansvarlig</th>
-      </tr></thead>
-      <tbody></tbody>
-    </table>
-  </div>
-</section>
-
-<section class="kort">
-  <div class="eyebrow">Regelverk</div>
-  <h2>AI Act i korte trekk</h2>
-  <p class="lede" style="margin:8px 0 16px">Forenklet arbeidsforklaring. Forordning (EU) 2024/1689. Ved tvil gjelder forordningsteksten, ikke denne siden.</p>
-  <div class="akt">
-    <div>
-      <h3>Hva er et KI-system?</h3>
-      <p>Et maskinbasert system som utleder resultater fra data det får inn, med en viss grad av selvstendighet. Rent regelbaserte systemer faller normalt utenfor.</p>
-      <div class="eks"><b>Uavklart hos oss:</b> grensen mot tradisjonell statistisk modellering. Et beslutningstre som grupperer grunnkretser lærer av data — en regelbasert imputering gjør det ikke. SSB har ikke landet en felles arbeidsdefinisjon, og seksjonene som har svart har trolig brukt hver sin.</div>
-    </div>
-    <div>
-      <h3>Bruksområdet avgjør, ikke teknologien</h3>
-      <p>Høyrisiko følger av hva systemet brukes til. Hvor avansert modellen er, har ingenting med saken å gjøre.</p>
-      <div class="eks"><b>To eksempler fra registeret:</b> gradient boosting som imputerer manglende omsetningstall er plassert som minimal risiko. Generativ KI som leser CV-er og foreslår kandidater er en høyrisikokandidat. Den enkleste av de to er den som teller.</div>
-    </div>
-    <div>
-      <h3>Fire kategorier, ikke en skala</h3>
-      <p>Forbudt bruk, høyrisiko, begrenset risiko med krav om åpenhet, og øvrig lavrisiko. Dette er diskrete juridiske klasser. Det finnes ingen risikoscore mellom dem.</p>
-      <div class="eks"><b>I figuren:</b> avstanden fra sentrum viser kategori, ikke grad. To punkter i samme sone er i samme klasse, uansett hvor de ligger innenfor den.</div>
-    </div>
-    <div>
-      <h3>Begrenset risiko betyr ikke ingenting</h3>
-      <p>Transparenskravene gjelder blant annet merking av KI-generert innhold.</p>
-      <div class="eks"><b>Nærmest oss:</b> en Gemini-assistent for produksjon av SSB-artikler. Publiseringsnær bruk i et byrå hvis troverdighet hviler på åpenhet. Det er den eneste posten i kategorien med en plikt som treffer utad.</div>
-    </div>
-    <div>
-      <h3>Leverandør eller idriftsetter</h3>
-      <p>Pliktene er vesentlig strengere for den som utvikler og tilbyr et KI-system enn for den som tar det i bruk.</p>
-      <div class="eks"><b>Der det brenner:</b> modeller SSB utvikler selv og som brukes videre av andre myndigheter. Feltet er satt maskinelt i denne versjonen og er ikke en juridisk vurdering.</div>
-    </div>
-    <div>
-      <h3>AI Act-risiko er ikke all risiko</h3>
-      <p>En anvendelse kan ligge helt ytterst i figuren og likevel ha betydelig personvernrisiko, metodisk risiko eller omdømmerisiko.</p>
-      <div class="eks"><b>Merk:</b> grønt i figuren betyr «minimal risiko etter AI Act». Det betyr ikke at anvendelsen er vurdert som uproblematisk på andre områder.</div>
+      <aside class="sidefelt" aria-label="Detaljer om valgt anvendelse">
+        <div class="detalj-boks" id="detalj" tabindex="-1">
+          <p class="tom">Velg et punkt i figuren eller en rad i registeret for å se detaljene.</p>
+        </div>
+        <div class="uplassert-boks">
+          <h3>Ikke plassert ennå</h3>
+          <div id="uplassert"></div>
+        </div>
+      </aside>
     </div>
   </div>
 </section>
 
-<section class="kort">
-  <div class="eyebrow">Vedlikehold</div>
-  <h2>Slik legges nye anvendelser inn</h2>
-  <p class="lede" style="margin:8px 0 16px">Registeret er ikke ferdig. Nye anvendelser kommer til, og eksisterende endrer seg. Meld fra tidlig — en anvendelse som er på idéstadiet er lettere å vurdere enn en som allerede er i drift.</p>
-  <div class="sti">
-    <div>
-      <h3>Hva vi trenger å vite</h3>
-      <ul>
-        <li>Hva KI-en faktisk gjør, i én til tre setninger</li>
-        <li>Hvilken seksjon som bruker den</li>
-        <li>Om den brukes på opplysninger om enkeltpersoner</li>
-        <li>Hvem som eier anvendelsen</li>
-        <li>Om den er idé, pilot eller i drift</li>
-        <li>Hva som er uklart</li>
-      </ul>
+<section class="seksjon" id="funn" aria-labelledby="h-funn" data-tolkning="2026-09-21">
+  <div class="ramme">
+    <p class="eyebrow">Hva kartleggingen viser</p>
+    <h2 id="h-funn">Risikoen etter AI Act ligger der KI brukes på mennesker, ikke på tall</h2>
+    <p class="notat">Tallene regnes ut fra registeret. Teksten er skrevet 21. september 2026, etter andre innsamlingsrunde.</p>
+    <p class="avvik" id="rapport-avvik" hidden>Registeret er oppdatert etter at teksten under ble skrevet. Tallene er riktige, men tolkningen kan være utdatert.</p>
+    <div class="funn">
+      <div class="funn-post">
+        <p class="tall"><span data-tall="hoyrisiko"></span> <span class="tall-av">av <span data-tall="totalt"></span></span></p>
+        <h3>Høyrisiko finnes bare i støttefunksjonene</h3>
+        <p>Alle høyrisikokandidatene gjelder rekruttering og oppfølging av ansatte. Ingen ligger i statistikkproduksjonen, og andre runde endret ikke dette. Det korrigerer antakelsen i det interne notatet om at høyrisiko først og fremst ville dukke opp der statistikken lages.</p>
+      </div>
+      <div class="funn-post">
+        <p class="tall"><span data-tall="generell"></span> <span class="tall-av">av <span data-tall="totalt"></span></span></p>
+        <h3>Nær halvparten er alminnelig assistentbruk</h3>
+        <p>Kode, tekst, oversettelse og oppsummering finnes i nesten alle seksjoner som har svart. Det er reell bruk, men ikke systemer som skal forvaltes hver for seg. Totaltallet bør ikke siteres uten dette forbeholdet.</p>
+      </div>
+      <div class="funn-post">
+        <p class="tall"><span data-tall="levert"></span> <span class="tall-av">av <span data-tall="seksjoner"></span> seksjoner</span></p>
+        <h3>Dekningen er fortsatt ujevn</h3>
+        <p>Seksjoner som ikke har levert, er skravert i figuren, og forskningsavdelingen er ikke forespurt. Detaljnivået varierer fra én til ti poster per seksjon, så figuren viser også hvem som svarte grundig.</p>
+      </div>
+      <div class="funn-post">
+        <p class="tall" data-tall="uavklart"></p>
+        <h3>To lot seg ikke plassere</h3>
+        <p>Én fordi formålet ikke er definert ennå, én fordi resultatet brukes videre av en annen myndighet. Det siste reiser spørsmålet om SSB der er leverandør og ikke bare idriftsetter.</p>
+      </div>
     </div>
-    <div>
-      <h3>Beskriv anvendelsen, ikke verktøyet</h3>
-      <p>«Copilot» er et verktøy. «Copilot brukt til å sile jobbsøkere» er en anvendelse. Samme verktøy kan brukes til mange formål og få ulik vurdering.</p>
-      <p>Alminnelig bruk av KI-assistenter til kode og tekst trenger ikke meldes per person eller per oppgave — det holder at seksjonen er med.</p>
+    <p class="notat">Første runde (11. august, 49 poster fra 19 seksjoner) viste det samme hovedbildet. Den versjonen ligger i versjonshistorikken.</p>
+  </div>
+</section>
+
+<section class="seksjon" id="register" aria-labelledby="h-register">
+  <div class="ramme">
+    <p class="eyebrow">Registeret</p>
+    <h2 id="h-register">Alle registrerte anvendelser</h2>
+    <p class="notat" id="tabell-antall"></p>
+    <div class="tabellhylse" role="region" aria-labelledby="h-register" tabindex="0">
+      <table id="tabell">
+        <thead><tr>
+          <th scope="col"><button type="button" data-felt="id">ID</button></th>
+          <th scope="col"><button type="button" data-felt="navn">Anvendelse</button></th>
+          <th scope="col"><button type="button" data-felt="seksjon">Seksjon</button></th>
+          <th scope="col"><button type="button" data-felt="beskrivelse">Kort beskrivelse</button></th>
+          <th scope="col"><button type="button" data-felt="risikokategori">Kategori</button></th>
+          <th scope="col"><button type="button" data-felt="fase">Fase</button></th>
+          <th scope="col"><button type="button" data-felt="ansvarlig">Ansvarlig</button></th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
     </div>
-    <div>
-      <h3>Hva som skjer etterpå</h3>
-      <p>Prosjektet gjør en foreløpig plassering og legger anvendelsen inn i registeret. Ved mistanke om høyrisiko tas den videre til HR, personvernombud og jus.</p>
-      <p class="notat" style="margin-top:8px">Mottaker og svartid er ikke avklart ennå. Til det er på plass, meld fra til prosjektleder.</p>
+    <p class="notat">Tabellen følger utvalget i oversiktsbildet. Klikk på en kolonneoverskrift for å sortere.</p>
+  </div>
+</section>
+
+<section class="seksjon" id="aiact" aria-labelledby="h-aiact">
+  <div class="ramme">
+    <p class="eyebrow">AI Act i korte trekk</p>
+    <h2 id="h-aiact">Det som avgjør plasseringen</h2>
+    <p class="tekst">Forenklet arbeidsforklaring av forordning (EU) 2024/1689. Ved tvil gjelder forordningsteksten, ikke denne siden.</p>
+    <div class="regler">
+      <div class="regel">
+        <h3>Hva er et KI-system?</h3>
+        <p>Et maskinbasert system som utleder resultater fra data det får inn, med en viss grad av selvstendighet. Rent regelbaserte systemer faller normalt utenfor.</p>
+        <p class="eksempel"><strong>Uavklart hos oss:</strong> grensen mot tradisjonell statistisk modellering. Et beslutningstre som grupperer grunnkretser lærer av data. En regelbasert imputering gjør det ikke. SSB har ikke landet en felles arbeidsdefinisjon, og seksjonene har trolig brukt hver sin.</p>
+      </div>
+      <div class="regel">
+        <h3>Bruksområdet avgjør, ikke teknologien</h3>
+        <p>Høyrisiko følger av hva systemet brukes til. Hvor avansert modellen er, spiller ingen rolle.</p>
+        <p class="eksempel"><strong>To eksempler fra registeret:</strong> gradient boosting som imputerer manglende omsetningstall er plassert som minimal risiko. Generativ KI som leser CV-er og foreslår kandidater er en høyrisikokandidat. Den enkleste av de to er den som teller.</p>
+      </div>
+      <div class="regel">
+        <h3>Fire kategorier, ikke en skala</h3>
+        <p>Forbudt bruk, høyrisiko, begrenset risiko med krav om åpenhet, og øvrig lavrisiko. Det finnes ingen risikoscore mellom dem.</p>
+        <p class="eksempel"><strong>I figuren:</strong> avstanden fra sentrum viser kategori, ikke grad. To punkter i samme sone er i samme klasse, uansett hvor de ligger innenfor den.</p>
+      </div>
+      <div class="regel">
+        <h3>Begrenset risiko er ikke det samme som ingenting</h3>
+        <p>Åpenhetskravene gjelder blant annet merking av KI-generert innhold.</p>
+        <p class="eksempel"><strong>Nærmest oss:</strong> en Gemini-assistent for produksjon av SSB-artikler. Publiseringsnær bruk i et byrå hvis troverdighet hviler på åpenhet.</p>
+      </div>
+      <div class="regel">
+        <h3>Leverandør eller idriftsetter</h3>
+        <p>Pliktene er vesentlig strengere for den som utvikler og tilbyr et KI-system enn for den som tar det i bruk.</p>
+        <p class="eksempel"><strong>Der det er uklart:</strong> modeller SSB utvikler selv, og som brukes videre av andre myndigheter. Rollen er satt maskinelt i denne versjonen og er ikke en juridisk vurdering.</p>
+      </div>
+      <div class="regel">
+        <h3>AI Act-risiko er ikke all risiko</h3>
+        <p>En anvendelse kan ligge ytterst i figuren og likevel ha betydelig personvernrisiko, metodisk risiko eller omdømmerisiko.</p>
+        <p class="eksempel"><strong>Merk:</strong> grønt i figuren betyr minimal risiko etter AI Act. Det betyr ikke at anvendelsen er vurdert som uproblematisk på andre områder.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="kort">
-  <div class="eyebrow">Grunnlag</div>
-  <h2>Forbehold, kilder og det som ikke er kartlagt</h2>
-  <div class="kilder">
-    <h3>Ikke kartlagt</h3>
-    <p><span id="dekning-tekst"></span> Tomme eller skraverte felt i figuren betyr manglende kartlegging, ikke fravær av KI-bruk. Blant seksjonene som har svart, er detaljnivået ujevnt, og figuren viser derfor delvis hvem som rapporterte grundig.</p><p>Kildefilen inneholder også plassholderrader for seksjoner som ikke har levert. Disse er ikke tatt med som anvendelser, fordi kategorien deres er gjettet og ikke meldt inn.</p>
-    <h3>Utledet, ikke registrert</h3>
-    <p>Inndelingen av alminnelig bruk i møte- og referatstøtte, publiseringsnært innhold og analysestøtte er lest ut av korte fritekstbeskrivelser. Den er ikke et registrert felt og bør bekreftes mot intervjunotatene før den brukes utenfor prosjektet. Det samme gjelder feltet for SSBs rolle, som er satt ved tekstsøk etter verktøynavn, og skillet mellom alminnelig bruk og egne anvendelser, som er satt ved tekstsøk til kildefilen får en egen kolonne for det.</p>
-    <h3>Om plasseringen i figuren</h3>
-    <p>Punkter som ellers ville dekket hverandre er forskjøvet litt. Forskyvningen er visuell og har ingen faglig betydning. Båndet utenfor kanten har ingen radiell akse — der betyr avstand ingenting.</p>
-    <h3>Kilder</h3>
-    <p>Forordning (EU) 2024/1689 om kunstig intelligens. Kommisjonens retningslinjer om definisjonen av KI-system. Intern kartlegging av KI-anvendelser, første registerversjon. Rådata fra intervjuene ligger i SSBs egne systemer og er ikke del av denne løsningen.</p>
+<section class="seksjon" id="nye" aria-labelledby="h-nye">
+  <div class="ramme">
+    <p class="eyebrow">Nye anvendelser</p>
+    <h2 id="h-nye">Slik melder du inn KI-bruk</h2>
+    <p class="tekst">Registeret er ikke ferdig. Meld fra tidlig: en anvendelse på idéstadiet er lettere å vurdere enn en som allerede er i drift.</p>
+    <div class="sti">
+      <div>
+        <h3>Dette trenger vi å vite</h3>
+        <ul>
+          <li>Hva KI-en faktisk gjør, i én til tre setninger</li>
+          <li>Hvilken seksjon som bruker den</li>
+          <li>Om den brukes på opplysninger om enkeltpersoner</li>
+          <li>Hvem som eier anvendelsen</li>
+          <li>Om den er idé, pilot eller i drift</li>
+          <li>Hva som er uklart</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Beskriv bruken, ikke verktøyet</h3>
+        <p>«Copilot» er et verktøy. «Copilot brukt til å sile jobbsøkere» er en anvendelse. Samme verktøy kan brukes til mange formål og få ulik vurdering.</p>
+        <p>Alminnelig bruk av KI-assistenter til kode og tekst trenger ikke meldes per person eller oppgave. Det holder at seksjonen er med.</p>
+      </div>
+      <div>
+        <h3>Hva som skjer etterpå</h3>
+        <p>Prosjektet gjør en foreløpig plassering og legger anvendelsen inn i registeret. Ved mistanke om høyrisiko tas den videre til HR, personvernombud og jus.</p>
+        <p class="notat">Mottaker og svartid er ikke avklart ennå. Til det er på plass, meld fra til prosjektleder.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="seksjon" id="grunnlag" aria-labelledby="h-grunnlag">
+  <div class="ramme">
+    <p class="eyebrow">Forbehold og kilder</p>
+    <h2 id="h-grunnlag">Hva tallene bygger på</h2>
+    <div class="tekst">
+      <h3>Ikke kartlagt</h3>
+      <p><span id="dekning-tekst"></span> Skraverte felt i figuren betyr manglende kartlegging, ikke fravær av KI-bruk. Kildefilen har plassholderrader for seksjoner som ikke har levert. De er ikke tatt med som anvendelser, fordi kategorien deres er gjettet og ikke meldt inn.</p>
+      <h3>Utledet, ikke registrert</h3>
+      <p>Skillet mellom alminnelig bruk og egne anvendelser, symbolene for type alminnelig bruk og feltet for SSBs rolle er satt ved tekstsøk i kildefilen. De bør kontrolleres mot grunnlagsdokumentene før de brukes utenfor prosjektet.</p>
+      <h3>Kilder</h3>
+      <p>Forordning (EU) 2024/1689 om kunstig intelligens. Kommisjonens retningslinjer om definisjonen av KI-system. Intern kartlegging av KI-anvendelser i SSB. Grunnlagsdokumentene fra intervjuene ligger i SSBs egne systemer og er ikke del av denne løsningen.</p>
+    </div>
   </div>
 </section>
 
 </main>
 
-<footer>Prototype. Versjon 0.2. Innholdet er arbeidsmateriale og skal ikke deles utenfor SSB.</footer>
+<footer class="bunn">
+  <div class="ramme">
+    <p>Prototype, versjon 0.3. Arbeidsmateriale som ikke skal deles utenfor SSB.</p>
+  </div>
+</footer>
 
-<div id="tips"></div>
+<div id="tips" role="tooltip"></div>
 
-<div id="feil" class="kort" hidden style="max-width:700px;margin:22px auto"><h2>Fant ikke data.json</h2><p>Nettleseren blokkerer lesing av data.json når siden åpnes direkte fra disk. Start en lokal server i mappen:</p><code>python3 -m http.server 8000</code></div>
+<div id="feil" class="feil" hidden>
+  <h2>Fant ikke data.json</h2>
+  <p>Nettleseren blokkerer lesing av data.json når siden åpnes direkte fra disk. Start en lokal server i mappen og åpne adressen den skriver ut:</p>
+  <code>python3 -m http.server 8000</code>
+</div>
 
 <!--DATA-->
 <script src="app.js"></script>
