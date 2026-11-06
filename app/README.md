@@ -1,4 +1,4 @@
-# KI-kartlegging – prototype v0.2
+# KI-kartlegging – prototype v0.4
 
 Oversikt over kartlagte KI-anvendelser i SSB og deres foreløpige plassering
 etter AI Act (forordning 2024/1689).
@@ -55,11 +55,21 @@ celler er seksjoner som ikke har levert. I båndet betyr avstand ingenting.
 Punkter som ellers ville dekket hverandre er forskjøvet litt. Forskyvningen
 har ingen faglig betydning.
 
+## Kolonnen «Meldt inn som»
+
+Viser hvilken kategori seksjonen selv oppga i intervjureferatet. Der den
+avviker fra kolonnen «Kategori», har prosjektet omplassert anvendelsen.
+Begrunnelsen hører i «Ansvar / oppfølging». Appen merker omplasserte poster
+i detaljpanelet, og skriptet teller dem ved konvertering.
+
+Per november 2026 er 24 av 73 poster omplassert.
+
 ## Kjente svakheter
 
-- Skillet mellom alminnelig bruk og egne anvendelser settes ved tekstsøk,
-  fordi kildefilen mangler en `Type`-kolonne. Skriptet skriver ut hvilke
-  poster som er satt som alminnelig bruk, slik at de kan kontrolleres.
-  Legges kolonnen inn, bruker skriptet den automatisk.
-- Klassene for alminnelig bruk og feltet `ssb_rolle` er også satt ved tekstsøk.
-- Seksjon 380 har poster, men mangler i arket «Dekning».
+- Klassene for alminnelig bruk (møte, publisering, analyse) og feltet
+  `ssb_rolle` settes fortsatt ved tekstsøk i beskrivelsene.
+- Risikovurderingen av KI-funksjoner i kommunikasjonsverktøyene i seksjon 660
+  ble gjort med en KI-assistent og er ført inn som innmelding.
+- Kategorigrensen mellom alminnelig assistentbruk som er «begrenset» og den
+  som er «minimal» følger ingen nedskrevet regel. Intern tekstbruk er plassert
+  begge steder.

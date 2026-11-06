@@ -51,6 +51,12 @@ const ROLLE = { idriftsetter: 'Idriftsetter', leverandoer: 'Leverandør',
 
 const GRUNNLAG = { runde1: 'Første innsamlingsrunde', runde2: 'Ny innsamlingsrunde' };
 
+// Kategorinavnene slik de står i intervjureferatene, for å kunne sammenligne
+const MELDT = { 'Begrenset': 'begrenset', 'Minimal': 'minimal', 'Uavklart': 'uavklart',
+                'Høyrisiko / mulig høyrisiko': 'hoyrisiko', 'Forbudt': 'forbudt' };
+const omplassert = a => a.meldt_inn_som && MELDT[a.meldt_inn_som]
+                        && MELDT[a.meldt_inn_som] !== a.risikokategori;
+
 // Viser koden selv hvis en verdi mangler i tabellen, i stedet for «undefined»
 const navn = (tabell, kode) => tabell[kode] || kode || '–';
 
@@ -188,6 +194,7 @@ function skrivTall() {
     uavklart: A.filter(a => a.risikokategori === 'uavklart').length,
     levert: levert.length,
     seksjoner: DATA.seksjoner.length,
+    omplassert: A.filter(omplassert).length,
   };
   document.querySelectorAll('[data-tall]').forEach(e => { e.textContent = tall[e.dataset.tall]; });
 
@@ -531,6 +538,10 @@ function velg(id, visPanel) {
     (a.generell_klasser && a.generell_klasser.length
       ? `<div><dt>Klasser av alminnelig bruk</dt><dd>${a.generell_klasser.map(x => navn(KLASSE, x)).join(', ')}</dd></div>` : '') +
     `<div><dt>Datagrunnlag</dt><dd>${navn(GRUNNLAG, a.datagrunnlag)}</dd></div>` +
+    (a.meldt_inn_som
+      ? `<div${omplassert(a) ? ' class="avklar"' : ''}><dt>Meldt inn som</dt><dd>${esc(a.meldt_inn_som)}` +
+        (omplassert(a) ? ' <em>— omplassert av prosjektet</em>' : '') + '</dd></div>'
+      : '') +
     '</dl></div>';
 
   // Fra tabellen eller listen: flytt blikket til panelet hvis det ikke er synlig

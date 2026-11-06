@@ -1,7 +1,7 @@
 {
   "metadata": {
     "tittel": "KI-anvendelser i SSB",
-    "sist_oppdatert": "2026-09-21",
+    "sist_oppdatert": "2026-11-06",
     "kildefil": "KI_register.xlsx",
     "forbehold": "Vurderingene her er prosjektets foreløpige arbeidsvurderinger, laget for å få oversikt. De er ikke juridiske konklusjoner, og skal kvalitetssikres av jurist og personvernombud."
   },
@@ -189,7 +189,7 @@
     {
       "kode": 722,
       "avdeling": 700,
-      "dekning": "ikke_levert"
+      "dekning": "levert"
     },
     {
       "kode": 723,
@@ -263,7 +263,8 @@
       "datagrunnlag": "runde2",
       "ssb_rolle": "idriftsetter",
       "ansvarlig": "DFØ / S111",
-      "maa_avklares": "Avklar hvilke KI-funksjoner SSB faktisk eksponeres for og hvordan de brukes."
+      "maa_avklares": "Avklar hvilke KI-funksjoner SSB faktisk eksponeres for og hvordan de brukes.",
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-111-02",
@@ -279,6 +280,7 @@
       "ssb_rolle": "idriftsetter",
       "ansvarlig": "Seksjonsleder. Én ansatt har Claude-lisens",
       "maa_avklares": null,
+      "meldt_inn_som": "Minimal",
       "generell_klasser": []
     },
     {
@@ -294,7 +296,8 @@
       "datagrunnlag": "runde2",
       "ssb_rolle": "uavklart",
       "ansvarlig": "Seksjonsleder",
-      "maa_avklares": "Behold tydelig menneskelig kvalitetssikring og avklar eventuell møte-/referatbruk."
+      "maa_avklares": "Behold tydelig menneskelig kvalitetssikring og avklar eventuell møte-/referatbruk.",
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-150-02",
@@ -310,6 +313,7 @@
       "ssb_rolle": "uavklart",
       "ansvarlig": "Seksjonsleder",
       "maa_avklares": null,
+      "meldt_inn_som": "Minimal",
       "generell_klasser": []
     },
     {
@@ -326,6 +330,7 @@
       "ssb_rolle": "uavklart",
       "ansvarlig": "Seksjonsleder",
       "maa_avklares": null,
+      "meldt_inn_som": "Minimal",
       "generell_klasser": [
         "analyse"
       ]
@@ -343,7 +348,8 @@
       "datagrunnlag": "runde2",
       "ssb_rolle": "uavklart",
       "ansvarlig": "Seksjonsleder",
-      "maa_avklares": "Avklar konkret funksjonalitet og graden av automatisering når løsningen tas i bruk."
+      "maa_avklares": "Avklar konkret funksjonalitet og graden av automatisering når løsningen tas i bruk.",
+      "meldt_inn_som": "Minimal"
     },
     {
       "id": "KI-210-01",
@@ -359,6 +365,7 @@
       "ssb_rolle": "uavklart",
       "ansvarlig": null,
       "maa_avklares": "Ansvar ikke avklart. Avklar verktøy og databruk.",
+      "meldt_inn_som": "Begrenset",
       "generell_klasser": []
     },
     {
@@ -367,15 +374,32 @@
       "avdeling": 200,
       "seksjon": 211,
       "type": "generell",
-      "beskrivelse": "Kode, oversettelse, oppsummering, arkitektur og utvikling av produksjonssystem",
+      "beskrivelse": "Kode, oversettelse, oppsummering og skrivehjelp. Microsoft Copilot og Claude.",
       "risikokategori": "begrenset",
       "vurderingsstatus": "foreloepig",
       "fase": "drift",
       "datagrunnlag": "runde1",
-      "ssb_rolle": "uavklart",
+      "ssb_rolle": "idriftsetter",
       "ansvarlig": null,
       "maa_avklares": "Fagsansvar ikke oppgitt.",
+      "meldt_inn_som": "Begrenset",
       "generell_klasser": []
+    },
+    {
+      "id": "KI-211-02",
+      "navn": "KI-assistert utvikling av produksjonssystem på Dapla",
+      "avdeling": 200,
+      "seksjon": 211,
+      "type": "spesifikk",
+      "beskrivelse": "Claude brukes som diskusjonspartner om IT-arkitektur, til kodegenerering og til prosjektledelse og målsetninger i arbeidet med et nytt statistikkproduksjonssystem på Dapla. Repoet er internt.",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "maa_avklares",
+      "fase": "drift",
+      "datagrunnlag": "runde1",
+      "ssb_rolle": "idriftsetter",
+      "ansvarlig": "Seksjonssjef",
+      "maa_avklares": "Avklar hvor stor del av produksjonskoden som er KI-generert, og hvordan den kvalitetssikres.",
+      "meldt_inn_som": "Minimal"
     },
     {
       "id": "KI-212-01",
@@ -391,6 +415,7 @@
       "ssb_rolle": "uavklart",
       "ansvarlig": null,
       "maa_avklares": "Ansvar ikke oppgitt.",
+      "meldt_inn_som": "Begrenset og minimal",
       "generell_klasser": []
     },
     {
@@ -406,7 +431,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "idriftsetter",
       "ansvarlig": null,
-      "maa_avklares": "Bruk delvis uformell.",
+      "maa_avklares": "Ikke avklart. Bruken er delvis uformell. Privat anskaffet ChatGPT brukes i arbeidet; avklar skillet mellom privat og virksomhetsgodkjent bruk.",
+      "meldt_inn_som": "Begrenset og minimal",
       "generell_klasser": [
         "analyse"
       ]
@@ -425,6 +451,7 @@
       "ssb_rolle": "idriftsetter",
       "ansvarlig": "Seksjonssjef og den enkelte medarbeider",
       "maa_avklares": null,
+      "meldt_inn_som": "Begrenset",
       "generell_klasser": [
         "publikasjon"
       ]
@@ -443,6 +470,7 @@
       "ssb_rolle": "idriftsetter",
       "ansvarlig": "Den enkelte medarbeider",
       "maa_avklares": null,
+      "meldt_inn_som": "Minimal",
       "generell_klasser": []
     },
     {
@@ -458,7 +486,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "uavklart",
       "ansvarlig": "Espen Kristiansen",
-      "maa_avklares": "Dokumentasjon/transparens bør styrkes."
+      "maa_avklares": "Dokumentasjon/transparens bør styrkes.",
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-240-02",
@@ -473,7 +502,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "uavklart",
       "ansvarlig": "Espen Kristiansen",
-      "maa_avklares": "Følg overgang til produksjon."
+      "maa_avklares": "Følg overgang til produksjon.",
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-240-03",
@@ -489,6 +519,7 @@
       "ssb_rolle": "uavklart",
       "ansvarlig": "Espen Kristiansen",
       "maa_avklares": null,
+      "meldt_inn_som": "Begrenset",
       "generell_klasser": [
         "analyse"
       ]
@@ -506,7 +537,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "uavklart",
       "ansvarlig": "AKU-gruppen",
-      "maa_avklares": null
+      "maa_avklares": null,
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-312-02",
@@ -521,7 +553,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "uavklart",
       "ansvarlig": "Registergruppen",
-      "maa_avklares": null
+      "maa_avklares": null,
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-312-03",
@@ -536,7 +569,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "idriftsetter",
       "ansvarlig": "Yrkesgruppen",
-      "maa_avklares": null
+      "maa_avklares": null,
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-312-04",
@@ -552,6 +586,7 @@
       "ssb_rolle": "uavklart",
       "ansvarlig": "Bred bruk; 7 ChatGPT-abonnementer oppgitt",
       "maa_avklares": null,
+      "meldt_inn_som": "Minimal",
       "generell_klasser": [
         "publikasjon"
       ]
@@ -562,14 +597,15 @@
       "avdeling": 300,
       "seksjon": 330,
       "type": "generell",
-      "beskrivelse": "Kode, tekst, presentasjoner og møtereferater",
+      "beskrivelse": "Kode, tekst, presentasjoner og møtereferater fra Teams-transkripsjon. Copilot brukes også på upubliserte data innenfor gjeldende rammer.",
       "risikokategori": "begrenset",
       "vurderingsstatus": "foreloepig",
       "fase": "drift",
       "datagrunnlag": "runde1",
-      "ssb_rolle": "uavklart",
+      "ssb_rolle": "idriftsetter",
       "ansvarlig": null,
-      "maa_avklares": "Ansvar ikke avklart.",
+      "maa_avklares": "Ansvar ikke avklart. Bruk av Copilot på upubliserte data bør vurderes av PVO.",
+      "meldt_inn_som": "Begrenset",
       "generell_klasser": [
         "mote",
         "publikasjon"
@@ -588,7 +624,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "idriftsetter",
       "ansvarlig": null,
-      "maa_avklares": "Ansvar ikke avklart."
+      "maa_avklares": "Ansvar ikke avklart.",
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-330-03",
@@ -603,7 +640,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "uavklart",
       "ansvarlig": "Dokumentert i metodenotater",
-      "maa_avklares": null
+      "maa_avklares": null,
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-350-01",
@@ -619,6 +657,7 @@
       "ssb_rolle": "uavklart",
       "ansvarlig": "Seksjonsleder",
       "maa_avklares": null,
+      "meldt_inn_som": "Begrenset",
       "generell_klasser": []
     },
     {
@@ -633,8 +672,9 @@
       "fase": "drift",
       "datagrunnlag": "runde1",
       "ssb_rolle": "uavklart",
-      "ansvarlig": "Seksjonsleder/metode. God dokumentasjon",
-      "maa_avklares": null
+      "ansvarlig": "Seksjonsleder (faglig), metodeavdelingen (teknisk). God dokumentasjon i publiserte metodenotater. Seksjonen plasserte selv anvendelsen under «uklart» og ba om formell kategoribekreftelse",
+      "maa_avklares": null,
+      "meldt_inn_som": "Minimal, flagget som uklart av seksjonen"
     },
     {
       "id": "KI-360-01",
@@ -650,6 +690,7 @@
       "ssb_rolle": "uavklart",
       "ansvarlig": null,
       "maa_avklares": "Ansvar ikke avklart.",
+      "meldt_inn_som": "Begrenset",
       "generell_klasser": [
         "publikasjon"
       ]
@@ -667,7 +708,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "idriftsetter",
       "ansvarlig": null,
-      "maa_avklares": "Følg videre utvikling."
+      "maa_avklares": "Følg videre utvikling.",
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-380-01",
@@ -683,6 +725,7 @@
       "ssb_rolle": "idriftsetter",
       "ansvarlig": "Kenneth Schnelle",
       "maa_avklares": null,
+      "meldt_inn_som": "Begrenset",
       "generell_klasser": []
     },
     {
@@ -699,6 +742,7 @@
       "ssb_rolle": "uavklart",
       "ansvarlig": "Statistikkansvarlige",
       "maa_avklares": null,
+      "meldt_inn_som": "Begrenset",
       "generell_klasser": []
     },
     {
@@ -706,7 +750,7 @@
       "navn": "KI-støttet statistisk analyse og figurproduksjon",
       "avdeling": 400,
       "seksjon": 421,
-      "type": "generell",
+      "type": "spesifikk",
       "beskrivelse": "KI-generert API brukes til figurgrunnlag og diagrammer for Indikatorrapporten basert på data fra Statistikkbanken. KI brukes også i analyse av usikkerhet med tidsserieøkonometri.",
       "risikokategori": "begrenset",
       "vurderingsstatus": "foreloepig",
@@ -715,9 +759,7 @@
       "ssb_rolle": "uavklart",
       "ansvarlig": "Erik Fjærli",
       "maa_avklares": null,
-      "generell_klasser": [
-        "analyse"
-      ]
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-422-01",
@@ -733,6 +775,7 @@
       "ssb_rolle": "idriftsetter",
       "ansvarlig": "Seksjonssjef overordnet",
       "maa_avklares": null,
+      "meldt_inn_som": "Begrenset",
       "generell_klasser": []
     },
     {
@@ -748,7 +791,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "uavklart",
       "ansvarlig": "Joel Parr. God versjonering og dokumentasjon",
-      "maa_avklares": null
+      "maa_avklares": null,
+      "meldt_inn_som": "Høyrisiko / mulig høyrisiko"
     },
     {
       "id": "KI-423-02",
@@ -763,7 +807,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "uavklart",
       "ansvarlig": "Joel Parr",
-      "maa_avklares": null
+      "maa_avklares": null,
+      "meldt_inn_som": "Høyrisiko / mulig høyrisiko"
     },
     {
       "id": "KI-423-03",
@@ -778,7 +823,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "uavklart",
       "ansvarlig": "Iris Santos/Stian Elisenberg",
-      "maa_avklares": "Dokumentasjon bør styrkes."
+      "maa_avklares": "Dokumentasjon bør styrkes.",
+      "meldt_inn_som": "Høyrisiko / mulig høyrisiko"
     },
     {
       "id": "KI-423-04",
@@ -793,7 +839,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "uavklart",
       "ansvarlig": "Iris Santos. Dokumentasjon/pipeline må styrkes",
-      "maa_avklares": null
+      "maa_avklares": null,
+      "meldt_inn_som": "Høyrisiko / mulig høyrisiko"
     },
     {
       "id": "KI-423-05",
@@ -808,7 +855,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "uavklart",
       "ansvarlig": "Joel Parr",
-      "maa_avklares": null
+      "maa_avklares": null,
+      "meldt_inn_som": "Høyrisiko / mulig høyrisiko"
     },
     {
       "id": "KI-423-06",
@@ -823,7 +871,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "uavklart",
       "ansvarlig": "Joel Parr",
-      "maa_avklares": null
+      "maa_avklares": null,
+      "meldt_inn_som": "Høyrisiko / mulig høyrisiko"
     },
     {
       "id": "KI-423-07",
@@ -838,7 +887,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "idriftsetter",
       "ansvarlig": "Joel Parr. Ingen data ut av SSB",
-      "maa_avklares": null
+      "maa_avklares": null,
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-423-08",
@@ -854,6 +904,7 @@
       "ssb_rolle": "uavklart",
       "ansvarlig": "S423",
       "maa_avklares": null,
+      "meldt_inn_som": "Begrenset",
       "generell_klasser": [
         "publikasjon"
       ]
@@ -871,7 +922,25 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "uavklart",
       "ansvarlig": null,
-      "maa_avklares": "Bør ikke plottes som risikokategori før formålet er kjent."
+      "maa_avklares": "Bør ikke plottes som risikokategori før formålet er kjent.",
+      "meldt_inn_som": "Høyrisiko / mulig høyrisiko"
+    },
+    {
+      "id": "KI-423-10",
+      "navn": "KI-assistenter til intern kommunikasjon",
+      "avdeling": 400,
+      "seksjon": 423,
+      "type": "generell",
+      "beskrivelse": "KI-assistenter brukes til formulering av interne e-poster, beskjeder, oppsummeringer og forklaringer. Innholdet vurderes av medarbeider før bruk.",
+      "risikokategori": "minimal",
+      "vurderingsstatus": "foreloepig",
+      "fase": "drift",
+      "datagrunnlag": "runde1",
+      "ssb_rolle": "uavklart",
+      "ansvarlig": "S423",
+      "maa_avklares": null,
+      "meldt_inn_som": "Minimal",
+      "generell_klasser": []
     },
     {
       "id": "KI-424-01",
@@ -887,6 +956,7 @@
       "ssb_rolle": "uavklart",
       "ansvarlig": null,
       "maa_avklares": "Ansvar delvis ikke oppgitt.",
+      "meldt_inn_som": "Begrenset",
       "generell_klasser": []
     },
     {
@@ -902,7 +972,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "uavklart",
       "ansvarlig": "BR",
-      "maa_avklares": null
+      "maa_avklares": null,
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-424-03",
@@ -917,7 +988,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "uavklart",
       "ansvarlig": "Metode utvikler, S424 drifter",
-      "maa_avklares": null
+      "maa_avklares": null,
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-424-04",
@@ -932,7 +1004,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "uavklart",
       "ansvarlig": "S424. Gjelder virksomheter, ikke personer",
-      "maa_avklares": null
+      "maa_avklares": null,
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-425-01",
@@ -948,6 +1021,7 @@
       "ssb_rolle": "uavklart",
       "ansvarlig": "Flere",
       "maa_avklares": null,
+      "meldt_inn_som": "Minimal",
       "generell_klasser": [
         "mote"
       ]
@@ -965,7 +1039,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "uavklart",
       "ansvarlig": "Per Medby m.fl",
-      "maa_avklares": "Bør vurderes særskilt fordi resultatet brukes videre av Skatteetaten til skatteformål."
+      "maa_avklares": "Bør vurderes særskilt fordi resultatet brukes videre av Skatteetaten til skatteformål.",
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-426-02",
@@ -980,7 +1055,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "uavklart",
       "ansvarlig": "Gruppe for areal og GIS",
-      "maa_avklares": null
+      "maa_avklares": null,
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-426-03",
@@ -996,6 +1072,7 @@
       "ssb_rolle": "uavklart",
       "ansvarlig": "De fleste i seksjonen",
       "maa_avklares": null,
+      "meldt_inn_som": "Begrenset og minimal",
       "generell_klasser": []
     },
     {
@@ -1003,18 +1080,16 @@
       "navn": "Generative funksjoner i kommunikasjonsverktøy",
       "avdeling": 600,
       "seksjon": 660,
-      "type": "generell",
+      "type": "spesifikk",
       "beskrivelse": "Figma, Flourish, MyNewsDesk, Vimeo og Siteimprove har KI-funksjonalitet for innhold/visualisering",
       "risikokategori": "begrenset",
       "vurderingsstatus": "foreloepig",
       "fase": "tilgjengelig",
       "datagrunnlag": "runde1",
       "ssb_rolle": "idriftsetter",
-      "ansvarlig": "Faktisk bruk er ikke kartlagt for alle verktøy",
-      "maa_avklares": null,
-      "generell_klasser": [
-        "publikasjon"
-      ]
+      "ansvarlig": "Faktisk bruk er ikke kartlagt for alle verktøy. MyNewsDesk og Vimeo har ansvarlig i seksjon 630",
+      "maa_avklares": "Risikovurderingen av verktøyene ble gjort med Copilot og bør kvalitetssikres.",
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-660-02",
@@ -1029,7 +1104,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "idriftsetter",
       "ansvarlig": null,
-      "maa_avklares": "Faktisk KI-bruk bør skilles fra tilgjengelig funksjonalitet."
+      "maa_avklares": "Faktisk KI-bruk bør skilles fra tilgjengelig funksjonalitet.",
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-660-03",
@@ -1044,7 +1120,57 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "idriftsetter",
       "ansvarlig": "Ulrik Amundsen. Publiseringsnær bruk gjør transparens relevant",
-      "maa_avklares": null
+      "maa_avklares": null,
+      "meldt_inn_som": "Begrenset"
+    },
+    {
+      "id": "KI-660-04",
+      "navn": "KI-funksjoner i Hotjar",
+      "avdeling": 600,
+      "seksjon": 660,
+      "type": "spesifikk",
+      "beskrivelse": "Hotjar (Contentsquare) genererer spørreundersøkelser, lager automatiske sammendrag av fritekstsvar, gjør sentimentanalyse, automatisk tagging og tematisering, og produserer innsiktsrapporter med sitater og anbefalinger.",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "maa_avklares",
+      "fase": "tilgjengelig",
+      "datagrunnlag": "runde1",
+      "ssb_rolle": "uavklart",
+      "ansvarlig": "Maciej Warchal (660)",
+      "maa_avklares": "Avklar om funksjonene brukes på fritekstsvar fra respondenter eller brukere. Sentimentanalyse av svar fra enkeltpersoner bør vurderes av PVO.",
+      "meldt_inn_som": "Begrenset"
+    },
+    {
+      "id": "KI-722-01",
+      "navn": "Copilot til screening i rekruttering",
+      "avdeling": 700,
+      "seksjon": 722,
+      "type": "spesifikk",
+      "beskrivelse": "Microsoft Copilot brukes til screening og vurderingsstøtte ved rekruttering og utvelgelse av kandidater. KI-støtten kan påvirke hvilke kandidater som prioriteres videre i prosessen.",
+      "risikokategori": "hoyrisiko",
+      "vurderingsstatus": "mulig_hoyrisiko",
+      "fase": "drift",
+      "datagrunnlag": "runde2",
+      "ssb_rolle": "idriftsetter",
+      "ansvarlig": "Seksjonssjef Jo Andre Torp har meldt inn",
+      "maa_avklares": "Ikke avklart. Avklar KI-ens rolle i vurderingene og graden av menneskelig kontroll. Bør vurderes av HR, PVO og jus.",
+      "meldt_inn_som": "Høyrisiko / mulig høyrisiko"
+    },
+    {
+      "id": "KI-722-02",
+      "navn": "Generelle KI-assistenter",
+      "avdeling": 700,
+      "seksjon": 722,
+      "type": "generell",
+      "beskrivelse": "Microsoft Copilot brukes av de fleste ansatte til tekstutkast, informasjonsinnhenting og oppsummering, og av de aller fleste til kodegenerering, feilsøking og dokumentasjon.",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "fase": "drift",
+      "datagrunnlag": "runde2",
+      "ssb_rolle": "idriftsetter",
+      "ansvarlig": null,
+      "maa_avklares": "Ikke avklart. Fagansvar for seksjonens generelle Copilot-bruk bør utpekes.",
+      "meldt_inn_som": "Begrenset",
+      "generell_klasser": []
     },
     {
       "id": "KI-723-01",
@@ -1059,7 +1185,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "idriftsetter",
       "ansvarlig": "Erik Øvrum",
-      "maa_avklares": "Må avklares med HR/PVO/jus før eventuell bruk."
+      "maa_avklares": "Må avklares med HR/PVO/jus før eventuell bruk.",
+      "meldt_inn_som": "Høyrisiko / mulig høyrisiko"
     },
     {
       "id": "KI-723-02",
@@ -1074,7 +1201,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "idriftsetter",
       "ansvarlig": null,
-      "maa_avklares": "Avgjørende å avklare om KI vurderer ansatte eller bare hjelper med formulering."
+      "maa_avklares": "Ikke avklart. Meldt inn som begrenset risiko, hevet til mulig høyrisiko av prosjektet fordi bruken gjelder medarbeidersamtaler og oppfølging. Avgjørende å avklare om KI vurderer ansatte eller bare hjelper med formulering.",
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-723-03",
@@ -1090,6 +1218,7 @@
       "ssb_rolle": "idriftsetter",
       "ansvarlig": "Erik Øvrum",
       "maa_avklares": null,
+      "meldt_inn_som": "Begrenset",
       "generell_klasser": [
         "mote"
       ]
@@ -1100,14 +1229,15 @@
       "avdeling": 700,
       "seksjon": 782,
       "type": "spesifikk",
-      "beskrivelse": "M365 Copilot brukt til utvelgelse av kvalifiserte kandidater",
+      "beskrivelse": "M365 Copilot brukt til utvelgelse av kvalifiserte kandidater ved rekruttering til Kundeservice.",
       "risikokategori": "hoyrisiko",
       "vurderingsstatus": "kandidat",
       "fase": "drift",
       "datagrunnlag": "runde1",
       "ssb_rolle": "idriftsetter",
       "ansvarlig": "Klar høyrisikokandidat",
-      "maa_avklares": "HR/juridisk vurdering nødvendig."
+      "maa_avklares": "HR/juridisk vurdering nødvendig.",
+      "meldt_inn_som": "Høyrisiko / mulig høyrisiko"
     },
     {
       "id": "KI-782-02",
@@ -1121,8 +1251,9 @@
       "fase": "drift",
       "datagrunnlag": "runde1",
       "ssb_rolle": "idriftsetter",
-      "ansvarlig": "Personlig anskaffede abonnement oppgitt",
-      "maa_avklares": null,
+      "ansvarlig": "Claude og ChatGPT er personlig anskaffede abonnement brukt til infrastrukturkode",
+      "maa_avklares": "Ikke avklart. Avklar skillet mellom privat og virksomhetsgodkjent bruk.",
+      "meldt_inn_som": "Begrenset",
       "generell_klasser": []
     },
     {
@@ -1132,13 +1263,14 @@
       "seksjon": 782,
       "type": "generell",
       "beskrivelse": "Tekst, idémyldring, scripting og Atlassian-integrert støtte",
-      "risikokategori": "begrenset",
+      "risikokategori": "minimal",
       "vurderingsstatus": "foreloepig",
       "fase": "drift",
       "datagrunnlag": "runde1",
       "ssb_rolle": "idriftsetter",
       "ansvarlig": null,
       "maa_avklares": "Ansvar ikke oppgitt.",
+      "meldt_inn_som": "Minimal",
       "generell_klasser": []
     },
     {
@@ -1154,7 +1286,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "uavklart",
       "ansvarlig": "Seksjonsleder",
-      "maa_avklares": "Klar høyrisikokandidat; bør vurderes med HR/jus."
+      "maa_avklares": "Klar høyrisikokandidat; bør vurderes med HR/jus.",
+      "meldt_inn_som": "Høyrisiko / mulig høyrisiko"
     },
     {
       "id": "KI-811-02",
@@ -1170,6 +1303,7 @@
       "ssb_rolle": "uavklart",
       "ansvarlig": "Seksjon for metoder",
       "maa_avklares": null,
+      "meldt_inn_som": "Begrenset",
       "generell_klasser": [
         "mote",
         "analyse"
@@ -1188,7 +1322,8 @@
       "datagrunnlag": "runde1",
       "ssb_rolle": "uavklart",
       "ansvarlig": "Seksjon for metoder",
-      "maa_avklares": null
+      "maa_avklares": null,
+      "meldt_inn_som": "Egen kategori: ikke høyrisiko, KI til statistiske formål"
     },
     {
       "id": "KI-821-01",
@@ -1204,6 +1339,7 @@
       "ssb_rolle": "idriftsetter",
       "ansvarlig": "Seksjonsleder",
       "maa_avklares": null,
+      "meldt_inn_som": "Ikke entydig i referatet",
       "generell_klasser": []
     },
     {
@@ -1220,6 +1356,7 @@
       "ssb_rolle": "idriftsetter",
       "ansvarlig": "Seksjonsleder",
       "maa_avklares": null,
+      "meldt_inn_som": "Ikke entydig i referatet",
       "generell_klasser": [
         "analyse"
       ]
@@ -1237,7 +1374,8 @@
       "datagrunnlag": "runde2",
       "ssb_rolle": "idriftsetter",
       "ansvarlig": "Seksjonsleder",
-      "maa_avklares": null
+      "maa_avklares": null,
+      "meldt_inn_som": "Ikke entydig i referatet"
     },
     {
       "id": "KI-821-04",
@@ -1252,7 +1390,8 @@
       "datagrunnlag": "runde2",
       "ssb_rolle": "idriftsetter",
       "ansvarlig": "Seksjonsleder",
-      "maa_avklares": null
+      "maa_avklares": null,
+      "meldt_inn_som": "Ikke entydig i referatet"
     },
     {
       "id": "KI-851-01",
@@ -1268,6 +1407,7 @@
       "ssb_rolle": "idriftsetter",
       "ansvarlig": "Seksjonsleder",
       "maa_avklares": null,
+      "meldt_inn_som": "Begrenset",
       "generell_klasser": []
     },
     {
@@ -1284,6 +1424,7 @@
       "ssb_rolle": "idriftsetter",
       "ansvarlig": "Seksjonsleder",
       "maa_avklares": null,
+      "meldt_inn_som": "Begrenset",
       "generell_klasser": []
     },
     {
@@ -1299,7 +1440,8 @@
       "datagrunnlag": "runde2",
       "ssb_rolle": "uavklart",
       "ansvarlig": "Seksjonsleder",
-      "maa_avklares": null
+      "maa_avklares": null,
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-851-04",
@@ -1314,7 +1456,8 @@
       "datagrunnlag": "runde2",
       "ssb_rolle": "uavklart",
       "ansvarlig": "Seksjonsleder",
-      "maa_avklares": null
+      "maa_avklares": null,
+      "meldt_inn_som": "Begrenset"
     },
     {
       "id": "KI-851-05",
@@ -1330,22 +1473,7 @@
       "ssb_rolle": "idriftsetter",
       "ansvarlig": "Seksjonsleder",
       "maa_avklares": null,
-      "generell_klasser": []
-    },
-    {
-      "id": "KI-423-10",
-      "navn": "KI-assistenter til intern kommunikasjon",
-      "avdeling": 400,
-      "seksjon": 423,
-      "type": "generell",
-      "beskrivelse": "KI-assistenter brukes til formulering av interne e-poster, beskjeder, oppsummeringer og forklaringer. Innholdet vurderes av medarbeider før bruk.",
-      "risikokategori": "minimal",
-      "vurderingsstatus": "foreloepig",
-      "fase": "drift",
-      "datagrunnlag": "runde1",
-      "ssb_rolle": "uavklart",
-      "ansvarlig": "S423",
-      "maa_avklares": null,
+      "meldt_inn_som": "Minimal",
       "generell_klasser": []
     }
   ]

@@ -188,6 +188,8 @@ def main(sti, ut_sti):
             'ssb_rolle': 'idriftsetter' if TREDJEPART.search(tekst) else 'uavklart',
             'ansvarlig': ansvarlig,
             'maa_avklares': avklares,
+            'meldt_inn_som': (str(r['Meldt inn som']).strip() if 'Meldt inn som' in reg.columns
+                              and pd.notna(r.get('Meldt inn som')) else None),
         }
         if typ == 'generell':
             rec['generell_klasser'] = klasser_for_generell(tekst)
@@ -244,6 +246,10 @@ def main(sti, ut_sti):
     print(f'Skrev {ut_sti}')
     print(f'  {len(anvendelser)} anvendelser ({n_gen} alminnelig bruk, {len(anvendelser) - n_gen} egne)')
     print(f'  {int(plassholdere.sum())} plassholderrader hoppet over')
+    avvik = [a for a in anvendelser if a['meldt_inn_som'] in KATEGORI
+             and KATEGORI[a['meldt_inn_som']] != a['risikokategori']]
+    if avvik:
+        print(f'  {len(avvik)} poster er omplassert i forhold til det seksjonen meldte inn')
     print(f'  {sum(s["dekning"] == "levert" for s in seksjoner)} seksjoner har levert, '
           f'{sum(s["dekning"] == "ikke_levert" for s in seksjoner)} har ikke levert')
     if not har_type:
