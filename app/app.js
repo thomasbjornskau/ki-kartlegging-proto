@@ -49,7 +49,7 @@ const STATUS = { foreloepig: 'Foreløpig vurdert', ikke_vurdert: 'Ikke vurdert',
 const ROLLE = { idriftsetter: 'Idriftsetter', leverandoer: 'Leverandør',
                 uavklart: 'Rolle ikke avklart' };
 
-const GRUNNLAG = { runde1: 'Første innsamlingsrunde', runde2: 'Ny innsamlingsrunde' };
+const GRUNNLAG = { runde1: 'Første innsamlingsrunde', runde2: 'Ny innsamlingsrunde', skjema: 'Meldt inn via skjema' };
 
 // Kategorinavnene slik de står i intervjureferatene, for å kunne sammenligne
 const MELDT = { 'Begrenset': 'begrenset', 'Minimal': 'minimal', 'Uavklart': 'uavklart',
@@ -575,3 +575,159 @@ function velgSeksjon(kode) {
       '</dl></div>';
   }
 }
+
+/* ---------- innmeldingsskjema ----------
+   Skjemaet foreslår en kategori ut fra svarene. Regelen er bevisst enkel og
+   skrevet ned her, slik at den kan diskuteres: det er en arbeidsregel, ikke
+   en juridisk vurdering. Ingenting lagres; skjemaet produserer bare en
+   innmelding brukeren selv sender videre. */
+
+const MOTTAKER = 'thb@ssb.no';
+
+function foreslaaKategori(s) {
+  if (s.person === 'vurdering')
+    return { kat: 'Høyrisiko / mulig høyrisiko', vs: 'Mulig høyrisiko',
+      hvorfor: 'KI brukes til å vurdere, rangere eller følge opp personer. Rekruttering og '
+             + 'arbeidstakeroppfølging er egne områder i AI Acts vedlegg III, og slik bruk kan '
+             + 'falle inn under høyrisikoregimet uavhengig av hvor enkel modellen er.' };
+
+  if (s.ut === 'dialog')
+    return { kat: 'Begrenset', vs: 'Må avklares',
+      hvorfor: 'KI-en møter brukere eller respondenter direkte. Artikkel 50 krever at folk får '
+             + 'vite at de samhandler med KI. Det gjelder uavhengig av hva samtalen handler om.' };
+
+  if (s.ut === 'publisert' && s.art !== 'ml')
+    return { kat: 'Begrenset', vs: 'Foreløpig vurdert',
+      hvorfor: 'Generativ KI lager innhold som går ut av SSB. Da kan kravet om merking av '
+             + 'KI-generert innhold slå inn.' };
+
+  if (s.person === 'opplysninger')
+    return { kat: 'Minimal', vs: 'Må avklares',
+      hvorfor: 'KI brukes på opplysninger om enkeltpersoner, men ikke til å vurdere dem. Det er '
+             + 'normalt ikke høyrisiko etter AI Act. Personvernsiden må vurderes for seg, og '
+             + 'prosjektet tar den videre til personvernombudet.' };
+
+  return { kat: 'Minimal', vs: 'Foreløpig vurdert',
+    hvorfor: s.art === 'ml'
+      ? 'Maskinlæring i statistikkproduksjon som ikke brukes til beslutninger om enkeltpersoner. '
+      + 'Hvor avansert modellen er, har ingen betydning for kategorien.'
+      : 'Intern arbeidsstøtte med menneskelig kontroll, uten innhold som går ut og uten vurdering '
+      + 'av personer.' };
+}
+
+function nesteId(seksjon) {
+  const brukt = DATA.anvendelser.filter(a => a.seksjon === Number(seksjon))
+    .map(a => Number(String(a.id).split('-')[2])).filter(n => !isNaN(n));
+  const n = (brukt.length ? Math.max(...brukt) : 0) + 1;
+  return `KI-${seksjon}-${String(n).padStart(2, '0')}`;
+}
+
+function byggInnmelding() {
+  const v = id => document.getElementById(id).value.trim();
+  const rad = n => (document.querySelector(`input[name="${n}"]:checked`) || {}).value || '';
+  const s = { navn: v('s-navn'), seksjon: v('s-seksjon'), beskrivelse: v('s-beskrivelse'),
+              art: rad('art'), person: rad('person'), ut: rad('ut'), fase: rad('fase'),
+              eier: v('s-eier'), uklart: v('s-uklart'),
+              generell: document.getElementById('s-generell').checked };
+
+  const mangler = [];
+  if (!s.navn) mangler.push('navn');
+  if (!s.seksjon) mangler.push('seksjon');
+  if (!s.beskrivelse) mangler.push('beskrivelse');
+  if (!s.art) mangler.push('hva slags KI');
+  if (!s.person) mangler.push('bruk på personer');
+  if (!s.ut) mangler.push('om resultatet går ut');
+  if (!s.fase) mangler.push('hvor langt den er kommet');
+  if (mangler.length) return { mangler };
+
+  const f = foreslaaKategori(s);
+  const seksjon = DATA.seksjoner.find(x => x.kode === Number(s.seksjon));
+  return {
+    s, f,
+    felt: {
+      'ID': nesteId(s.seksjon),
+      'Avdeling': seksjon ? seksjon.avdeling : '',
+      'Seksjon': s.seksjon,
+      'Anvendelse': s.navn,
+      'Kort beskrivelse': s.beskrivelse,
+      'Kategori': f.kat,
+      'Status': s.fase,
+      'Ansvar / oppfølging': [s.eier, s.uklart].filter(Boolean).join('. '),
+      'Datagrunnlag': 'Innmeldt – via skjema',
+      'Vurderingsstatus': f.vs,
+      'Type': s.generell ? 'generell' : 'spesifikk',
+      'Meldt inn som': f.kat,
+    },
+  };
+}
+
+(function skjema() {
+  const form = document.getElementById('innmeld');
+  if (!form) return;
+
+  document.getElementById('s-seksjon').innerHTML = '<option value="">Velg seksjon</option>' +
+    DATA.seksjoner.map(x => `<option value="${x.kode}">Seksjon ${x.kode} (avdeling ${x.avdeling})</option>`).join('');
+
+  let siste = null;
+  const kvittering = t => {
+    const e = document.getElementById('s-kvittering');
+    e.textContent = t; setTimeout(() => { e.textContent = ''; }, 4000);
+  };
+  const kopier = t => {
+    navigator.clipboard.writeText(t).then(() => kvittering('Kopiert.'),
+      () => kvittering('Kunne ikke kopiere. Marker teksten og kopier selv.'));
+  };
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const r = byggInnmelding();
+    const feil = document.getElementById('s-feil');
+    if (r.mangler) {
+      feil.textContent = 'Fyll ut ' + liste(r.mangler) + ' før du lager innmeldingen.';
+      document.getElementById('resultat').hidden = true;
+      return;
+    }
+    feil.textContent = '';
+    siste = r;
+
+    document.getElementById('s-forslag').innerHTML =
+      '<h3>Forslag til kategori</h3>' +
+      `<span class="merke risiko"><span class="rute ${
+        {'Høyrisiko / mulig høyrisiko':'hoyrisiko','Begrenset':'begrenset','Minimal':'minimal'}[r.f.kat]
+      }" aria-hidden="true"></span>${r.f.kat}</span>` +
+      `<p>${r.f.hvorfor}</p>` +
+      '<p class="notat">Dette er en veiledende arbeidsregel, ikke en juridisk vurdering. ' +
+      'Prosjektet gjør den endelige plasseringen, og kategorien du fikk her lagres som «meldt inn som».</p>';
+
+    document.getElementById('s-utdata').textContent =
+      Object.entries(r.felt).map(([k, val]) => `${k}: ${val}`).join('\n');
+
+    const boks = document.getElementById('resultat');
+    boks.hidden = false;
+    boks.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+                          block: 'nearest' });
+  });
+
+  document.getElementById('s-send').addEventListener('click', () => {
+    if (!siste) return;
+    const brodtekst = 'Ny KI-anvendelse meldt inn via oversiktssiden.\n\n'
+      + Object.entries(siste.felt).map(([k, v]) => `${k}: ${v}`).join('\n')
+      + '\n\nBegrunnelse for foreslått kategori:\n' + siste.f.hvorfor + '\n';
+    const url = `mailto:${MOTTAKER}?subject=${encodeURIComponent('Ny KI-anvendelse: ' + siste.s.navn)}`
+      + `&body=${encodeURIComponent(brodtekst)}`;
+    if (url.length > 1900) {
+      kvittering('Innmeldingen er for lang for e-postknappen. Kopier teksten i stedet.');
+      return;
+    }
+    location.href = url;
+  });
+
+  document.getElementById('s-kopier').addEventListener('click', () => {
+    if (siste) kopier(document.getElementById('s-utdata').textContent);
+  });
+
+  // Én linje med tabulator mellom feltene, i samme rekkefølge som regnearket
+  document.getElementById('s-rad').addEventListener('click', () => {
+    if (siste) kopier(Object.values(siste.felt).map(v => String(v).replace(/\s+/g, ' ')).join('\t'));
+  });
+})();

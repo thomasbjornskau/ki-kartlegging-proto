@@ -55,6 +55,41 @@ celler er seksjoner som ikke har levert. I båndet betyr avstand ingenting.
 Punkter som ellers ville dekket hverandre er forskjøvet litt. Forskyvningen
 har ingen faglig betydning.
 
+## Innmeldingsskjema
+
+Siden har et skjema under «Meld inn KI-bruk». Det lagrer ingenting — Pages-
+nettstedet er statisk og offentlig. Skjemaet stiller fire spørsmål som avgjør
+kategori, foreslår en plassering med begrunnelse, og produserer en ferdig
+registerpost.
+
+Tre knapper: e-post til prosjektleder, kopier teksten, eller kopier som
+regnearkrad. Den siste gir én tabulatordelt linje med de tolv kolonnene i
+riktig rekkefølge, klar til å limes inn nederst i `Register`-arket.
+
+Arbeidsflyten er da:
+
+    lim inn raden i kilde/KI_register.xlsx
+    python3 verktoy/excel_til_json.py kilde/KI_register.xlsx
+    git add kilde/ data.json && git commit -m "Ny anvendelse: <navn>"
+
+Mottakeradressen ligger i `MOTTAKER` øverst i skjemadelen av `app.js`.
+
+### Arbeidsregelen skjemaet bruker
+
+Reglene står i `foreslaaKategori()` i app.js, i denne rekkefølgen:
+
+1. Brukes KI til å vurdere, rangere eller følge opp personer → høyrisiko
+2. Møter KI-en brukere eller respondenter direkte → begrenset, må avklares
+3. Lager generativ KI innhold som publiseres eller sendes ut → begrenset
+4. Brukes KI på opplysninger om enkeltpersoner uten å vurdere dem → minimal,
+   må avklares, tas videre til personvernombudet
+5. Ellers → minimal
+
+Dette er en arbeidsregel, ikke en juridisk vurdering. Registeret følger den
+ikke konsekvent i dag: intern generativ bruk er plassert både som begrenset og
+som minimal. Regelen bør derfor bekreftes av metode, og registeret ryddes i
+tråd med den.
+
 ## Kolonnen «Meldt inn som»
 
 Viser hvilken kategori seksjonen selv oppga i intervjureferatet. Der den

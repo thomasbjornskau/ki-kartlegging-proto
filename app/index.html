@@ -185,30 +185,111 @@
 <section class="seksjon" id="nye" aria-labelledby="h-nye">
   <div class="ramme">
     <p class="eyebrow">Nye anvendelser</p>
-    <h2 id="h-nye">Slik melder du inn KI-bruk</h2>
-    <p class="tekst">Registeret er ikke ferdig. Meld fra tidlig: en anvendelse på idéstadiet er lettere å vurdere enn en som allerede er i drift.</p>
-    <div class="sti">
-      <div>
-        <h3>Dette trenger vi å vite</h3>
-        <ul>
-          <li>Hva KI-en faktisk gjør, i én til tre setninger</li>
-          <li>Hvilken seksjon som bruker den</li>
-          <li>Om den brukes på opplysninger om enkeltpersoner</li>
-          <li>Hvem som eier anvendelsen</li>
-          <li>Om den er idé, pilot eller i drift</li>
-          <li>Hva som er uklart</li>
-        </ul>
-      </div>
+    <h2 id="h-nye">Meld inn KI-bruk</h2>
+    <p class="tekst">Registeret er ikke ferdig. Meld fra tidlig — en anvendelse på idéstadiet er lettere å vurdere enn en som allerede er i drift. Skjemaet foreslår en kategori ut fra svarene dine og sier hvorfor. Forslaget er veiledende; prosjektet gjør den endelige plasseringen.</p>
+
+    <div class="sti" style="margin-bottom:32px">
       <div>
         <h3>Beskriv bruken, ikke verktøyet</h3>
         <p>«Copilot» er et verktøy. «Copilot brukt til å sile jobbsøkere» er en anvendelse. Samme verktøy kan brukes til mange formål og få ulik vurdering.</p>
-        <p>Alminnelig bruk av KI-assistenter til kode og tekst trenger ikke meldes per person eller oppgave. Det holder at seksjonen er med.</p>
+      </div>
+      <div>
+        <h3>Én post per seksjon for vanlig assistentbruk</h3>
+        <p>Bruker mange i seksjonen KI-assistenter til kode og tekst, er det én innmelding. Kryss av for det nederst i skjemaet.</p>
       </div>
       <div>
         <h3>Hva som skjer etterpå</h3>
-        <p>Prosjektet gjør en foreløpig plassering og legger anvendelsen inn i registeret. Ved mistanke om høyrisiko tas den videre til HR, personvernombud og jus.</p>
-        <p class="notat">Mottaker og svartid er ikke avklart ennå. Til det er på plass, meld fra til prosjektleder.</p>
+        <p>Innmeldingen går til prosjektleder, som plasserer anvendelsen i registeret. Ved mistanke om høyrisiko tas den videre til HR, personvernombud og jus.</p>
+        <p class="notat">Fast mottaker og svartid er ikke avklart ennå.</p>
       </div>
+    </div>
+
+    <form id="innmeld" class="skjema" novalidate>
+      <div class="skjema-rad">
+        <div class="felt">
+          <label for="s-navn">Hva heter anvendelsen?</label>
+          <input type="text" id="s-navn" required placeholder="For eksempel: KI-støtte ved koding av yrke">
+          <p class="hjelp">En kort setning som beskriver bruken, ikke produktnavnet.</p>
+        </div>
+        <div class="felt">
+          <label for="s-seksjon">Hvilken seksjon bruker den?</label>
+          <select id="s-seksjon" required></select>
+        </div>
+      </div>
+
+      <div class="felt">
+        <label for="s-beskrivelse">Hva gjør KI-en?</label>
+        <textarea id="s-beskrivelse" rows="3" required placeholder="Én til tre setninger. Hva slags data går inn, hva kommer ut, og hvem ser på resultatet?"></textarea>
+      </div>
+
+      <fieldset class="felt">
+        <legend>Hva slags KI er det?</legend>
+        <div class="valg">
+          <label><input type="radio" name="art" value="generativ"> Generativ KI eller KI-assistent, som lager tekst, kode eller bilder</label>
+          <label><input type="radio" name="art" value="ml"> Maskinlæring eller statistisk modell, som klassifiserer, imputerer eller predikerer</label>
+          <label><input type="radio" name="art" value="ukjent"> Vet ikke, eller begge deler</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="felt">
+        <legend>Brukes den på eller om personer?</legend>
+        <div class="valg">
+          <label><input type="radio" name="person" value="nei"> Nei</label>
+          <label><input type="radio" name="person" value="virksomhet"> Ja, men bare om virksomheter eller aggregerte tall</label>
+          <label><input type="radio" name="person" value="opplysninger"> Ja, på opplysninger om enkeltpersoner, for eksempel respondent- eller registerdata</label>
+          <label><input type="radio" name="person" value="vurdering"> Ja, til å vurdere, rangere eller følge opp personer, for eksempel søkere eller ansatte</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="felt">
+        <legend>Går resultatet ut av seksjonen?</legend>
+        <div class="valg">
+          <label><input type="radio" name="ut" value="internt"> Nei, bare internt arbeid med menneskelig kontroll</label>
+          <label><input type="radio" name="ut" value="publisert"> Ja, innhold som publiseres eller sendes til eksterne</label>
+          <label><input type="radio" name="ut" value="dialog"> Ja, den møter brukere eller respondenter direkte, for eksempel som chatbot</label>
+        </div>
+      </fieldset>
+
+      <div class="skjema-rad">
+        <fieldset class="felt">
+          <legend>Hvor langt er den kommet?</legend>
+          <div class="valg">
+            <label><input type="radio" name="fase" value="Idé"> Idé</label>
+            <label><input type="radio" name="fase" value="Test"> Pilot eller test</label>
+            <label><input type="radio" name="fase" value="I bruk"> I bruk</label>
+            <label><input type="radio" name="fase" value="Produksjon"> I produksjon</label>
+          </div>
+        </fieldset>
+        <div class="felt">
+          <label for="s-eier">Hvem eier anvendelsen?</label>
+          <input type="text" id="s-eier" placeholder="Rolle eller navn">
+          <p class="hjelp">Den som kan svare på hvordan den brukes og hvorfor.</p>
+          <label for="s-uklart" style="margin-top:16px">Hva er uklart?</label>
+          <textarea id="s-uklart" rows="2" placeholder="Valgfritt. Noe du er usikker på, eller som bør avklares."></textarea>
+        </div>
+      </div>
+
+      <div class="felt">
+        <label class="avkryss"><input type="checkbox" id="s-generell"> Dette er alminnelig bruk av KI-assistenter i seksjonen, ikke en egen anvendelse</label>
+      </div>
+
+      <div class="skjema-knapper">
+        <button type="submit" class="knapp-primaer">Lag innmelding</button>
+        <p class="hjelp" id="s-feil" role="alert"></p>
+      </div>
+    </form>
+
+    <div id="resultat" hidden>
+      <div class="forslag" id="s-forslag"></div>
+      <h3 style="margin-bottom:8px">Innmelding</h3>
+      <pre class="utdata" id="s-utdata" tabindex="0"></pre>
+      <div class="skjema-knapper">
+        <button type="button" class="knapp-primaer" id="s-send">Send til prosjektleder</button>
+        <button type="button" class="knapp-sekundaer" id="s-kopier">Kopier teksten</button>
+        <button type="button" class="knapp-sekundaer" id="s-rad">Kopier som regnearkrad</button>
+        <span class="hjelp" id="s-kvittering" role="status"></span>
+      </div>
+      <p class="notat" style="margin-top:14px">Knappen åpner e-postprogrammet med innmeldingen ferdig utfylt. Virker den ikke, kopier teksten og send den selv til thb@ssb.no.</p>
     </div>
   </div>
 </section>

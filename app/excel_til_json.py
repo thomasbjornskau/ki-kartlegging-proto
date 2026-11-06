@@ -64,6 +64,7 @@ FASE = {
 DATAGRUNNLAG = {
     'Innmeldt – første runde': 'runde1',
     'Innmeldt – ny runde': 'runde2',
+    'Innmeldt – via skjema': 'skjema',
 }
 
 DEKNING = {

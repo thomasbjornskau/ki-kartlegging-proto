@@ -350,6 +350,55 @@ td .kat { display: inline-flex; align-items: center; gap: 8px; white-space: nowr
 }
 .tabellhylse + .notat { margin-top: 12px; }
 
+/* ---------- innmeldingsskjema ---------- */
+
+.skjema { max-width: 940px; border-top: 1px solid var(--mellom); padding-top: calc(var(--rad) * 3); }
+.skjema-rad { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(var(--rad) * 3); }
+.skjema .felt { margin-bottom: calc(var(--rad) * 3); max-width: 60ch; }
+.skjema legend { font-size: 0.9375rem; font-weight: 600; color: var(--mork); padding: 0; margin-bottom: var(--rad); }
+.skjema label { font-size: 0.9375rem; font-weight: 600; color: var(--mork); }
+
+.skjema input[type=text], .skjema textarea, .skjema select {
+  font: inherit; color: var(--tekst); width: 100%;
+  padding: 10px 12px; border: 1px solid var(--mork); border-radius: var(--hjorne); background: var(--hvit);
+}
+.skjema input[type=text] { height: 44px; padding: 0 12px; }
+.skjema textarea { resize: vertical; line-height: 1.5; }
+
+.hjelp { font-size: 0.8125rem; color: var(--tekst-2); margin: 6px 0 0; font-weight: 400; }
+#s-feil { color: var(--forbudt); font-weight: 600; }
+
+.valg { display: flex; flex-direction: column; gap: 2px; }
+.valg label {
+  display: flex; align-items: flex-start; gap: 10px; font-weight: 400; font-size: 0.9375rem;
+  padding: 9px 10px; border: 1px solid transparent; cursor: pointer; min-height: 44px;
+}
+.valg label:hover { background: var(--lys); }
+.valg input { width: 20px; height: 20px; accent-color: var(--mork); margin: 1px 0 0; flex: none; }
+.valg label:has(input:checked) { background: var(--lys); border-color: var(--mellom); font-weight: 600; }
+
+.skjema-knapper { display: flex; flex-wrap: wrap; gap: calc(var(--rad) * 1.5); align-items: center; }
+.knapp-primaer {
+  font: inherit; font-size: 0.9375rem; font-weight: 600;
+  min-height: 44px; padding: 0 20px; cursor: pointer;
+  background: var(--gronn); color: var(--hvit); border: 1px solid var(--gronn); border-radius: var(--hjorne);
+}
+.knapp-primaer:hover { background: var(--mork); border-color: var(--mork); }
+
+#resultat { max-width: 940px; margin-top: calc(var(--rad) * 4); padding-top: calc(var(--rad) * 3); border-top: 1px solid var(--mellom); }
+.forslag { background: var(--lys); border-left: 4px solid var(--gronn); padding: calc(var(--rad) * 2); margin-bottom: calc(var(--rad) * 3); }
+.forslag h3 { margin-bottom: 6px; }
+.forslag p { font-size: 0.9375rem; margin-bottom: 8px; }
+.forslag .merke.risiko { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+.utdata {
+  font: 400 13.5px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  white-space: pre-wrap; background: var(--hvit); border: 1px solid var(--mellom);
+  padding: calc(var(--rad) * 2); margin: 0 0 calc(var(--rad) * 2); overflow-x: auto;
+}
+#s-kvittering { color: var(--gronn); font-weight: 600; }
+
+@media (max-width: 720px) { .skjema-rad { grid-template-columns: minmax(0, 1fr); } }
+
 </style>
 </head>
 <body>
@@ -531,30 +580,111 @@ td .kat { display: inline-flex; align-items: center; gap: 8px; white-space: nowr
 <section class="seksjon" id="nye" aria-labelledby="h-nye">
   <div class="ramme">
     <p class="eyebrow">Nye anvendelser</p>
-    <h2 id="h-nye">Slik melder du inn KI-bruk</h2>
-    <p class="tekst">Registeret er ikke ferdig. Meld fra tidlig: en anvendelse på idéstadiet er lettere å vurdere enn en som allerede er i drift.</p>
-    <div class="sti">
-      <div>
-        <h3>Dette trenger vi å vite</h3>
-        <ul>
-          <li>Hva KI-en faktisk gjør, i én til tre setninger</li>
-          <li>Hvilken seksjon som bruker den</li>
-          <li>Om den brukes på opplysninger om enkeltpersoner</li>
-          <li>Hvem som eier anvendelsen</li>
-          <li>Om den er idé, pilot eller i drift</li>
-          <li>Hva som er uklart</li>
-        </ul>
-      </div>
+    <h2 id="h-nye">Meld inn KI-bruk</h2>
+    <p class="tekst">Registeret er ikke ferdig. Meld fra tidlig — en anvendelse på idéstadiet er lettere å vurdere enn en som allerede er i drift. Skjemaet foreslår en kategori ut fra svarene dine og sier hvorfor. Forslaget er veiledende; prosjektet gjør den endelige plasseringen.</p>
+
+    <div class="sti" style="margin-bottom:32px">
       <div>
         <h3>Beskriv bruken, ikke verktøyet</h3>
         <p>«Copilot» er et verktøy. «Copilot brukt til å sile jobbsøkere» er en anvendelse. Samme verktøy kan brukes til mange formål og få ulik vurdering.</p>
-        <p>Alminnelig bruk av KI-assistenter til kode og tekst trenger ikke meldes per person eller oppgave. Det holder at seksjonen er med.</p>
+      </div>
+      <div>
+        <h3>Én post per seksjon for vanlig assistentbruk</h3>
+        <p>Bruker mange i seksjonen KI-assistenter til kode og tekst, er det én innmelding. Kryss av for det nederst i skjemaet.</p>
       </div>
       <div>
         <h3>Hva som skjer etterpå</h3>
-        <p>Prosjektet gjør en foreløpig plassering og legger anvendelsen inn i registeret. Ved mistanke om høyrisiko tas den videre til HR, personvernombud og jus.</p>
-        <p class="notat">Mottaker og svartid er ikke avklart ennå. Til det er på plass, meld fra til prosjektleder.</p>
+        <p>Innmeldingen går til prosjektleder, som plasserer anvendelsen i registeret. Ved mistanke om høyrisiko tas den videre til HR, personvernombud og jus.</p>
+        <p class="notat">Fast mottaker og svartid er ikke avklart ennå.</p>
       </div>
+    </div>
+
+    <form id="innmeld" class="skjema" novalidate>
+      <div class="skjema-rad">
+        <div class="felt">
+          <label for="s-navn">Hva heter anvendelsen?</label>
+          <input type="text" id="s-navn" required placeholder="For eksempel: KI-støtte ved koding av yrke">
+          <p class="hjelp">En kort setning som beskriver bruken, ikke produktnavnet.</p>
+        </div>
+        <div class="felt">
+          <label for="s-seksjon">Hvilken seksjon bruker den?</label>
+          <select id="s-seksjon" required></select>
+        </div>
+      </div>
+
+      <div class="felt">
+        <label for="s-beskrivelse">Hva gjør KI-en?</label>
+        <textarea id="s-beskrivelse" rows="3" required placeholder="Én til tre setninger. Hva slags data går inn, hva kommer ut, og hvem ser på resultatet?"></textarea>
+      </div>
+
+      <fieldset class="felt">
+        <legend>Hva slags KI er det?</legend>
+        <div class="valg">
+          <label><input type="radio" name="art" value="generativ"> Generativ KI eller KI-assistent, som lager tekst, kode eller bilder</label>
+          <label><input type="radio" name="art" value="ml"> Maskinlæring eller statistisk modell, som klassifiserer, imputerer eller predikerer</label>
+          <label><input type="radio" name="art" value="ukjent"> Vet ikke, eller begge deler</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="felt">
+        <legend>Brukes den på eller om personer?</legend>
+        <div class="valg">
+          <label><input type="radio" name="person" value="nei"> Nei</label>
+          <label><input type="radio" name="person" value="virksomhet"> Ja, men bare om virksomheter eller aggregerte tall</label>
+          <label><input type="radio" name="person" value="opplysninger"> Ja, på opplysninger om enkeltpersoner, for eksempel respondent- eller registerdata</label>
+          <label><input type="radio" name="person" value="vurdering"> Ja, til å vurdere, rangere eller følge opp personer, for eksempel søkere eller ansatte</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="felt">
+        <legend>Går resultatet ut av seksjonen?</legend>
+        <div class="valg">
+          <label><input type="radio" name="ut" value="internt"> Nei, bare internt arbeid med menneskelig kontroll</label>
+          <label><input type="radio" name="ut" value="publisert"> Ja, innhold som publiseres eller sendes til eksterne</label>
+          <label><input type="radio" name="ut" value="dialog"> Ja, den møter brukere eller respondenter direkte, for eksempel som chatbot</label>
+        </div>
+      </fieldset>
+
+      <div class="skjema-rad">
+        <fieldset class="felt">
+          <legend>Hvor langt er den kommet?</legend>
+          <div class="valg">
+            <label><input type="radio" name="fase" value="Idé"> Idé</label>
+            <label><input type="radio" name="fase" value="Test"> Pilot eller test</label>
+            <label><input type="radio" name="fase" value="I bruk"> I bruk</label>
+            <label><input type="radio" name="fase" value="Produksjon"> I produksjon</label>
+          </div>
+        </fieldset>
+        <div class="felt">
+          <label for="s-eier">Hvem eier anvendelsen?</label>
+          <input type="text" id="s-eier" placeholder="Rolle eller navn">
+          <p class="hjelp">Den som kan svare på hvordan den brukes og hvorfor.</p>
+          <label for="s-uklart" style="margin-top:16px">Hva er uklart?</label>
+          <textarea id="s-uklart" rows="2" placeholder="Valgfritt. Noe du er usikker på, eller som bør avklares."></textarea>
+        </div>
+      </div>
+
+      <div class="felt">
+        <label class="avkryss"><input type="checkbox" id="s-generell"> Dette er alminnelig bruk av KI-assistenter i seksjonen, ikke en egen anvendelse</label>
+      </div>
+
+      <div class="skjema-knapper">
+        <button type="submit" class="knapp-primaer">Lag innmelding</button>
+        <p class="hjelp" id="s-feil" role="alert"></p>
+      </div>
+    </form>
+
+    <div id="resultat" hidden>
+      <div class="forslag" id="s-forslag"></div>
+      <h3 style="margin-bottom:8px">Innmelding</h3>
+      <pre class="utdata" id="s-utdata" tabindex="0"></pre>
+      <div class="skjema-knapper">
+        <button type="button" class="knapp-primaer" id="s-send">Send til prosjektleder</button>
+        <button type="button" class="knapp-sekundaer" id="s-kopier">Kopier teksten</button>
+        <button type="button" class="knapp-sekundaer" id="s-rad">Kopier som regnearkrad</button>
+        <span class="hjelp" id="s-kvittering" role="status"></span>
+      </div>
+      <p class="notat" style="margin-top:14px">Knappen åpner e-postprogrammet med innmeldingen ferdig utfylt. Virker den ikke, kopier teksten og send den selv til thb@ssb.no.</p>
     </div>
   </div>
 </section>
@@ -2122,7 +2252,7 @@ const STATUS = { foreloepig: 'Foreløpig vurdert', ikke_vurdert: 'Ikke vurdert',
 const ROLLE = { idriftsetter: 'Idriftsetter', leverandoer: 'Leverandør',
                 uavklart: 'Rolle ikke avklart' };
 
-const GRUNNLAG = { runde1: 'Første innsamlingsrunde', runde2: 'Ny innsamlingsrunde' };
+const GRUNNLAG = { runde1: 'Første innsamlingsrunde', runde2: 'Ny innsamlingsrunde', skjema: 'Meldt inn via skjema' };
 
 // Kategorinavnene slik de står i intervjureferatene, for å kunne sammenligne
 const MELDT = { 'Begrenset': 'begrenset', 'Minimal': 'minimal', 'Uavklart': 'uavklart',
@@ -2648,6 +2778,162 @@ function velgSeksjon(kode) {
       '</dl></div>';
   }
 }
+
+/* ---------- innmeldingsskjema ----------
+   Skjemaet foreslår en kategori ut fra svarene. Regelen er bevisst enkel og
+   skrevet ned her, slik at den kan diskuteres: det er en arbeidsregel, ikke
+   en juridisk vurdering. Ingenting lagres; skjemaet produserer bare en
+   innmelding brukeren selv sender videre. */
+
+const MOTTAKER = 'thb@ssb.no';
+
+function foreslaaKategori(s) {
+  if (s.person === 'vurdering')
+    return { kat: 'Høyrisiko / mulig høyrisiko', vs: 'Mulig høyrisiko',
+      hvorfor: 'KI brukes til å vurdere, rangere eller følge opp personer. Rekruttering og '
+             + 'arbeidstakeroppfølging er egne områder i AI Acts vedlegg III, og slik bruk kan '
+             + 'falle inn under høyrisikoregimet uavhengig av hvor enkel modellen er.' };
+
+  if (s.ut === 'dialog')
+    return { kat: 'Begrenset', vs: 'Må avklares',
+      hvorfor: 'KI-en møter brukere eller respondenter direkte. Artikkel 50 krever at folk får '
+             + 'vite at de samhandler med KI. Det gjelder uavhengig av hva samtalen handler om.' };
+
+  if (s.ut === 'publisert' && s.art !== 'ml')
+    return { kat: 'Begrenset', vs: 'Foreløpig vurdert',
+      hvorfor: 'Generativ KI lager innhold som går ut av SSB. Da kan kravet om merking av '
+             + 'KI-generert innhold slå inn.' };
+
+  if (s.person === 'opplysninger')
+    return { kat: 'Minimal', vs: 'Må avklares',
+      hvorfor: 'KI brukes på opplysninger om enkeltpersoner, men ikke til å vurdere dem. Det er '
+             + 'normalt ikke høyrisiko etter AI Act. Personvernsiden må vurderes for seg, og '
+             + 'prosjektet tar den videre til personvernombudet.' };
+
+  return { kat: 'Minimal', vs: 'Foreløpig vurdert',
+    hvorfor: s.art === 'ml'
+      ? 'Maskinlæring i statistikkproduksjon som ikke brukes til beslutninger om enkeltpersoner. '
+      + 'Hvor avansert modellen er, har ingen betydning for kategorien.'
+      : 'Intern arbeidsstøtte med menneskelig kontroll, uten innhold som går ut og uten vurdering '
+      + 'av personer.' };
+}
+
+function nesteId(seksjon) {
+  const brukt = DATA.anvendelser.filter(a => a.seksjon === Number(seksjon))
+    .map(a => Number(String(a.id).split('-')[2])).filter(n => !isNaN(n));
+  const n = (brukt.length ? Math.max(...brukt) : 0) + 1;
+  return `KI-${seksjon}-${String(n).padStart(2, '0')}`;
+}
+
+function byggInnmelding() {
+  const v = id => document.getElementById(id).value.trim();
+  const rad = n => (document.querySelector(`input[name="${n}"]:checked`) || {}).value || '';
+  const s = { navn: v('s-navn'), seksjon: v('s-seksjon'), beskrivelse: v('s-beskrivelse'),
+              art: rad('art'), person: rad('person'), ut: rad('ut'), fase: rad('fase'),
+              eier: v('s-eier'), uklart: v('s-uklart'),
+              generell: document.getElementById('s-generell').checked };
+
+  const mangler = [];
+  if (!s.navn) mangler.push('navn');
+  if (!s.seksjon) mangler.push('seksjon');
+  if (!s.beskrivelse) mangler.push('beskrivelse');
+  if (!s.art) mangler.push('hva slags KI');
+  if (!s.person) mangler.push('bruk på personer');
+  if (!s.ut) mangler.push('om resultatet går ut');
+  if (!s.fase) mangler.push('hvor langt den er kommet');
+  if (mangler.length) return { mangler };
+
+  const f = foreslaaKategori(s);
+  const seksjon = DATA.seksjoner.find(x => x.kode === Number(s.seksjon));
+  return {
+    s, f,
+    felt: {
+      'ID': nesteId(s.seksjon),
+      'Avdeling': seksjon ? seksjon.avdeling : '',
+      'Seksjon': s.seksjon,
+      'Anvendelse': s.navn,
+      'Kort beskrivelse': s.beskrivelse,
+      'Kategori': f.kat,
+      'Status': s.fase,
+      'Ansvar / oppfølging': [s.eier, s.uklart].filter(Boolean).join('. '),
+      'Datagrunnlag': 'Innmeldt – via skjema',
+      'Vurderingsstatus': f.vs,
+      'Type': s.generell ? 'generell' : 'spesifikk',
+      'Meldt inn som': f.kat,
+    },
+  };
+}
+
+(function skjema() {
+  const form = document.getElementById('innmeld');
+  if (!form) return;
+
+  document.getElementById('s-seksjon').innerHTML = '<option value="">Velg seksjon</option>' +
+    DATA.seksjoner.map(x => `<option value="${x.kode}">Seksjon ${x.kode} (avdeling ${x.avdeling})</option>`).join('');
+
+  let siste = null;
+  const kvittering = t => {
+    const e = document.getElementById('s-kvittering');
+    e.textContent = t; setTimeout(() => { e.textContent = ''; }, 4000);
+  };
+  const kopier = t => {
+    navigator.clipboard.writeText(t).then(() => kvittering('Kopiert.'),
+      () => kvittering('Kunne ikke kopiere. Marker teksten og kopier selv.'));
+  };
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const r = byggInnmelding();
+    const feil = document.getElementById('s-feil');
+    if (r.mangler) {
+      feil.textContent = 'Fyll ut ' + liste(r.mangler) + ' før du lager innmeldingen.';
+      document.getElementById('resultat').hidden = true;
+      return;
+    }
+    feil.textContent = '';
+    siste = r;
+
+    document.getElementById('s-forslag').innerHTML =
+      '<h3>Forslag til kategori</h3>' +
+      `<span class="merke risiko"><span class="rute ${
+        {'Høyrisiko / mulig høyrisiko':'hoyrisiko','Begrenset':'begrenset','Minimal':'minimal'}[r.f.kat]
+      }" aria-hidden="true"></span>${r.f.kat}</span>` +
+      `<p>${r.f.hvorfor}</p>` +
+      '<p class="notat">Dette er en veiledende arbeidsregel, ikke en juridisk vurdering. ' +
+      'Prosjektet gjør den endelige plasseringen, og kategorien du fikk her lagres som «meldt inn som».</p>';
+
+    document.getElementById('s-utdata').textContent =
+      Object.entries(r.felt).map(([k, val]) => `${k}: ${val}`).join('\n');
+
+    const boks = document.getElementById('resultat');
+    boks.hidden = false;
+    boks.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+                          block: 'nearest' });
+  });
+
+  document.getElementById('s-send').addEventListener('click', () => {
+    if (!siste) return;
+    const brodtekst = 'Ny KI-anvendelse meldt inn via oversiktssiden.\n\n'
+      + Object.entries(siste.felt).map(([k, v]) => `${k}: ${v}`).join('\n')
+      + '\n\nBegrunnelse for foreslått kategori:\n' + siste.f.hvorfor + '\n';
+    const url = `mailto:${MOTTAKER}?subject=${encodeURIComponent('Ny KI-anvendelse: ' + siste.s.navn)}`
+      + `&body=${encodeURIComponent(brodtekst)}`;
+    if (url.length > 1900) {
+      kvittering('Innmeldingen er for lang for e-postknappen. Kopier teksten i stedet.');
+      return;
+    }
+    location.href = url;
+  });
+
+  document.getElementById('s-kopier').addEventListener('click', () => {
+    if (siste) kopier(document.getElementById('s-utdata').textContent);
+  });
+
+  // Én linje med tabulator mellom feltene, i samme rekkefølge som regnearket
+  document.getElementById('s-rad').addEventListener('click', () => {
+    if (siste) kopier(Object.values(siste.felt).map(v => String(v).replace(/\s+/g, ' ')).join('\t'));
+  });
+})();
 
 </script>
 </body>
