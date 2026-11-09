@@ -5,12 +5,28 @@ etter AI Act (forordning 2024/1689).
 
 ## Oppdatere registeret
 
-Excel-filen i `kilde/` er kilden. `data.json` er avledet og skal ikke
-redigeres for hånd.
+Excel-filen i `kilde/` er kilden. **`data.json` er avledet, og det er den
+siden leser.** Endrer du bare Excel-filen, skjer det ingenting på nettsiden.
+
+Med GitHub Action (anbefalt): lim inn raden i regnearket og commit kilden.
+`.github/workflows/bygg-data.yml` regenererer `data.json` og committer den.
+
+    git add kilde/KI_register.xlsx
+    git commit -m "Ny anvendelse: <navn>"
+    git push
+
+Manuelt, hvis du vil se resultatet før du pusher:
 
     python3 verktoy/excel_til_json.py kilde/KI_register.xlsx
-    git add kilde/ data.json
-    git commit -m "Oppdatert register"
+    git add kilde/KI_register.xlsx data.json
+    git commit -m "Ny anvendelse: <navn>"
+    git push
+
+Krever `pandas` og `openpyxl` (`pip install pandas openpyxl`).
+
+Viser siden fortsatt gamle tall etter at Pages har bygget, er det nettleseren.
+Siden ber om en fersk `data.json`, men en hard oppdatering (Ctrl+F5) løser
+resten.
 
 Skriptet stopper hvis det møter en verdi det ikke kjenner, for eksempel en ny
 status. Det er med vilje: nye verdier skal legges inn bevisst i skriptet, ikke

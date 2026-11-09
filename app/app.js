@@ -104,7 +104,9 @@ const liste = xs => xs.length < 2 ? xs.join('') : xs.slice(0, -1).join(', ') + '
 if (window.DATA) {
   DATA = window.DATA; start();
 } else {
-  fetch('data.json')
+  // no-cache: be alltid om en fersk kopi, slik at nettleseren ikke viser
+  // et gammelt register etter at data.json er oppdatert og publisert
+  fetch('data.json', { cache: 'no-cache' })
     .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(d => { DATA = d; start(); })
     .catch(() => { document.getElementById('feil').hidden = false; });
