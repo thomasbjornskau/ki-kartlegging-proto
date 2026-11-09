@@ -18,3 +18,5 @@ venv/
 
 # Sensitive data
 data/raw/
+
+app/samlefil.html
