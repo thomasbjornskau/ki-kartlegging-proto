@@ -12,7 +12,9 @@ og kildefilen – aldri i samlefilen.
 import sys
 from pathlib import Path
 
-rot = Path(__file__).resolve().parent.parent
+# Rotmappa er der index.html ligger: enten skriptets egen mappe eller mappa over.
+her = Path(__file__).resolve().parent
+rot = her if (her / 'index.html').exists() else her.parent
 html = (rot / 'index.html').read_text(encoding='utf-8')
 css = (rot / 'style.css').read_text(encoding='utf-8')
 js = (rot / 'app.js').read_text(encoding='utf-8')

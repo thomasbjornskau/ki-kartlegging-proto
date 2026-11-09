@@ -166,6 +166,11 @@ def main(sti, ut_sti):
         if seksjon not in dekning_seksjon:
             advarsler.append(f'Seksjon {seksjon} har poster, men mangler i Dekning-arket. Satt som levert.')
             dekning_seksjon[seksjon] = (int(r['Avdeling']), 'levert')
+        elif dekning_seksjon[seksjon][1] != 'levert':
+            advarsler.append(f'Seksjon {seksjon} har poster, men står som '
+                             f'«{dekning_seksjon[seksjon][1]}» i Dekning-arket. '
+                             'Feltet blir skravert i figuren selv om det er punkter i sektoren. '
+                             'Rett statusen i Dekning-arket.')
 
         tekst = f"{r['Anvendelse']} {r['Kort beskrivelse']}"
         if har_type and pd.notna(r.get('Type')):
@@ -268,5 +273,9 @@ if __name__ == '__main__':
         print(__doc__)
         sys.exit(1)
     kilde = sys.argv[1]
-    mål = sys.argv[2] if len(sys.argv) > 2 else str(Path(__file__).resolve().parent.parent / 'data.json')
+    # Uten andre argument legges data.json ved siden av index.html. Vi leter
+    # etter den i skriptets egen mappe først, deretter i mappa over.
+    her = Path(__file__).resolve().parent
+    standard = her / 'data.json' if (her / 'index.html').exists() else her.parent / 'data.json'
+    mål = sys.argv[2] if len(sys.argv) > 2 else str(standard)
     main(kilde, mål)
