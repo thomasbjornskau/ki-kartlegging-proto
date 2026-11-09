@@ -368,14 +368,26 @@ td .kat { display: inline-flex; align-items: center; gap: 8px; white-space: nowr
 .hjelp { font-size: 0.8125rem; color: var(--tekst-2); margin: 6px 0 0; font-weight: 400; }
 #s-feil { color: var(--forbudt); font-weight: 600; }
 
-.valg { display: flex; flex-direction: column; gap: 2px; }
+/* Ett valg per linje, med synlig skillelinje. Markeringen av valgt alternativ
+   ligger både på label (:has) og på selve radioknappen, slik at den virker også
+   i nettlesere uten :has-støtte. */
+.valg { display: block; border: 1px solid var(--mellom); border-radius: var(--hjorne); }
 .valg label {
-  display: flex; align-items: flex-start; gap: 10px; font-weight: 400; font-size: 0.9375rem;
-  padding: 9px 10px; border: 1px solid transparent; cursor: pointer; min-height: 44px;
+  display: flex; align-items: flex-start; gap: 12px; width: 100%;
+  font-weight: 400; font-size: 0.9375rem; line-height: 1.45;
+  padding: 11px 14px; cursor: pointer; min-height: 44px;
+  border-bottom: 1px solid var(--mellom); border-left: 3px solid transparent;
 }
+.valg label:last-child { border-bottom: 0; }
 .valg label:hover { background: var(--lys); }
-.valg input { width: 20px; height: 20px; accent-color: var(--mork); margin: 1px 0 0; flex: none; }
-.valg label:has(input:checked) { background: var(--lys); border-color: var(--mellom); font-weight: 600; }
+.valg input {
+  width: 20px; height: 20px; accent-color: var(--gronn);
+  margin: 1px 0 0; flex: none;
+}
+.valg input:focus-visible { outline: 3px solid var(--lilla); outline-offset: 2px; }
+.valg label:has(input:checked) {
+  background: var(--lys); border-left-color: var(--gronn); font-weight: 600;
+}
 
 .skjema-knapper { display: flex; flex-wrap: wrap; gap: calc(var(--rad) * 1.5); align-items: center; }
 .knapp-primaer {
@@ -645,22 +657,25 @@ td .kat { display: inline-flex; align-items: center; gap: 8px; white-space: nowr
         </div>
       </fieldset>
 
+      <fieldset class="felt">
+        <legend>Hvor langt er den kommet?</legend>
+        <div class="valg">
+          <label><input type="radio" name="fase" value="Idé"> Idé</label>
+          <label><input type="radio" name="fase" value="Test"> Pilot eller test</label>
+          <label><input type="radio" name="fase" value="I bruk"> I bruk</label>
+          <label><input type="radio" name="fase" value="Produksjon"> I produksjon</label>
+        </div>
+      </fieldset>
+
       <div class="skjema-rad">
-        <fieldset class="felt">
-          <legend>Hvor langt er den kommet?</legend>
-          <div class="valg">
-            <label><input type="radio" name="fase" value="Idé"> Idé</label>
-            <label><input type="radio" name="fase" value="Test"> Pilot eller test</label>
-            <label><input type="radio" name="fase" value="I bruk"> I bruk</label>
-            <label><input type="radio" name="fase" value="Produksjon"> I produksjon</label>
-          </div>
-        </fieldset>
         <div class="felt">
           <label for="s-eier">Hvem eier anvendelsen?</label>
           <input type="text" id="s-eier" placeholder="Rolle eller navn">
           <p class="hjelp">Den som kan svare på hvordan den brukes og hvorfor.</p>
-          <label for="s-uklart" style="margin-top:16px">Hva er uklart?</label>
-          <textarea id="s-uklart" rows="2" placeholder="Valgfritt. Noe du er usikker på, eller som bør avklares."></textarea>
+        </div>
+        <div class="felt">
+          <label for="s-uklart">Hva er uklart?</label>
+          <textarea id="s-uklart" rows="3" placeholder="Valgfritt. Noe du er usikker på, eller som bør avklares."></textarea>
         </div>
       </div>
 
@@ -670,6 +685,7 @@ td .kat { display: inline-flex; align-items: center; gap: 8px; white-space: nowr
 
       <div class="skjema-knapper">
         <button type="submit" class="knapp-primaer">Lag innmelding</button>
+        <span class="hjelp">Du får et forslag til kategori og en ferdig post. Sending er neste steg.</span>
         <p class="hjelp" id="s-feil" role="alert"></p>
       </div>
     </form>
@@ -2323,6 +2339,7 @@ function start() {
   tegnUplassert();
   fyllFiltre();
   koblingerOgLyttere();
+  settOppSkjema();
   oppdater();
 }
 
@@ -2864,21 +2881,23 @@ function byggInnmelding() {
   };
 }
 
-(function skjema() {
+function settOppSkjema() {
   const form = document.getElementById('innmeld');
-  if (!form) return;
+  if (!form || form.dataset.klar) return;
+  form.dataset.klar = '1';
 
   document.getElementById('s-seksjon').innerHTML = '<option value="">Velg seksjon</option>' +
     DATA.seksjoner.map(x => `<option value="${x.kode}">Seksjon ${x.kode} (avdeling ${x.avdeling})</option>`).join('');
 
   let siste = null;
-  const kvittering = t => {
+  const kvittering = (t, varig) => {
     const e = document.getElementById('s-kvittering');
-    e.textContent = t; setTimeout(() => { e.textContent = ''; }, 4000);
+    e.textContent = t;
+    if (!varig) setTimeout(() => { if (e.textContent === t) e.textContent = ''; }, 6000);
   };
   const kopier = t => {
     navigator.clipboard.writeText(t).then(() => kvittering('Kopiert.'),
-      () => kvittering('Kunne ikke kopiere. Marker teksten og kopier selv.'));
+      () => kvittering('Kunne ikke kopiere. Marker teksten og kopier selv.', true));
   };
 
   form.addEventListener('submit', e => {
@@ -2919,9 +2938,12 @@ function byggInnmelding() {
     const url = `mailto:${MOTTAKER}?subject=${encodeURIComponent('Ny KI-anvendelse: ' + siste.s.navn)}`
       + `&body=${encodeURIComponent(brodtekst)}`;
     if (url.length > 1900) {
-      kvittering('Innmeldingen er for lang for e-postknappen. Kopier teksten i stedet.');
+      kvittering('Innmeldingen er for lang for e-postknappen. Bruk «Kopier teksten» i stedet.', true);
       return;
     }
+    // Vi får ikke vite om e-postprogrammet faktisk åpnet, så vi sier hva som skal skje
+    kvittering(`E-postprogrammet skal nå åpne med innmeldingen klar til ${MOTTAKER}. `
+             + 'Skjer det ikke, bruk «Kopier teksten».');
     location.href = url;
   });
 
@@ -2933,7 +2955,7 @@ function byggInnmelding() {
   document.getElementById('s-rad').addEventListener('click', () => {
     if (siste) kopier(Object.values(siste.felt).map(v => String(v).replace(/\s+/g, ' ')).join('\t'));
   });
-})();
+}
 
 </script>
 </body>

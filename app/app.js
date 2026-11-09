@@ -120,6 +120,7 @@ function start() {
   tegnUplassert();
   fyllFiltre();
   koblingerOgLyttere();
+  settOppSkjema();
   oppdater();
 }
 
@@ -661,21 +662,23 @@ function byggInnmelding() {
   };
 }
 
-(function skjema() {
+function settOppSkjema() {
   const form = document.getElementById('innmeld');
-  if (!form) return;
+  if (!form || form.dataset.klar) return;
+  form.dataset.klar = '1';
 
   document.getElementById('s-seksjon').innerHTML = '<option value="">Velg seksjon</option>' +
     DATA.seksjoner.map(x => `<option value="${x.kode}">Seksjon ${x.kode} (avdeling ${x.avdeling})</option>`).join('');
 
   let siste = null;
-  const kvittering = t => {
+  const kvittering = (t, varig) => {
     const e = document.getElementById('s-kvittering');
-    e.textContent = t; setTimeout(() => { e.textContent = ''; }, 4000);
+    e.textContent = t;
+    if (!varig) setTimeout(() => { if (e.textContent === t) e.textContent = ''; }, 6000);
   };
   const kopier = t => {
     navigator.clipboard.writeText(t).then(() => kvittering('Kopiert.'),
-      () => kvittering('Kunne ikke kopiere. Marker teksten og kopier selv.'));
+      () => kvittering('Kunne ikke kopiere. Marker teksten og kopier selv.', true));
   };
 
   form.addEventListener('submit', e => {
@@ -716,9 +719,12 @@ function byggInnmelding() {
     const url = `mailto:${MOTTAKER}?subject=${encodeURIComponent('Ny KI-anvendelse: ' + siste.s.navn)}`
       + `&body=${encodeURIComponent(brodtekst)}`;
     if (url.length > 1900) {
-      kvittering('Innmeldingen er for lang for e-postknappen. Kopier teksten i stedet.');
+      kvittering('Innmeldingen er for lang for e-postknappen. Bruk «Kopier teksten» i stedet.', true);
       return;
     }
+    // Vi får ikke vite om e-postprogrammet faktisk åpnet, så vi sier hva som skal skje
+    kvittering(`E-postprogrammet skal nå åpne med innmeldingen klar til ${MOTTAKER}. `
+             + 'Skjer det ikke, bruk «Kopier teksten».');
     location.href = url;
   });
 
@@ -730,4 +736,4 @@ function byggInnmelding() {
   document.getElementById('s-rad').addEventListener('click', () => {
     if (siste) kopier(Object.values(siste.felt).map(v => String(v).replace(/\s+/g, ' ')).join('\t'));
   });
-})();
+}

@@ -250,22 +250,25 @@
         </div>
       </fieldset>
 
+      <fieldset class="felt">
+        <legend>Hvor langt er den kommet?</legend>
+        <div class="valg">
+          <label><input type="radio" name="fase" value="Idé"> Idé</label>
+          <label><input type="radio" name="fase" value="Test"> Pilot eller test</label>
+          <label><input type="radio" name="fase" value="I bruk"> I bruk</label>
+          <label><input type="radio" name="fase" value="Produksjon"> I produksjon</label>
+        </div>
+      </fieldset>
+
       <div class="skjema-rad">
-        <fieldset class="felt">
-          <legend>Hvor langt er den kommet?</legend>
-          <div class="valg">
-            <label><input type="radio" name="fase" value="Idé"> Idé</label>
-            <label><input type="radio" name="fase" value="Test"> Pilot eller test</label>
-            <label><input type="radio" name="fase" value="I bruk"> I bruk</label>
-            <label><input type="radio" name="fase" value="Produksjon"> I produksjon</label>
-          </div>
-        </fieldset>
         <div class="felt">
           <label for="s-eier">Hvem eier anvendelsen?</label>
           <input type="text" id="s-eier" placeholder="Rolle eller navn">
           <p class="hjelp">Den som kan svare på hvordan den brukes og hvorfor.</p>
-          <label for="s-uklart" style="margin-top:16px">Hva er uklart?</label>
-          <textarea id="s-uklart" rows="2" placeholder="Valgfritt. Noe du er usikker på, eller som bør avklares."></textarea>
+        </div>
+        <div class="felt">
+          <label for="s-uklart">Hva er uklart?</label>
+          <textarea id="s-uklart" rows="3" placeholder="Valgfritt. Noe du er usikker på, eller som bør avklares."></textarea>
         </div>
       </div>
 
@@ -275,6 +278,7 @@
 
       <div class="skjema-knapper">
         <button type="submit" class="knapp-primaer">Lag innmelding</button>
+        <span class="hjelp">Du får et forslag til kategori og en ferdig post. Sending er neste steg.</span>
         <p class="hjelp" id="s-feil" role="alert"></p>
       </div>
     </form>
