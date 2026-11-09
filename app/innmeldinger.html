@@ -5,19 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Innmeldinger til regnearkrader</title>
 <style>
-:root{--mork:#274247;--gronn:#00824D;--lys:#F0F8F9;--mellom:#C3DCDC;--lilla:#7E5EE8;
---tekst:#1B2E32;--tekst-2:#4b6166;--rod:#c0392b;--gul:#8a6d1f;--rad:8px}
+/* Roboto fra @statisticsnorway/design-css. Begge stier dekker at filen kan
+   ligge i verktoy/ eller rett ved siden av fonts/. */
+@font-face{font-family:"Roboto";font-weight:400;font-style:normal;font-display:swap;
+src:url("fonts/roboto-400.woff2") format("woff2"),url("../fonts/roboto-400.woff2") format("woff2")}
+@font-face{font-family:"Roboto";font-weight:700;font-style:normal;font-display:swap;
+src:url("fonts/roboto-700.woff2") format("woff2"),url("../fonts/roboto-700.woff2") format("woff2")}
+:root{--mork:#274247;--gronn:#00824D;--gronn-tekst:#016842;--lys:#F0F8F9;--mellom:#C3DCDC;
+--lilla:#7E5EE8;--tekst:#1B2E32;--tekst-2:#4b6166;--rod:#c0392b;--gul:#8a6d1f;--rad:8px}
 *,*::before,*::after{box-sizing:border-box}
 body{margin:0;background:#fff;color:var(--tekst);
-font:400 16px/1.6 "Open Sans",Roboto,Arial,sans-serif}
+font:400 16px/1.6 Roboto,Arial,sans-serif}
 .ramme{max-width:1180px;margin:0 auto;padding:0 24px}
-h1,h2,h3{color:var(--mork);margin:0;font-weight:600}
+h1,h2,h3{color:var(--mork);margin:0;font-weight:700}
 h1{font-size:1.75rem;line-height:1.2}
 h2{font-size:1.25rem;margin-bottom:12px}
 p{margin:0 0 16px;max-width:70ch}
 :focus-visible{outline:3px solid var(--lilla);outline-offset:2px}
 header{padding:48px 0 28px;border-bottom:1px solid var(--mellom);margin-bottom:36px}
-.eyebrow{color:var(--gronn);font-size:.875rem;font-weight:600;margin:0 0 8px}
+.eyebrow{color:var(--gronn-tekst);font-size:.875rem;font-weight:600;margin:0 0 8px}
 .notat{color:var(--tekst-2);font-size:.875rem}
 section{margin-bottom:40px}
 label{display:block;font-size:.9375rem;font-weight:600;color:var(--mork);margin-bottom:6px}
@@ -29,19 +35,19 @@ cursor:pointer;border-radius:2px;border:1px solid var(--mork);background:#fff;co
 button.primaer{background:var(--gronn);border-color:var(--gronn);color:#fff}
 button.primaer:hover{background:var(--mork);border-color:var(--mork)}
 button:not(.primaer):hover{background:var(--lys)}
-.kvittering{color:var(--gronn);font-weight:600;font-size:.875rem}
+.kvittering{color:var(--gronn-tekst);font-weight:600;font-size:.875rem}
 table{border-collapse:collapse;width:100%;font-size:.875rem;margin-top:8px}
 th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--mellom);vertical-align:top}
 th{font-size:.8125rem;color:var(--tekst-2);border-bottom:1px solid var(--mork);white-space:nowrap}
 tr.feil td{background:#fdf0ee}
 tr.advarsel td{background:#fdf8e8}
 .status{font-weight:600;white-space:nowrap}
-.status.ok{color:var(--gronn)}
+.status.ok{color:var(--gronn-tekst)}
 .status.feil{color:var(--rod)}
 .status.advarsel{color:var(--gul)}
 .merknad{font-size:.8125rem;color:var(--tekst-2);margin-top:3px}
 pre{font:400 13px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-background:var(--lys);border:1px solid var(--mellom);padding:16px;overflow-x:auto;
+background:var(--lys);border:1px solid var(--tekst-2);padding:16px;overflow-x:auto;
 white-space:pre;margin:0}
 .boks{background:var(--lys);border-left:4px solid var(--gronn);padding:16px 20px}
 .tom{color:var(--tekst-2)}

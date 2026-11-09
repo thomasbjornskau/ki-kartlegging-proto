@@ -20,6 +20,16 @@ css = (rot / 'style.css').read_text(encoding='utf-8')
 js = (rot / 'app.js').read_text(encoding='utf-8')
 data = (rot / 'data.json').read_text(encoding='utf-8')
 
+# Skriftene bygges inn, slik at samlefilen kan sendes som én fil
+import base64, re
+def bygg_inn_font(treff):
+    sti = rot / treff.group(1)
+    if not sti.exists():
+        return treff.group(0)
+    b64 = base64.b64encode(sti.read_bytes()).decode()
+    return f'url("data:font/woff2;base64,{b64}") format("woff2")'
+css = re.sub(r'url\("(fonts/[^"]+\.woff2)"\)\s*format\("woff2"\)', bygg_inn_font, css)
+
 html = html.replace('<link rel="stylesheet" href="style.css">', f'<style>\n{css}\n</style>')
 html = html.replace('<!--DATA-->', f'<script>window.DATA = {data};</script>')
 html = html.replace('<script src="app.js"></script>', f'<script>\n{js}\n</script>')

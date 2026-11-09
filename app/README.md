@@ -1,4 +1,4 @@
-# KI-kartlegging – prototype v0.4
+# KI-kartlegging – prototype v0.5
 
 Oversikt over kartlagte KI-anvendelser i SSB og deres foreløpige plassering
 etter AI Act (forordning 2024/1689).
@@ -70,6 +70,31 @@ celler er seksjoner som ikke har levert. I båndet betyr avstand ingenting.
 
 Punkter som ellers ville dekket hverandre er forskjøvet litt. Forskyvningen
 har ingen faglig betydning.
+
+## Utseende
+
+Siden følger SSBs formspråk, men bygger ikke på `ssb-component-library` eller
+`@statisticsnorway/design-css`. Komponentbiblioteket krever React og et
+byggesteg, og designsystemet er på versjon 0.2.4 med komponenter dimensjonert
+for publikumsrettede sider. Denne siden er tett og analytisk.
+
+Tre ting er likevel hentet derfra:
+
+- **Roboto**, kopiert fra `@statisticsnorway/design-css` til `fonts/`.
+  Ingen CDN og ingen ekstern forespørsel. Lisens i `fonts/LICENSE-ROBOTO`.
+- **Overskrifter i 700**, som i designsystemets tokens.
+- **`--gronn-tekst` #016842** til tekst og lenker (6,9:1 mot hvit).
+  `--gronn` #00824D beholdes til knapper og markeringer.
+
+Fargepaletten lå allerede i SSB-temaet: #274247, #00824D, #F0F8F9 og #7E5EE8
+finnes som tokens der.
+
+Rammer som avgrenser noe meningsbærende bruker `--tekst-2`, ikke `--mellom`.
+Den lyse mellomtonen har bare 1,4:1 mot hvit og duger til skillelinjer, ikke
+til ytterrammer.
+
+Når designsystemet når en stabil versjon, er spørsmålet om applikasjonen skal
+bygges på nytt på det, ikke om denne skal pyntes.
 
 ## Innmeldingsskjema
 
