@@ -74,6 +74,26 @@ Arbeidsflyten er da:
 
 Mottakeradressen ligger i `MOTTAKER` øverst i skjemadelen av `app.js`.
 
+### Når innmeldingen kommer på e-post
+
+`verktoy/innmeldinger.html` gjør motsatt vei. Åpne den, lim inn e-postteksten
+fra én eller flere innmeldinger, og få ferdige regnearkrader ut. Hilsener,
+signaturer og kommentarer hoppes over, og tekst som e-postklienten har brukket
+over flere linjer settes sammen igjen.
+
+Siden kontrollerer hver innmelding mot `data.json` før den slipper gjennom:
+
+- at alle obligatoriske felter er med
+- at kategori, status og vurderingsstatus har kjente verdier
+- at ID-en ikke allerede finnes i registeret
+- at avdeling og seksjon hører sammen
+
+Mangler avdeling, datagrunnlag, vurderingsstatus, type eller «meldt inn som»,
+fylles de ut med rimelige standardverdier, og det står i merknaden. Rader med
+feil tas ikke med i utdataene.
+
+Siden er et arbeidsverktøy for prosjektleder og er ikke lenket fra oversikten.
+
 ### Arbeidsregelen skjemaet bruker
 
 Reglene står i `foreslaaKategori()` i app.js, i denne rekkefølgen:

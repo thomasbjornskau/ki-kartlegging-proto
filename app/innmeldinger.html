@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Innmeldinger til regnearkrader</title>
+<style>
+:root{--mork:#274247;--gronn:#00824D;--lys:#F0F8F9;--mellom:#C3DCDC;--lilla:#7E5EE8;
+--tekst:#1B2E32;--tekst-2:#4b6166;--rod:#c0392b;--gul:#8a6d1f;--rad:8px}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--tekst);
+font:400 16px/1.6 "Open Sans",Roboto,Arial,sans-serif}
+.ramme{max-width:1180px;margin:0 auto;padding:0 24px}
+h1,h2,h3{color:var(--mork);margin:0;font-weight:600}
+h1{font-size:1.75rem;line-height:1.2}
+h2{font-size:1.25rem;margin-bottom:12px}
+p{margin:0 0 16px;max-width:70ch}
+:focus-visible{outline:3px solid var(--lilla);outline-offset:2px}
+header{padding:48px 0 28px;border-bottom:1px solid var(--mellom);margin-bottom:36px}
+.eyebrow{color:var(--gronn);font-size:.875rem;font-weight:600;margin:0 0 8px}
+.notat{color:var(--tekst-2);font-size:.875rem}
+section{margin-bottom:40px}
+label{display:block;font-size:.9375rem;font-weight:600;color:var(--mork);margin-bottom:6px}
+textarea{font:400 13.5px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+width:100%;padding:12px;border:1px solid var(--mork);border-radius:2px;resize:vertical;color:var(--tekst)}
+.knapper{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:16px}
+button{font:inherit;font-size:.9375rem;font-weight:600;min-height:44px;padding:0 20px;
+cursor:pointer;border-radius:2px;border:1px solid var(--mork);background:#fff;color:var(--mork)}
+button.primaer{background:var(--gronn);border-color:var(--gronn);color:#fff}
+button.primaer:hover{background:var(--mork);border-color:var(--mork)}
+button:not(.primaer):hover{background:var(--lys)}
+.kvittering{color:var(--gronn);font-weight:600;font-size:.875rem}
+table{border-collapse:collapse;width:100%;font-size:.875rem;margin-top:8px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--mellom);vertical-align:top}
+th{font-size:.8125rem;color:var(--tekst-2);border-bottom:1px solid var(--mork);white-space:nowrap}
+tr.feil td{background:#fdf0ee}
+tr.advarsel td{background:#fdf8e8}
+.status{font-weight:600;white-space:nowrap}
+.status.ok{color:var(--gronn)}
+.status.feil{color:var(--rod)}
+.status.advarsel{color:var(--gul)}
+.merknad{font-size:.8125rem;color:var(--tekst-2);margin-top:3px}
+pre{font:400 13px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+background:var(--lys);border:1px solid var(--mellom);padding:16px;overflow-x:auto;
+white-space:pre;margin:0}
+.boks{background:var(--lys);border-left:4px solid var(--gronn);padding:16px 20px}
+.tom{color:var(--tekst-2)}
+footer{padding:24px 0 48px;font-size:.8125rem;color:var(--tekst-2)}
+</style>
+</head>
+<body>
+
+<header><div class="ramme">
+  <p class="eyebrow">Verktøy for prosjektleder</p>
+  <h1>Fra innmelding til regnearkrad</h1>
+  <p style="margin-top:12px">Lim inn teksten fra én eller flere innmeldinger. Siden henter ut feltene, sjekker dem mot registeret og gir deg ferdige rader å lime inn nederst i <code>Register</code>-arket.</p>
+  <p class="notat">Alt skjer i nettleseren. Ingenting sendes eller lagres.</p>
+</div></header>
+
+<main class="ramme">
+
+<section>
+  <label for="inn">Innmeldinger</label>
+  <textarea id="inn" rows="14" spellcheck="false" placeholder="Lim inn e-postteksten her. Hilsener, signaturer og kommentarer kan stå — de hoppes over. Flere innmeldinger etter hverandre går fint."></textarea>
+  <div class="knapper">
+    <button type="button" class="primaer" id="les">Les innmeldinger</button>
+    <button type="button" id="tom">Tøm</button>
+    <span class="kvittering" id="kvitt" role="status"></span>
+  </div>
+</section>
+
+<section id="resultat" hidden>
+  <h2>Funnet</h2>
+  <div id="oversikt"></div>
+  <table id="tabell"><thead><tr>
+    <th>Status</th><th>ID</th><th>Seksjon</th><th>Anvendelse</th><th>Kategori</th><th>Merknad</th>
+  </tr></thead><tbody></tbody></table>
+</section>
+
+<section id="utseksjon" hidden>
+  <h2>Rader til regnearket</h2>
+  <p class="notat">Én linje per innmelding, med tabulator mellom feltene og kolonnene i samme rekkefølge som arket. Marker cellen under siste rad i <code>Register</code> og lim inn.</p>
+  <pre id="ut"></pre>
+  <div class="knapper">
+    <button type="button" class="primaer" id="kopier">Kopier radene</button>
+    <span class="kvittering" id="kvitt2" role="status"></span>
+  </div>
+</section>
+
+</main>
+
+<footer class="ramme">Del av KI-kartleggingen. Rader med feil tas ikke med før de er rettet.</footer>
+
+<script>
+const KOL = ['ID','Avdeling','Seksjon','Anvendelse','Kort beskrivelse','Kategori','Status',
+             'Ansvar / oppfølging','Datagrunnlag','Vurderingsstatus','Type','Meldt inn som'];
+
+const KATEGORIER = ['Forbudt','Høyrisiko / mulig høyrisiko','Begrenset','Minimal','Uavklart'];
+const FASER = ['I bruk','Produksjon','Idé','Test','Planlagt','Eksperiment',
+               'Tilgjengelig / bruk varierer','Under anskaffelse / planlagt'];
+const VSTATUS = ['Foreløpig vurdert','Må avklares','Mulig høyrisiko','Høyrisikokandidat',
+                 'Avklart','Ikke vurdert','Ikke vurdert – formål mangler'];
+
+let REG = null;
+['../data.json','data.json'].reduce((p,u) => p.catch(() =>
+  fetch(u).then(r => { if (!r.ok) throw 0; return r.json(); })), Promise.reject())
+  .then(d => { REG = d; }).catch(() => { REG = null; });
+
+/* Feltnavnet kan stå med eller uten innledende punkt/strek, og e-postklienter
+   bryter lange linjer. Vi samler derfor alt fram til neste kjente feltnavn. */
+const navnMonster = new RegExp('^\\s*[-*>\\s]*(' +
+  KOL.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')\\s*:\\s*(.*)$', 'i');
+
+function lesBlokker(tekst) {
+  const linjer = tekst.replace(/\r/g, '').split('\n');
+  const poster = [];
+  let aktiv = null, sisteFelt = null;
+
+  for (const linje of linjer) {
+    const m = linje.match(navnMonster);
+    if (m) {
+      const felt = KOL.find(k => k.toLowerCase() === m[1].toLowerCase());
+      // Ny ID betyr at en ny innmelding begynner
+      if (felt === 'ID' || !aktiv) { aktiv = {}; poster.push(aktiv); }
+      aktiv[felt] = m[2].trim();
+      sisteFelt = felt;
+    } else if (aktiv && sisteFelt && linje.trim() && !/^[-=_]{3,}$/.test(linje.trim())) {
+      // fortsettelseslinje fra ombrukket tekst
+      if (['Kort beskrivelse','Ansvar / oppfølging','Anvendelse'].includes(sisteFelt))
+        aktiv[sisteFelt] = (aktiv[sisteFelt] + ' ' + linje.trim()).trim();
+    } else if (!linje.trim()) {
+      sisteFelt = null;
+    }
+  }
+  return poster.filter(p => Object.keys(p).length >= 3);
+}
+
+function sjekk(p, alleIder) {
+  const feil = [], advarsel = [];
+  for (const k of ['ID','Seksjon','Anvendelse','Kort beskrivelse','Kategori','Status'])
+    if (!p[k]) feil.push('mangler ' + k.toLowerCase());
+
+  if (p.Kategori && !KATEGORIER.includes(p.Kategori))
+    feil.push(`ukjent kategori «${p.Kategori}»`);
+  if (p.Status && !FASER.includes(p.Status))
+    advarsel.push(`ukjent status «${p.Status}»`);
+  if (p.Vurderingsstatus && !VSTATUS.includes(p.Vurderingsstatus))
+    advarsel.push(`ukjent vurderingsstatus «${p.Vurderingsstatus}»`);
+  if (p.Type && !['generell','spesifikk'].includes(p.Type.toLowerCase()))
+    advarsel.push(`type bør være generell eller spesifikk`);
+
+  if (p.ID) {
+    if (alleIder.filter(x => x === p.ID).length > 1) feil.push('samme ID flere ganger i innlimt tekst');
+    if (REG && REG.anvendelser.some(a => a.id === p.ID)) feil.push(`ID ${p.ID} finnes allerede i registeret`);
+  }
+  if (REG && p.Seksjon) {
+    const s = REG.seksjoner.find(x => String(x.kode) === String(p.Seksjon));
+    if (!s) advarsel.push(`seksjon ${p.Seksjon} står ikke i registeret`);
+    else if (p.Avdeling && String(s.avdeling) !== String(p.Avdeling))
+      feil.push(`avdeling ${p.Avdeling} stemmer ikke med seksjon ${p.Seksjon} (skal være ${s.avdeling})`);
+    else if (!p.Avdeling) { p.Avdeling = String(s.avdeling); advarsel.push('avdeling fylt ut fra seksjonen'); }
+  }
+  if (!p.Datagrunnlag) { p.Datagrunnlag = 'Innmeldt – via skjema'; }
+  if (!p.Vurderingsstatus) {
+    p.Vurderingsstatus = 'Foreløpig vurdert'; advarsel.push('vurderingsstatus satt til foreløpig vurdert');
+  }
+  if (!p.Type) { p.Type = 'spesifikk'; advarsel.push('type satt til spesifikk'); }
+  if (!p['Meldt inn som'] && p.Kategori) {
+    p['Meldt inn som'] = p.Kategori; advarsel.push('meldt inn som satt lik kategori');
+  }
+  return { feil, advarsel };
+}
+
+const esc = s => String(s == null ? '' : s)
+  .replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+document.getElementById('les').addEventListener('click', () => {
+  const poster = lesBlokker(document.getElementById('inn').value);
+  const res = document.getElementById('resultat');
+  const utS = document.getElementById('utseksjon');
+
+  if (!poster.length) {
+    res.hidden = false; utS.hidden = true;
+    document.getElementById('oversikt').innerHTML =
+      '<p class="tom">Fant ingen felter. Teksten må inneholde linjer på formen <code>ID: KI-423-11</code>.</p>';
+    document.querySelector('#tabell tbody').innerHTML = '';
+    return;
+  }
+
+  const ider = poster.map(p => p.ID).filter(Boolean);
+  const rader = poster.map(p => ({ p, ...sjekk(p, ider) }));
+  const gyldige = rader.filter(r => !r.feil.length);
+
+  document.getElementById('oversikt').innerHTML =
+    `<div class="boks"><strong>${poster.length} innmelding${poster.length === 1 ? '' : 'er'} lest.</strong> ` +
+    `${gyldige.length} klar til innliming` +
+    (rader.length - gyldige.length ? `, ${rader.length - gyldige.length} må rettes først` : '') + '.' +
+    (REG ? '' : ' <span class="notat">Fant ikke data.json, så ID-er og seksjoner er ikke kontrollert mot registeret.</span>') +
+    '</div>';
+
+  document.querySelector('#tabell tbody').innerHTML = rader.map(r => {
+    const klasse = r.feil.length ? 'feil' : (r.advarsel.length ? 'advarsel' : '');
+    const status = r.feil.length ? '<span class="status feil">Må rettes</span>'
+                 : r.advarsel.length ? '<span class="status advarsel">Se merknad</span>'
+                 : '<span class="status ok">Klar</span>';
+    const merk = [...r.feil, ...r.advarsel].map(m => `<div class="merknad">${esc(m)}</div>`).join('');
+    return `<tr class="${klasse}"><td>${status}</td><td>${esc(r.p.ID)}</td><td>${esc(r.p.Seksjon)}</td>` +
+           `<td>${esc(r.p.Anvendelse)}</td><td>${esc(r.p.Kategori)}</td><td>${merk || '—'}</td></tr>`;
+  }).join('');
+  res.hidden = false;
+
+  if (gyldige.length) {
+    document.getElementById('ut').textContent = gyldige
+      .map(r => KOL.map(k => String(r.p[k] || '').replace(/\s+/g, ' ').trim()).join('\t'))
+      .join('\n');
+    utS.hidden = false;
+  } else {
+    utS.hidden = true;
+  }
+});
+
+document.getElementById('tom').addEventListener('click', () => {
+  document.getElementById('inn').value = '';
+  document.getElementById('resultat').hidden = true;
+  document.getElementById('utseksjon').hidden = true;
+  document.getElementById('inn').focus();
+});
+
+document.getElementById('kopier').addEventListener('click', () => {
+  const e = document.getElementById('kvitt2');
+  navigator.clipboard.writeText(document.getElementById('ut').textContent).then(
+    () => { e.textContent = 'Kopiert. Lim inn i cellen under siste rad.'; setTimeout(() => e.textContent = '', 6000); },
+    () => { e.textContent = 'Kunne ikke kopiere. Marker teksten og kopier selv.'; });
+});
+</script>
+</body>
+</html>
