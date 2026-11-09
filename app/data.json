@@ -1,8 +1,8 @@
 {
   "metadata": {
     "tittel": "KI-anvendelser i SSB",
-    "sist_oppdatert": "2026-11-06",
-    "kildefil": "KI_register.xlsx",
+    "sist_oppdatert": "2026-11-09",
+    "kildefil": "KI_register_v3.xlsx",
     "forbehold": "Vurderingene her er prosjektets foreløpige arbeidsvurderinger, laget for å få oversikt. De er ikke juridiske konklusjoner, og skal kvalitetssikres av jurist og personvernombud."
   },
   "avdelinger": [
@@ -1475,6 +1475,22 @@
       "maa_avklares": null,
       "meldt_inn_som": "Minimal",
       "generell_klasser": []
+    },
+    {
+      "id": "KI-702-01",
+      "navn": "TEST",
+      "avdeling": 700,
+      "seksjon": 702,
+      "type": "spesifikk",
+      "beskrivelse": "Utarbeider prototype",
+      "risikokategori": "begrenset",
+      "vurderingsstatus": "foreloepig",
+      "fase": "test",
+      "datagrunnlag": "skjema",
+      "ssb_rolle": "uavklart",
+      "ansvarlig": "Thomas Bjørnskau",
+      "maa_avklares": null,
+      "meldt_inn_som": "Begrenset"
     }
   ]
 }
